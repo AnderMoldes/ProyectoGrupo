@@ -7,6 +7,7 @@ public class Police_Station {
 	
 	public static void main(String[] args) {
 		System.out.println("Xabat calvo");
+		System.out.println("Holaaa");
 	}
 
 }
