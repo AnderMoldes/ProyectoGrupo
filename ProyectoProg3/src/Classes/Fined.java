@@ -1,45 +1,48 @@
 package Classes;
 
+import java.util.Date;
+
 public class Fined extends Detained{
-		private String Specialty;
-		private String experience;
-		
-		
-		public Fined(String name, String lastName, int age, String specialty, String experience) {
-			super(name, lastName, age);
-			Specialty = specialty;
-			this.experience = experience;
-		}
-		
-		public Fined() {
-			super();
-			Specialty = "";
-			this.experience = "";
-		}
-
-		public String getSpecialty() {
-			return Specialty;
-		}
-
-		public void setSpecialty(String specialty) {
-			Specialty = specialty;
-		}
-
-		public String getExperience() {
-			return experience;
-		}
-
-		public void setExperience(String experience) {
-			this.experience = experience;
-		}
-
-		@Override
-		public String toString() {
-			return "Fined [Specialty=" + Specialty + ", experience=" + experience + ", getName()=" + getName()
-					+ ", getLastName()=" + getLastName() + ", getAge()=" + getAge() + ", toString()=" + super.toString()
-					+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + "]";
-		}
-		
-		
+	private static int counter = 1;
+	private int number;
+	private String description;
+	//Multar por vehiculo
+	private double payment;
+	public Fined(String name, String lastName, Date age, Gender gender, int number, String description,
+			double payment) {
+		super(name, lastName, age, gender);
+		this.number = counter++;
+		this.description = description;
+		this.payment = payment;
+	}
+	public Fined() {
+		super();
+		this.number = 0;
+		this.description = "";
+		this.payment = 0.0;
+	}
+	public int getNumber() {
+		return number;
+	}
+	public void setNumber(int number) {
+		this.number = number;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public double getPayment() {
+		return payment;
+	}
+	public void setPayment(double payment) {
+		this.payment = payment;
+	}
+	@Override
+	public String toString() {
+		return "Fined number " + number + "Why is he/she fined? " + description + " Payment: " + payment;
+	}
 	
+		
 }

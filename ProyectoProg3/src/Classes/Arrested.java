@@ -4,30 +4,47 @@ import java.util.Date;
 
 public class Arrested extends Detained{
 	public static int counter = 1;
-	private String name_a;
-	private String lastName_a;
-	private Date age_a;
+	private int numberOfArrest;
 	private String description;
-	public Arrested(String name, String lastName, int age, String name_a, String lastName_a, Date age_a,
-			String description) {
-		super(name, lastName, age);
-		this.counter = counter++;
-		this.name_a = name_a;
-		this.lastName_a = lastName_a;
-		this.age_a = age_a;
+	private Date jailRelease;
+	
+	public Arrested(String name, String lastName, Date age, Gender gender, int numberOfArrest, String description,
+			Date jailRelease) {
+		super(name, lastName, age, gender);
+		this.numberOfArrest = counter++;
 		this.description = description;
+		this.jailRelease = jailRelease;
 	}
+
 	public Arrested() {
 		super();
-		this.name_a = "";
-		this.lastName_a = "";
-		this.age_a = new Date();
+		this.numberOfArrest = 0;
 		this.description = "";
+		this.jailRelease = new Date();
+	}
+	
+	public int getNumberOfArrest() {
+		return numberOfArrest;
+	}
+	public void setNumberOfArrest(int numberOfArrest) {
+		this.numberOfArrest = numberOfArrest;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public Date getJailRelease() {
+		return jailRelease;
+	}
+	public void setJailRelease(Date jailRelease) {
+		this.jailRelease = jailRelease;
 	}
 	@Override
 	public String toString() {
-		return "Arrested name: " + name_a + ". Last name: " + lastName_a + ". Age: " + age_a + ". The description: "
-				+ description;
+		return "Arrested number: " + numberOfArrest + " Why is he/she arrested? " + description + " When is going to leave? "
+				+ jailRelease;
 	}
 	
 	
