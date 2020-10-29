@@ -7,6 +7,7 @@ public class Workers {
     private String name;
     private String surname;
     private Gender gender;
+    
 	public Workers(int code, String name, String surname, Gender gender) {
 		super();
 		this.code = counter++;

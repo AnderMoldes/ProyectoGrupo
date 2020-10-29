@@ -14,13 +14,13 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
-public class MainWindows extends JFrame {
+public class MainWindow extends JFrame {
 
 	JLabel image;
 	JButton start;
 	JTextPane title;
 
-	public MainWindows() throws BadLocationException {
+	public MainWindow() throws BadLocationException {
 
 		title = new JTextPane();
 		SimpleAttributeSet attrs = new SimpleAttributeSet();
@@ -65,7 +65,7 @@ public class MainWindows extends JFrame {
 			@Override
 			public void run() {
 				try {
-					new MainWindows();
+					new MainWindow();
 				} catch (BadLocationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
