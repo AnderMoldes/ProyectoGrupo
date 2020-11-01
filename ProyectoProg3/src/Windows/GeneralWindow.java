@@ -30,7 +30,6 @@ public class GeneralWindow extends JFrame {
 	JButton bCerrar;
 	JButton bgestionarRelaciones;
 	JButton bmanageDetained;
-	JButton bvalorateWorkers;
 	JList listWorkers;
 	DefaultListModel modelWorkers;
 	JList listDetained;
@@ -129,10 +128,8 @@ public class GeneralWindow extends JFrame {
 		bCerrar = new JButton("Close Window");
 		bgestionarRelaciones = new JButton("Manage Relations");
 		bmanageDetained = new JButton("Manage Workers");
-		bvalorateWorkers = new JButton("Valorate Workers");
 		abajoTotal.add(bgestionarRelaciones, BorderLayout.CENTER);
 		abajoTotal.add(bmanageDetained, BorderLayout.CENTER);
-		abajoTotal.add(bvalorateWorkers, BorderLayout.CENTER);
 
 		JPanel abajoFinal = new JPanel();
 		abajoFinal.setLayout(new GridLayout(3, 1));
