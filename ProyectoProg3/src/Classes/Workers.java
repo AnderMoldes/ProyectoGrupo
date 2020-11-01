@@ -6,9 +6,9 @@ public class Workers {
     private int code;
     private String name;
     private String surname;
-    private Gender gender;
+    private String gender;
     
-	public Workers(int code, String name, String surname, Gender gender) {
+	public Workers(int code, String name, String surname, String gender) {
 		super();
 		this.code = counter++;
 		this.name = name;
@@ -17,16 +17,12 @@ public class Workers {
 	}
 	public Workers() {
 		super();
-		this.code = 0;
 		this.name = "";
 		this.surname = "";
-		this.gender = Gender.OTHER;
+		this.gender = "";
 	}
 	public int getCode() {
 		return code;
-	}
-	public void setCode(int code) {
-		this.code = code;
 	}
 	public String getName() {
 		return name;
@@ -40,10 +36,10 @@ public class Workers {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	public Gender getGender() {
+	public String getGender() {
 		return gender;
 	}
-	public void setGender(Gender gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 	@Override
