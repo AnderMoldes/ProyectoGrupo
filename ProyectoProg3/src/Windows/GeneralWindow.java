@@ -23,21 +23,20 @@ public class GeneralWindow extends JFrame {
 	
 	JMenuItem cerrarPestaña;
 	
-	JButton crearJinete;
-	JButton consultarJinetes;
-	JButton campeonato;
-	JButton crearEmpleado;
-	JButton consultarEmpleados;
+	JButton createWorkers;
+	JButton consultWorkers;
+	JButton createDetained;
+	JButton consultDetained;
 	JButton bCerrar;
 	JButton bgestionarRelaciones;
-	JButton bgestionarCaballos;
-	JButton bvalorarEmpleados;
-	JList listaJinetes;
-	DefaultListModel modeloJinetes;
-	JList listaCaballos;
-	DefaultListModel modeloCaballos;
-	DefaultListModel modeloEmpleado;
-	JList listaEmpleado;
+	JButton bmanageDetained;
+	JButton bvalorateWorkers;
+	JList listWorkers;
+	DefaultListModel modelWorkers;
+	JList listDetained;
+	DefaultListModel modelDetained;
+	
+	
 	JLabel lbarra;
 	JProgressBar progreso;
 
@@ -55,10 +54,10 @@ public class GeneralWindow extends JFrame {
 
 		bar = new JMenuBar();
 
-		file = new JMenu("Fichero");
+		file = new JMenu("File");
 		
-		close = new JMenu("Cerrar");
-		cerrarPestaña = new JMenuItem("Cerrar esta ventana");
+		close = new JMenu("Close");
+		cerrarPestaña = new JMenuItem("Close this window");
 
 		end = new JMenu("Menu");
 		
@@ -91,49 +90,34 @@ public class GeneralWindow extends JFrame {
 
 		JPanel panelBotones = new JPanel();
 
-		crearJinete = new JButton("Crear Jinete");
-		consultarJinetes = new JButton("Consultar Jinetes");
+		createWorkers = new JButton("Create Worker");
+		consultWorkers = new JButton("Consult Workers");
 
-		panelBotones.add(crearJinete);
-		panelBotones.add(consultarJinetes);
+		panelBotones.add(createWorkers);
+		panelBotones.add(consultWorkers);
 
-		modeloJinetes = new DefaultListModel();
-		listaJinetes = new JList(modeloJinetes);
-		JScrollPane scrollJinetes = new JScrollPane(listaJinetes);
+		modelWorkers = new DefaultListModel();
+		listWorkers = new JList(modelWorkers);
+		JScrollPane scrollWorkers = new JScrollPane(listWorkers);
 
-		arriba.add(scrollJinetes);
+		arriba.add(scrollWorkers);
 		arriba.add(panelBotones, BorderLayout.NORTH);
 
 		JPanel panelBotones2 = new JPanel();
 
-		JButton crearCaballo = new JButton("Crear Caballo");
-		JButton consultarCaballos = new JButton("Consultar Caballos");
+		JButton createDetained = new JButton("Create Detained");
+		JButton consultDetained = new JButton("Consult Detained");
 
-		panelBotones2.add(crearCaballo);
-		panelBotones2.add(consultarCaballos);
+		panelBotones2.add(createDetained);
+		panelBotones2.add(consultDetained);
 
-		modeloCaballos = new DefaultListModel();
-		listaCaballos = new JList(modeloCaballos);
-		JScrollPane scroolCaballos = new JScrollPane(listaCaballos);
+		modelDetained = new DefaultListModel();
+		listDetained = new JList(modelDetained);
+		JScrollPane scrollDetained = new JScrollPane(listDetained);
 
-		centro.add(scroolCaballos);
+		centro.add(scrollDetained);
 		centro.add(panelBotones2, BorderLayout.NORTH);
 
-		campeonato = new JButton("Carrera");
-
-		JPanel panelabajo = new JPanel();
-		crearEmpleado = new JButton("Crear Empleado");
-		consultarEmpleados = new JButton("Consultar Empleados");
-
-		panelabajo.add(crearEmpleado);
-		panelabajo.add(consultarEmpleados);
-
-		modeloEmpleado = new DefaultListModel();
-		listaEmpleado = new JList(modeloEmpleado);
-		JScrollPane scrollEmpleado = new JScrollPane(listaEmpleado);
-
-		abajo.add(panelabajo, BorderLayout.NORTH);
-		abajo.add(scrollEmpleado);
 
 		JPanel arribaTotal = new JPanel();
 		arribaTotal.add(arriba);
@@ -142,14 +126,13 @@ public class GeneralWindow extends JFrame {
 
 		JPanel abajoTotal = new JPanel();
 
-		bCerrar = new JButton("Cerrar Ventana");
-		bgestionarRelaciones = new JButton("Gestionar Relaciones");
-		bgestionarCaballos = new JButton("Gestionar Caballos");
-		bvalorarEmpleados = new JButton("Valorar Empleados");
-		abajoTotal.add(campeonato, BorderLayout.CENTER);
+		bCerrar = new JButton("Close Window");
+		bgestionarRelaciones = new JButton("Manage Relations");
+		bmanageDetained = new JButton("Manage Workers");
+		bvalorateWorkers = new JButton("Valorate Workers");
 		abajoTotal.add(bgestionarRelaciones, BorderLayout.CENTER);
-		abajoTotal.add(bgestionarCaballos, BorderLayout.CENTER);
-		abajoTotal.add(bvalorarEmpleados, BorderLayout.CENTER);
+		abajoTotal.add(bmanageDetained, BorderLayout.CENTER);
+		abajoTotal.add(bvalorateWorkers, BorderLayout.CENTER);
 
 		JPanel abajoFinal = new JPanel();
 		abajoFinal.setLayout(new GridLayout(3, 1));
@@ -200,7 +183,7 @@ public class GeneralWindow extends JFrame {
 		});
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setTitle("CREACIÓN Y ORGANIZACIÓN");
+		setTitle("POLICE MANAGEMENT");
 		pack();
 		setResizable(false);
 		setVisible(true);
