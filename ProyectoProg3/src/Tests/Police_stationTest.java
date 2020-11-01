@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import Classes.Police_Station;
 
-class Police_stationTest {
+public class Police_stationTest {
 
 	
 

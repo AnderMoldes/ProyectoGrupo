@@ -5,10 +5,10 @@ import java.util.Date;
 public class Detained {
 	private String name;
 	private String lastName;
-	private Date age;
-	private Gender gender;
+	private int age;
+	private String gender;
 	
-	public Detained(String name, String lastName, Date age, Gender gender) {
+	public Detained(String name, String lastName, int age, String gender) {
 		super();
 		this.name = name;
 		this.lastName = lastName;
@@ -20,8 +20,8 @@ public class Detained {
 		super();
 		this.name = "";
 		this.lastName = "";
-		this.age = new Date();
-		this.gender = Gender.OTHER;
+		this.age = 0;
+		this.gender = "";
 	}
 
 	public String getName() {
@@ -40,20 +40,20 @@ public class Detained {
 		this.lastName = lastName;
 	}
 
-	public Date getAge() {
+	public int getAge() {
 		return age;
 	}
 
-	public void setAge(Date age) {
+	public void setAge(int age) {
 		this.age = age;
 	}
 	
 
-	public Gender getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(Gender gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
