@@ -2,13 +2,42 @@ package Tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 
-class VehicleTest {
+import Classes.Brand;
+import Classes.Colour;
+import Classes.Vehicle;
+
+public class VehicleTest {
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	public void testGetLicensePlate() {
+		Vehicle v = new Vehicle(2, Brand.NISSAN, Colour.GOLD, null);
+		assertEquals(2, v.getLicensePlate());
+
+	}
+
+	@Test
+	public void testGetBrand() {
+		Vehicle v = new Vehicle(9999, Brand.NISSAN, Colour.GOLD, null);
+		assertEquals(Brand.NISSAN, v.getBrand());
+
+	}
+
+	@Test
+	public void testGetColour() {
+		Vehicle v = new Vehicle(9999, Brand.NISSAN, Colour.GOLD, null);
+		assertEquals(Colour.GOLD, v.getColour());
+
+	}
+
+	@Test
+	public void testGetPolices() {
+		Vehicle v = new Vehicle(9999, Brand.NISSAN, Colour.GOLD, null);
+		assertEquals(null, v.getPolices());
+
 	}
 
 }

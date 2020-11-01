@@ -1,13 +1,12 @@
 package Tests;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 
 import Classes.Police_Station;
 
 public class Police_stationTest {
-
-	
 
 	@Test
 	public void testGetName() {
