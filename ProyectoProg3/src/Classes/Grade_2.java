@@ -48,10 +48,9 @@ public class Grade_2 extends Workers{
 	@Override
 	public String toString() {
 		return "Grade_2 [specialty=" + specialty + ", workingYears=" + workingYears + ", assessment=" + assessment
-				+ ", getCode()=" + getCode() + ", getName()=" + getName() + ", getSurname()=" + getSurname()
-				+ ", getGender()=" + getGender() + ", toString()=" + super.toString() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + "]";
+				+ "]";
 	}
+	
 	
 	
 	
