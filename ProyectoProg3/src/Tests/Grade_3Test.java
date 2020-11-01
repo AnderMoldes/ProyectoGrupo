@@ -4,11 +4,50 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class Grade_3Test {
+import Classes.Grade_3;
+
+public class Grade_3Test {
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	public void testGetName() {
+		Grade_3 g = new Grade_3(1, "Pedro", "Ortiz", "male", "arrests", 4, 5);
+		assertEquals("Pedro", g.getName());
+
+	}
+
+	@Test
+	public void testGetSurName() {
+		Grade_3 g = new Grade_3(1, "Pedro", "Ortiz", "male", "arrests", 4, 5);
+		assertEquals("Ortiz", g.getSurname());
+
+	}
+
+	@Test
+	public void testGetGender() {
+		Grade_3 g = new Grade_3(1, "Pedro", "Ortiz", "male", "arrests", 4, 5);
+		assertEquals("male", g.getGender());
+
+	}
+
+	@Test
+	public void testGetSpecialty() {
+		Grade_3 g = new Grade_3(1, "Pedro", "Ortiz", "male", "arrests", 4, 5);
+		assertEquals("arrests", g.getSpecialty());
+
+	}
+
+	@Test
+	public void testGetWorkingYears() {
+		Grade_3 g = new Grade_3(1, "Pedro", "Ortiz", "male", "arrests", 4, 5);
+		assertEquals(4, g.getWorkingYears());
+
+	}
+
+	@Test
+	public void testGetAssesment() {
+		Grade_3 g = new Grade_3(1, "Pedro", "Ortiz", "male", "arrests", 4, 5);
+		assertEquals(5, g.getAssessment());
+
 	}
 
 }
