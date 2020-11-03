@@ -24,7 +24,7 @@ public class DetainedWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				new CreateDetainedWindow();
 			}
 		});
 
@@ -32,7 +32,7 @@ public class DetainedWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				new FainedWindow();
 			}
 		});
 

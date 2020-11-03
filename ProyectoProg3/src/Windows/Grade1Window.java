@@ -121,7 +121,7 @@ public class Grade1Window extends JFrame{
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("Create a worker");
-		pack();
+		setSize(500,500);
 		setResizable(false);
 		setVisible(true);
 	}
