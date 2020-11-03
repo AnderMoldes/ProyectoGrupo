@@ -20,7 +20,8 @@ public class CreateDetainedWindow extends JFrame {
 	JLabel lOther;
 	JTextField tOther;
 	JLabel Empty;
-
+	
+	
 	ButtonGroup group = new ButtonGroup();
 
 	public CreateDetainedWindow() {
