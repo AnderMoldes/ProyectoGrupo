@@ -84,6 +84,16 @@ public class GeneralWindow extends JFrame {
 
 			}
 		});
+		
+		vehicle.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new VehicleWindow();
+				dispose();
+				
+			}
+		});
 
 		setJMenuBar(bar);
 
