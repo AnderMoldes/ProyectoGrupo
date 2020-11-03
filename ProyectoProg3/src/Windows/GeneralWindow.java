@@ -30,6 +30,7 @@ public class GeneralWindow extends JFrame {
 	JButton bClose;
 	JButton bManageRelations;
 	JButton bManageDetained;
+	JButton bManageWorkers;
 	JList listWorkers;
 	DefaultListModel modelWorkers;
 	JList listDetained;
@@ -84,6 +85,15 @@ public class GeneralWindow extends JFrame {
 
 			}
 		});
+		
+		vehicle.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new VehicleWindow();
+				
+			}
+		});
 
 		setJMenuBar(bar);
 
@@ -127,9 +137,14 @@ public class GeneralWindow extends JFrame {
 
 		bClose = new JButton("Close Window");
 		bManageRelations = new JButton("Manage Relations");
-		bManageDetained = new JButton("Manage Workers");
+		bManageWorkers= new JButton("Manage Workers");
+		bManageDetained = new JButton("Manage Detained");
+		
+		
 		DOWN.add(bManageRelations, BorderLayout.CENTER);
+		DOWN.add(bManageWorkers, BorderLayout.CENTER);
 		DOWN.add(bManageDetained, BorderLayout.CENTER);
+		
 
 		JPanel MOREDOWN = new JPanel();
 		MOREDOWN.setLayout(new GridLayout(3, 1));
@@ -177,12 +192,22 @@ public class GeneralWindow extends JFrame {
 
 			}
 		});
+		
 		createWorkers.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new SelectWorkerWindow();
 			}});
+		
+		createDetained.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new DetainedWindow();
+				
+			}
+		});
 
 		createDetained.addActionListener(new ActionListener() {
 			@Override

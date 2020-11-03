@@ -1,12 +1,14 @@
 package Classes;
 
-public class Workers {
+import java.io.Serializable;
+
+public class Workers implements Serializable{
     public static int counter = 1;
 
-    private int code;
-    private String name;
-    private String surname;
-    private String gender;
+    protected int code;
+    protected String name;
+    protected String surname;
+    protected String gender;
     
 	public Workers(int code, String name, String surname, String gender) {
 		super();
@@ -44,7 +46,7 @@ public class Workers {
 	}
 	@Override
 	public String toString() {
-		return "Workers number " + code + ". Name: " + name + " " + surname + ". Gender: " + gender + "]";
+		return "Workers number " + code + ". Name: " + name + " " + surname + ". Gender: " + gender ;
 	}
     
 
