@@ -47,9 +47,8 @@ public class Grade_3 extends Workers{
 
 	@Override
 	public String toString() {
-		return "Grade_2 [specialty=" + specialty + ", workingYears=" + workingYears + ", assessment=" + assessment
-				+ "]";
-	}
+		return "Police grade 1 with the speciality: " + specialty + ". Working Years: " + workingYears + ". Assessment: " + assessment;
+		}
 	
 	
 	

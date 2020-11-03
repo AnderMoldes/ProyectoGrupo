@@ -21,42 +21,42 @@ public class GeneralWindow extends JFrame {
 	JMenuItem vehicle;
 	JMenuItem detained;
 	
-	JMenuItem cerrarPestaña;
+	JMenuItem closeWindow;
 	
 	JButton createWorkers;
 	JButton consultWorkers;
 	JButton createDetained;
 	JButton consultDetained;
-	JButton bCerrar;
-	JButton bgestionarRelaciones;
-	JButton bmanageDetained;
+	JButton bClose;
+	JButton bManageRelations;
+	JButton bManageDetained;
 	JList listWorkers;
 	DefaultListModel modelWorkers;
 	JList listDetained;
 	DefaultListModel modelDetained;
 	
 	
-	JLabel lbarra;
-	JProgressBar progreso;
+	JLabel lbar;
+	JProgressBar progress;
 
 	public GeneralWindow() {
 
 		setLayout(new GridLayout(3, 1));
 
-		JPanel arriba = new JPanel();
-		JPanel centro = new JPanel();
-		JPanel abajo = new JPanel();
+		JPanel up = new JPanel();
+		JPanel center = new JPanel();
+		JPanel down = new JPanel();
 
-		arriba.setLayout(new BorderLayout());
-		centro.setLayout(new BorderLayout());
-		abajo.setLayout(new BorderLayout());
+		up.setLayout(new BorderLayout());
+		center.setLayout(new BorderLayout());
+		down.setLayout(new BorderLayout());
 
 		bar = new JMenuBar();
 
 		file = new JMenu("File");
 		
 		close = new JMenu("Close");
-		cerrarPestaña = new JMenuItem("Close this window");
+		closeWindow = new JMenuItem("Close this window");
 
 		end = new JMenu("Menu");
 		
@@ -69,14 +69,14 @@ public class GeneralWindow extends JFrame {
 		end.add(vehicle);
 		
 
-		close.add(cerrarPestaña);
+		close.add(closeWindow);
 
 		
 		bar.add(file);
 		bar.add(end);
 		bar.add(close);
 
-		cerrarPestaña.addActionListener(new ActionListener() {
+		closeWindow.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -87,97 +87,102 @@ public class GeneralWindow extends JFrame {
 
 		setJMenuBar(bar);
 
-		JPanel panelBotones = new JPanel();
+		JPanel ButtonPanel = new JPanel();
 
 		createWorkers = new JButton("Create Worker");
 		consultWorkers = new JButton("Consult Workers");
 
-		panelBotones.add(createWorkers);
-		panelBotones.add(consultWorkers);
+		ButtonPanel.add(createWorkers);
+		ButtonPanel.add(consultWorkers);
 
 		modelWorkers = new DefaultListModel();
 		listWorkers = new JList(modelWorkers);
 		JScrollPane scrollWorkers = new JScrollPane(listWorkers);
 
-		arriba.add(scrollWorkers);
-		arriba.add(panelBotones, BorderLayout.NORTH);
+		up.add(scrollWorkers);
+		up.add(ButtonPanel, BorderLayout.NORTH);
 
-		JPanel panelBotones2 = new JPanel();
+		JPanel ButtonPanel2 = new JPanel();
 
 		JButton createDetained = new JButton("Create Detained");
 		JButton consultDetained = new JButton("Consult Detained");
 
-		panelBotones2.add(createDetained);
-		panelBotones2.add(consultDetained);
+		ButtonPanel2.add(createDetained);
+		ButtonPanel2.add(consultDetained);
 
 		modelDetained = new DefaultListModel();
 		listDetained = new JList(modelDetained);
 		JScrollPane scrollDetained = new JScrollPane(listDetained);
 
-		centro.add(scrollDetained);
-		centro.add(panelBotones2, BorderLayout.NORTH);
+		center.add(scrollDetained);
+		center.add(ButtonPanel2, BorderLayout.NORTH);
 
 
-		JPanel arribaTotal = new JPanel();
-		arribaTotal.add(arriba);
-		arribaTotal.add(centro);
-		arribaTotal.add(abajo);
+		JPanel UP = new JPanel();
+		UP.add(up);
+		UP.add(center);
+		UP.add(down);
 
-		JPanel abajoTotal = new JPanel();
+		JPanel DOWN = new JPanel();
 
-		bCerrar = new JButton("Close Window");
-		bgestionarRelaciones = new JButton("Manage Relations");
-		bmanageDetained = new JButton("Manage Workers");
-		abajoTotal.add(bgestionarRelaciones, BorderLayout.CENTER);
-		abajoTotal.add(bmanageDetained, BorderLayout.CENTER);
+		bClose = new JButton("Close Window");
+		bManageRelations = new JButton("Manage Relations");
+		bManageDetained = new JButton("Manage Workers");
+		DOWN.add(bManageRelations, BorderLayout.CENTER);
+		DOWN.add(bManageDetained, BorderLayout.CENTER);
 
-		JPanel abajoFinal = new JPanel();
-		abajoFinal.setLayout(new GridLayout(3, 1));
-		lbarra = new JLabel("Cerrando la ventana...");
-		lbarra.setVisible(false);
-		progreso = new JProgressBar(0, 100);
-		progreso.setVisible(false);
+		JPanel MOREDOWN = new JPanel();
+		MOREDOWN.setLayout(new GridLayout(3, 1));
+		lbar = new JLabel("Closing the window...");
+		lbar.setVisible(false);
+		progress = new JProgressBar(0, 100);
+		progress.setVisible(false);
 
-		abajoFinal.add(bCerrar, BorderLayout.CENTER);
-		abajoFinal.add(lbarra);
-		abajoFinal.add(progreso);
+		MOREDOWN.add(bClose, BorderLayout.CENTER);
+		MOREDOWN.add(lbar);
+		MOREDOWN.add(progress);
 
-		add(arribaTotal, BorderLayout.NORTH);
-		add(abajoTotal, BorderLayout.CENTER);
-		add(abajoFinal, BorderLayout.SOUTH);
+		add(UP, BorderLayout.NORTH);
+		add(DOWN, BorderLayout.CENTER);
+		add(MOREDOWN, BorderLayout.SOUTH);
 
-		bCerrar.addActionListener(new ActionListener() {
+		bClose.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				Thread hilo = new Thread(new Runnable() {
+				Thread thread = new Thread(new Runnable() {
 					@Override
 					public void run() {
 
-						lbarra.setVisible(true);
-						progreso.setVisible(true);
+						lbar.setVisible(true);
+						progress.setVisible(true);
 
 						for (int i = 0; i <= 100; i++) {
-							progreso.setValue(i);
+							progress.setValue(i);
 							try {
-								Thread.sleep(4);
+								Thread.sleep(7);
 							} catch (InterruptedException el) {
 								el.printStackTrace();
 							}
 						}
 
-						lbarra.setVisible(false);
-						progreso.setVisible(false);
+						lbar.setVisible(false);
+						progress.setVisible(false);
 						dispose();
-
 					}
 				});
 
-				hilo.start();
+				thread.start();
 
 			}
 		});
+		createWorkers.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new SelectWorkerWindow();
+			}});
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("POLICE MANAGEMENT");
