@@ -1,12 +1,14 @@
 package Classes;
 
+import java.util.Date;
+
 public class Grade_2 extends Workers{
 	
-	private String specialty;
-	private int workingYears;
+	private Specialty specialty;
+	private Date workingYears;
 	private int assessment;
 	
-	public Grade_2(int code, String name, String surname, String gender, String specialty, int workingYears,
+	public Grade_2(int code, String name, String surname, String gender, Specialty specialty, Date workingYears,
 			int assessment) {
 		super(code, name, surname, gender);
 		this.specialty = specialty;
@@ -16,25 +18,25 @@ public class Grade_2 extends Workers{
 	
 	public Grade_2() {
 		super();
-		this.specialty = "";
-		this.workingYears = 0;
+		this.specialty = specialty.CONDUCTOR;
+		this.workingYears = new Date();
 		this.assessment = 0;
 	}
 
-	public String getSpecialty() {
+	public Specialty getSpecialty() {
 		return specialty;
 	}
 
-	public void setSpecialty(String specialty) {
-		this.specialty = specialty;
+	public void setSpecialty(Specialty specialty2) {
+		this.specialty = specialty2;
 	}
 
-	public int getWorkingYears() {
+	public Date getWorkingYears() {
 		return workingYears;
 	}
 
-	public void setWorkingYears(int workingYears) {
-		this.workingYears = workingYears;
+	public void setWorkingYears(Date date) {
+		this.workingYears = date;
 	}
 
 	public int getAssessment() {
@@ -45,10 +47,10 @@ public class Grade_2 extends Workers{
 		this.assessment = assessment;
 	}
 
-	@Override
 	public String toString() {
-		return "Police grade 2 with the speciality: " + specialty + ". Working Years: " + workingYears + ". Assessment: " + assessment;
-		}
+		return "Grade: 2. Code: " + code + "Name: " + name +" "+ surname + ". Gender: " + gender +". Especiality: "
+				+ specialty + ". Start working: " + workingYears + ". Assessment: " + assessment;
+	}
 	
 	
 	

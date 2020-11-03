@@ -7,7 +7,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import Classes.Police_Station;
+
 public class SelectWorkerWindow extends JFrame{
+	Police_Station policeStation;
 	JButton grade1;
 	JButton grade2;
 	JButton grade3;
@@ -27,21 +30,21 @@ public class SelectWorkerWindow extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//new Grade1Window();
+				new Grade1Window(policeStation, null, null);
 				
 			}});
 		grade2.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//new Grade2Window();
+				new Grade2Window(policeStation, null, null);
 				
 			}});
 		grade3.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//new Grade3Window();
+				new Grade3Window(policeStation, null, null);
 				
 			}});
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
