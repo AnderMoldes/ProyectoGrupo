@@ -184,6 +184,12 @@ public class GeneralWindow extends JFrame {
 				new SelectWorkerWindow();
 			}});
 
+		createDetained.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new CreateDetainedWindow();
+			}});
+		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("POLICE MANAGEMENT");
 		pack();
