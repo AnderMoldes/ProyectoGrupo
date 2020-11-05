@@ -31,6 +31,7 @@ public class SelectWorkerWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new Grade1Window(policeStation, null, null);
+				dispose();
 				
 			}});
 		grade2.addActionListener(new ActionListener() {
@@ -38,14 +39,14 @@ public class SelectWorkerWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new Grade2Window(policeStation, null, null);
-				
+				dispose();
 			}});
 		grade3.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new Grade3Window(policeStation, null, null);
-				
+				dispose();
 			}});
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("Select the grade of the worker");

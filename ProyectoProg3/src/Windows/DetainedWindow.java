@@ -25,6 +25,7 @@ public class DetainedWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new CreateDetainedWindow();
+				dispose();
 			}
 		});
 
@@ -33,6 +34,7 @@ public class DetainedWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new FainedWindow();
+				dispose();
 			}
 		});
 
