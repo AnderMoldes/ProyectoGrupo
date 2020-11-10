@@ -37,15 +37,15 @@ public class PatrolCarWindow extends JFrame{
 		JButton back = new JButton("Back");	
 		
 		text.setEditable(false);
-		text.setText("The patrol car is a ground vehicle used by police for transportation during\n "
-				+ "patrols and to enable them to respond to incidents and chases. Typical uses of a police\n"
+		text.setText(" The patrol car is a ground vehicle used by police for transportation during\n "
+				+ " patrols and to enable them to respond to incidents and chases. Typical uses of a police\n"
 				+ " car include transporting officers so they can reach the scene of an incident quickly, \n"
-				+ "transporting and temporarily detaining suspects in the back seats, as a location to use \n"
-				+ "their police radio or laptop, or to patrol an area, all while providing a visible deterrent \n"
-				+ "to crime. Some police cars are specially adapted for certain locations or for certain operations.\n"
-				+ "Police cars typically have rooftop flashing lights, a siren, and emblems or markings indicating \n"
-				+ "that the vehicle is a police car. Some police cars may have reinforced bumpers and alley lights, for \n"
-				+ "illuminating darkened alleys.");
+				+ " transporting and temporarily detaining suspects in the back seats, as a location to use \n"
+				+ " their police radio or laptop, or to patrol an area, all while providing a visible deterrent \n"
+				+ " to crime. Some police cars are specially adapted for certain locations or for certain operations.\n"
+				+ " Police cars typically have rooftop flashing lights, a siren, and emblems or markings indicating \n"
+				+ " that the vehicle is a police car. Some police cars may have reinforced bumpers and alley lights, for \n"
+				+ " illuminating darkened alleys.");
 		
 		back.addActionListener(new ActionListener() {
 			

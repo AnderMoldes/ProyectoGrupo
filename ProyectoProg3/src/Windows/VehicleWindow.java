@@ -90,6 +90,38 @@ public class VehicleWindow extends JFrame{
 				
 			}
 		});
+		motorbike.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new MotorBikeWindow();
+				
+			}
+		});
+		truck.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new TruckWindow();
+				
+			}
+		});
+		armoredCar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new ArmoredCarWindow();
+				
+			}
+		});
+		armoredVan.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new ArmoredVanWindow();
+				
+			}
+		});
 		
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
