@@ -1,8 +1,9 @@
 package Classes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Police_Station {
+public class Police_Station implements Serializable{ //Cambio de nombre a PoliceStation
 	private String name;
 	private int numWorkers;
 	private String address;

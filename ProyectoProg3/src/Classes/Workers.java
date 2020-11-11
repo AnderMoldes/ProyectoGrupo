@@ -12,7 +12,8 @@ public class Workers implements Serializable{
     
 	public Workers(int code, String name, String surname, String gender) {
 		super();
-		this.code = counter++;
+		this.code = code;
+		counter++;
 		this.name = name;
 		this.surname = surname;
 		this.gender = gender;
@@ -23,9 +24,7 @@ public class Workers implements Serializable{
 		this.surname = "";
 		this.gender = "";
 	}
-	public int getCode() {
-		return code;
-	}
+	
 	public String getName() {
 		return name;
 	}

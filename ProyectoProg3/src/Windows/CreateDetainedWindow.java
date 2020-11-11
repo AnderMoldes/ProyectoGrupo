@@ -37,6 +37,7 @@ public class CreateDetainedWindow extends JFrame {
 		tNID = new JTextField(9);
 		lCountry = new JLabel("Nationality: ");
 		comboCountry = new JComboBox<Country>();
+		//Hacer todo en un for
 		comboCountry.addItem(Country.Austria);
 		comboCountry.addItem(Country.Belgium);
 		comboCountry.addItem(Country.Bulgaria);

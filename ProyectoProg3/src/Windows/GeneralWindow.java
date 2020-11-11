@@ -3,15 +3,19 @@ package Windows;
 import javax.swing.*;
 import java.awt.*;
 
-import javax.swing.JLabel;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
+import Classes.Police_Station;
+import Classes.Workers;
+
 import java.awt.event.*;
 
 public class GeneralWindow extends JFrame {
-
+	protected static final Workers worker = null;
+	Police_Station policeStation;
+	
 	JMenuBar bar;
 	JMenu file;
 	JMenu close;
@@ -51,7 +55,8 @@ public class GeneralWindow extends JFrame {
 		up.setLayout(new BorderLayout());
 		center.setLayout(new BorderLayout());
 		down.setLayout(new BorderLayout());
-
+		
+		policeStation = new Police_Station();
 		bar = new JMenuBar();
 
 		file = new JMenu("File");
@@ -197,8 +202,18 @@ public class GeneralWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new SelectWorkerWindow();
+				new Grade1Window(policeStation, null, modelWorkers);
 			}});
+		listWorkers.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		        JList list = (JList)evt.getSource();
+		        if (evt.getClickCount() == 2) {
+		        	Workers workers = (Workers) listWorkers.getSelectedValue();
+					new Grade1Window(policeStation, null, modelWorkers);	
+					
+		        }		    
+		    }
+		});
 		
 		createDetained.addActionListener(new ActionListener() {
 			
@@ -208,7 +223,7 @@ public class GeneralWindow extends JFrame {
 				
 			}
 		});
-
+		
 		
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);

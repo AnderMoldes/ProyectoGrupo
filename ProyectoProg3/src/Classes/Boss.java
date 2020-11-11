@@ -35,9 +35,7 @@ public class Boss extends Workers{
 
 	@Override
 	public String toString() {
-		return "Boss [codeBoss=" + codeBoss + ", function=" + function + ", getCode()=" + getCode() + ", getName()="
-				+ getName() + ", getSurname()=" + getSurname() + ", getGender()=" + getGender() + ", toString()="
-				+ super.toString() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + "]";
+		return "";
 	}
 	
 	

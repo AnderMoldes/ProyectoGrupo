@@ -20,6 +20,8 @@ import Classes.Specialty;
 import Classes.Workers;
 
 public class Grade1Window extends JFrame{
+	JLabel lgrade;
+	JTextField tgrade;
 	JLabel lname;
 	JLabel lsurname;
 	JLabel lgender;
@@ -37,7 +39,8 @@ public class Grade1Window extends JFrame{
 	
 	
 	public Grade1Window (Police_Station policeStation, Grade_1 grade1, DefaultListModel model) {
-		setLayout(new GridLayout(7,2));
+		setLayout(new GridLayout(8,2));
+		lgrade = new JLabel("Grade: ");
 		lname = new JLabel("Name: ");
 		lsurname = new JLabel("Surname: ");
 		lgender = new JLabel("Gender: ");
@@ -49,22 +52,27 @@ public class Grade1Window extends JFrame{
 		tsurname = new JTextField(20);
 		tgender = new JTextField(15);
 		comboSpecialty = new JComboBox();
+		comboSpecialty.addItem(Specialty.DRIVER);
+		comboSpecialty.addItem(Specialty.DOCTOR);
 		
 		
 		spinYears = new JSpinner(new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH));
 		spinYears.setEditor(new JSpinner.DateEditor(spinYears,"dd/MM/yyyy"));
 		
 		tassesstment = new JTextField(100);
+		tgrade = new JTextField(1);
 		
 		create = new JButton("Create");
 		cancel = new JButton("Cancel");
 		
+		
 		if (grade1 != null) {
 			create.setText("Store");
+			tgrade.setText(String.valueOf(grade1.getGrade()));
 			tname.setText(grade1.getName());
 			tsurname.setText(grade1.getSurname());
 			tgender.setText(grade1.getGender());
-			//tassesstment.setText(grade1.getAssessment());
+			tassesstment.setText(String.valueOf(grade1.getAssessment()));
 			spinYears.setValue(grade1.getWorkingYears());
 			comboSpecialty.setSelectedItem(grade1.getSpecialty());
 		}
@@ -87,23 +95,24 @@ public class Grade1Window extends JFrame{
 				} else {
 					New = new Grade_1();
 				}
-				
+				New.setGrade(Integer.valueOf(tgrade.getText()));
 				New.setName(tname.getText());
 				New.setSurname(tsurname.getText());
 				New.setGender(tgender.getText());
-				//New.setAssessment(tassessment.getText());
+				New.setAssessment(Integer.valueOf(tassesstment.getText()));
 				New.setWorkingYears((Date) spinYears.getValue());
 				New.setSpecialty((Specialty) comboSpecialty.getSelectedItem());
 				
 				if (grade1 == null) {
 					policeStation.getWorkers().add(New);
-					//model.addElement(New);
+					model.addElement(New);
 				}
 				
 				dispose();
 			}
 		});
-		
+		add(lgrade);
+		add(tgrade);
 		add(lname);
 		add(tname);
 		add(lsurname);
