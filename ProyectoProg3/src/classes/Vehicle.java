@@ -1,13 +1,14 @@
 package classes;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Vehicle {
 	private static int counter = 1;
 	private int licensePlate;
 	private Brand brand;
 	private Colour colour;
-	private ArrayList<Workers> polices;
+	private List<Workers> polices;
 
 	public Vehicle(int licensePlate, Brand brand, Colour colour, ArrayList<Workers> polices) {
 		super();
@@ -45,7 +46,7 @@ public class Vehicle {
 	}
 
 	public ArrayList<Workers> getPolices() {
-		return polices;
+		return (ArrayList<Workers>) polices;
 	}
 
 	public void setPolices(ArrayList<Workers> polices) {

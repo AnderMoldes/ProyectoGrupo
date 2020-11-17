@@ -2,14 +2,15 @@ package classes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
-public class PoliceStation implements Serializable{ //Cambio de nombre a PoliceStation
+public class PoliceStation implements Serializable{ 
 	private String name;
 	private int numWorkers;
 	private String address;
-	private ArrayList<Boss> boss;
-	private ArrayList<Workers> workers;
-	private ArrayList<Detained> detained;
+	private List<Boss> boss;
+	private List<Workers> workers;
+	private List<Detained> detained;
 
 	public PoliceStation(String name, int numWorkers, String address, ArrayList<Boss> boss, ArrayList<Workers> workers,
 			ArrayList<Detained> detained) {
@@ -57,7 +58,7 @@ public class PoliceStation implements Serializable{ //Cambio de nombre a PoliceS
 	}
 
 	public ArrayList<Boss> getBoss() {
-		return boss;
+		return (ArrayList<Boss>) boss;
 	}
 
 	public void setBoss(ArrayList<Boss> boss) {
@@ -65,7 +66,7 @@ public class PoliceStation implements Serializable{ //Cambio de nombre a PoliceS
 	}
 
 	public ArrayList<Workers> getWorkers() {
-		return workers;
+		return (ArrayList<Workers>) workers;
 	}
 
 	public void setWorkers(ArrayList<Workers> workers) {
@@ -73,7 +74,7 @@ public class PoliceStation implements Serializable{ //Cambio de nombre a PoliceS
 	}
 
 	public ArrayList<Detained> getDetained() {
-		return detained;
+		return (ArrayList<Detained>) detained;
 	}
 
 	public void setDetained(ArrayList<Detained> detained) {
