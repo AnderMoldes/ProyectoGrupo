@@ -1,44 +1,66 @@
 package windows;
 
-import java.awt.GridLayout;
+import java.awt.*;
+
 
 import javax.swing.*;
 
+import java.awt.event.*;
+
+import classes.Arrested;
 import classes.Country;
+import classes.Detained;
+import classes.PoliceStation;
+
 
 public class CreateArrestedWindow extends JFrame {
 	JLabel lName;
 	JTextField tName;
 	JLabel lLastName;
 	JTextField tLastName;
+	JLabel lage;
+	JSpinner age;
 	JLabel lGender;
 	JRadioButton radioMale;
 	JRadioButton radioFamale;
-	JLabel lNID;
-	JTextField tNID;
+	JLabel numberOfArrest;
+	JSpinner pnumberOfArrest;
+	JLabel ldescription;
+	JTextField tdescription;
 	JLabel lCountry;
 	JComboBox<Country> comboCountry;
-	JLabel lOther;
-	JTextField tOther;
-	JLabel Empty;
-	
-	
+	JLabel ljailrelease;
+	JTextField tjailrelease;
+	JButton create;
+	JButton cancel;
+	JPanel panelIzquierda;
+	JPanel panelDerecha;
+
 	ButtonGroup group = new ButtonGroup();
 
-	public CreateArrestedWindow() {
+	public CreateArrestedWindow(Arrested arrested, Detained detained, DefaultListModel model) {
+
+		setLayout(new GridLayout(1, 2));
 
 		lName = new JLabel("Name: ");
 		tName = new JTextField(20);
 		lLastName = new JLabel("Last Name: ");
 		tLastName = new JTextField(20);
+		lage = new JLabel("Age: ");
+		age = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
 		lGender = new JLabel("Gender: ");
 		radioMale = new JRadioButton("Male");
 		radioFamale = new JRadioButton("Famale");
-		lNID = new JLabel("ID/INID: ");
-		tNID = new JTextField(9);
+		numberOfArrest = new JLabel("Number of Arrest: ");
+		pnumberOfArrest = new JSpinner(new SpinnerNumberModel(0, 0, 100000, 1));
 		lCountry = new JLabel("Nationality: ");
 		comboCountry = new JComboBox<Country>();
-		//Hacer todo en un for
+		ldescription = new JLabel("Description: ");
+		tdescription = new JTextField(50);
+		ljailrelease = new JLabel("Jail release: ");
+		tjailrelease = new JTextField(30);
+
+		// Hacer todo en un for
 		comboCountry.addItem(Country.Austria);
 		comboCountry.addItem(Country.Belgium);
 		comboCountry.addItem(Country.Bulgaria);
@@ -67,32 +89,108 @@ public class CreateArrestedWindow extends JFrame {
 		comboCountry.addItem(Country.Slovenia);
 		comboCountry.addItem(Country.Spain);
 		comboCountry.addItem(Country.Sweden);
-		lOther = new JLabel("Other: ");
-		tOther = new JTextField(15);
-		Empty = new JLabel();
-		
+
 		group.add(radioMale);
 		group.add(radioFamale);
+
+		if (arrested == null) {
+			create = new JButton("Create");
+
+		} else {
+
+			create = new JButton("Save data");
+
+			tName.setText(arrested.getName());
+			tLastName.setText(arrested.getLastName());
+			age.setValue(arrested.getAge());
+
+			if (radioFamale.isSelected()) {
+				radioFamale.setActionCommand(arrested.getGender());
+			} else {
+				radioMale.setActionCommand(arrested.getGender());
+			}
+
+			pnumberOfArrest.setValue(arrested.getNumberOfArrest());
+			comboCountry.setSelectedItem(arrested.getCitizenship());
+			tdescription.setText(arrested.getDescription());
+			tjailrelease.setText(arrested.getJailRelease());
+		}
+
+		cancel = new JButton("Cancel");
 		
-		this.setLayout(new GridLayout(7, 2));
-		add(lName);
-		add(tName);
-		add(lLastName);
-		add(tLastName);
-		add(lGender);
-		add(radioMale);
-		add(Empty);
-		add(radioFamale);
-		add(lNID);
-		add(tNID);
-		add(lCountry);
-		add(comboCountry);
-		add(lOther);
-		add(tOther);
+		
+		
+
+		cancel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+
+		create.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Arrested creation;
+
+				if (arrested != null) {
+					creation = arrested;
+				} else {
+					creation = new Arrested();
+				}
+				creation.setName(tName.getText());
+				creation.setLastName(tLastName.getText());
+				creation.setAge((int) age.getValue());
+				creation.setNumberOfArrest((int) pnumberOfArrest.getValue());
+
+				if (radioFamale.isSelected()) {
+					creation.setGender(radioFamale.getActionCommand());
+				} else {
+					creation.setGender(radioMale.getActionCommand());
+				}
+
+				creation.setCitizenship((Country) comboCountry.getSelectedItem());
+				creation.setDescription(tdescription.getText());
+				creation.setJailRelease(tjailrelease.getText());
+
+				if (arrested == null) {
+					PoliceStation.getDetained().add(creation);
+					model.addElement(creation);
+				}
+
+				dispose();
+			}
+		});
+		
+
+		panelDerecha.setLayout(new GridLayout(8, 1));
+		panelDerecha.add(lName);
+		panelDerecha.add(lLastName);
+		panelDerecha.add(lGender);
+		panelDerecha.add(numberOfArrest);
+		panelDerecha.add(lCountry);
+		panelDerecha.add(ldescription);
+		panelDerecha.add(ljailrelease);
+		panelDerecha.add(create);
+
+		panelIzquierda.setLayout(new GridLayout(9, 1));
+		panelIzquierda.add(tName);
+		panelIzquierda.add(tLastName);
+		panelIzquierda.add(radioFamale);
+		panelIzquierda.add(radioMale);
+		panelIzquierda.add(pnumberOfArrest);
+		panelIzquierda.add(comboCountry);
+		panelIzquierda.add(tdescription);
+		panelIzquierda.add(tjailrelease);
+		panelIzquierda.add(cancel);
+
+		add(panelDerecha);
+		add(panelIzquierda);
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("Create new detained");
-		setSize(800, 250);
+		pack();
 		setVisible(true);
 	}
 

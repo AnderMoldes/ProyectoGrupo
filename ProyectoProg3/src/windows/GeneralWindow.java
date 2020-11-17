@@ -235,7 +235,7 @@ public class GeneralWindow extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new DetainedWindow();
+				new DetainedWindow(null, policeStation, modelDetained);
 				
 			}
 		});
