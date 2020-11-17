@@ -3,28 +3,35 @@ package classes;
 import java.util.Date;
 
 public class Arrested extends Detained {
-	public static int counter = 1;
-	private int numberOfArrest;
-	private String description;
-	private String jailRelease;
+	
+	protected int numberOfArrest;
+	protected String description;
+	protected String jailRelease;
+	
+
+	
 
 	public Arrested(String name, String lastName, int age, String gender, int numberOfArrest, String description,
 			String jailRelease) {
 		super(name, lastName, age, gender);
-		this.numberOfArrest = counter++;
+		this.numberOfArrest = numberOfArrest;
 		this.description = description;
 		this.jailRelease = jailRelease;
 	}
 
 	public Arrested() {
 		super();
-
+		this.numberOfArrest = 0;
 		this.description = "";
 		this.jailRelease = "";
 	}
 
 	public int getNumberOfArrest() {
 		return numberOfArrest;
+	}
+
+	public void setNumberOfArrest(int numberOfArrest) {
+		this.numberOfArrest = numberOfArrest;
 	}
 
 	public String getDescription() {
@@ -45,8 +52,11 @@ public class Arrested extends Detained {
 
 	@Override
 	public String toString() {
-		return "Arrested number: " + numberOfArrest + " Why is he/she arrested? " + description
-				+ " When is going to leave? " + jailRelease;
+		return "Arrested" + identificative + " = " + numberOfArrest + ", " + description + ", "
+				+ jailRelease + ", " + identificative + ", " + name + ", " + lastName
+				+ ", " + age + ", " + gender + "";
 	}
+
+	
 
 }

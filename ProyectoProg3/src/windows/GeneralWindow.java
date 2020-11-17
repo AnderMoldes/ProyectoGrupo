@@ -220,6 +220,17 @@ public class GeneralWindow extends JFrame {
 		    }
 		});
 		
+		
+		consultWorkers.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Workers workers=  (Workers) listWorkers.getSelectedValue();
+				new WorkersWindow(workers, policeStation, modelWorkers);
+				
+			}
+		});
+		
 		createDetained.addActionListener(new ActionListener() {
 			
 			@Override

@@ -6,7 +6,7 @@ import javax.swing.*;
 
 import classes.Country;
 
-public class CreateDetainedWindow extends JFrame {
+public class CreateArrestedWindow extends JFrame {
 	JLabel lName;
 	JTextField tName;
 	JLabel lLastName;
@@ -25,7 +25,7 @@ public class CreateDetainedWindow extends JFrame {
 	
 	ButtonGroup group = new ButtonGroup();
 
-	public CreateDetainedWindow() {
+	public CreateArrestedWindow() {
 
 		lName = new JLabel("Name: ");
 		tName = new JTextField(20);

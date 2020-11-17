@@ -3,25 +3,43 @@ package classes;
 import java.util.Date;
 
 public class Detained {
-	private String name;
-	private String lastName;
-	private int age;
-	private String gender;
 	
-	public Detained(String name, String lastName, int age, String gender) {
+	public static int container= 1;
+	
+	protected int identificative;
+	protected String name;
+	protected String lastName;
+	protected int age;
+	protected String gender;
+	
+	
+	
+	public Detained( String name, String lastName, int age, String gender) {
 		super();
+		this.identificative = container++;
 		this.name = name;
 		this.lastName = lastName;
 		this.age = age;
 		this.gender = gender;
 	}
-	
+
 	public Detained() {
 		super();
+		this.identificative= container++;
 		this.name = "";
 		this.lastName = "";
 		this.age = 0;
 		this.gender = "";
+	}
+	
+	
+
+	public static int getContainer() {
+		return container;
+	}
+
+	public int getIdentificative() {
+		return identificative;
 	}
 
 	public String getName() {
@@ -59,8 +77,11 @@ public class Detained {
 
 	@Override
 	public String toString() {
-		return "Detained name: " + name + " " + lastName + ".  Age: " + age + "]";
+		return "Detained " + identificative + " = " + name + ", " + lastName + ", "
+				+ age + ", " + gender + "";
 	}
+
+	
 	
 	
 	
