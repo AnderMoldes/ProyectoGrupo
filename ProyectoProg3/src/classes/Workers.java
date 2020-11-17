@@ -103,6 +103,7 @@ public class Workers implements Serializable{
 	public void setAssesment(String assesment) {
 		Assesment = assesment;
 	}
+	
 
 	@Override
 	public String toString() {
@@ -110,7 +111,6 @@ public class Workers implements Serializable{
 				+ gender + ", Specialty=" + Specialty + ", startWorkingIn=" + startWorkingIn + ", Assesment="
 				+ Assesment + "]";
 	}
-	
 	
 	
 	
