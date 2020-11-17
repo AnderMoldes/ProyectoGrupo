@@ -1,10 +1,11 @@
 package classes;
 
+import java.awt.Container;
 import java.io.Serializable;
 import java.util.Date;
 
 public class Workers implements Serializable{
-    public static int counter = 0;
+    public static int counter = 1;
 
     protected int code;
     protected int grade;
@@ -32,19 +33,24 @@ public class Workers implements Serializable{
 	
 	public Workers() {
 		super();
+		this.code= counter++;
 		this.grade = 0;
 		this.name = "";
 		this.surname = "";
 		this.gender = "";
 		this.Specialty = null;
-		this.startWorkingIn = null;
+		this.startWorkingIn = new Date();
 		this.Assesment = "";
 	}
 
 	
 
+	public static int getCounter() {
+		return counter;
+	}
+
 	public int getCode() {
-		return counter++;
+		return code;
 	}
 
 
@@ -107,7 +113,7 @@ public class Workers implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Workers [code=" + code + ", grade=" + grade + ", name=" + name + ", surname=" + surname + ", gender="
+		return "Workers" + code +  " (  , grade=" + grade + ", name=" + name + ", surname=" + surname + ", gender="
 				+ gender + ", Specialty=" + Specialty + ", startWorkingIn=" + startWorkingIn + ", Assesment="
 				+ Assesment + "]";
 	}

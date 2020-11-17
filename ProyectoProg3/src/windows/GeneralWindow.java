@@ -205,14 +205,15 @@ public class GeneralWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new WorkersWindow(policeStation, null, modelWorkers);
+				new WorkersWindow(null, policeStation, modelWorkers);
 			}});
+		
 		listWorkers.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent evt) {
 		        JList list = (JList)evt.getSource();
 		        if (evt.getClickCount() == 2) {
 		        	Workers workers = (Workers) listWorkers.getSelectedValue();
-		        	new WorkersWindow(policeStation, workers, modelWorkers);
+		        	new WorkersWindow(workers, policeStation, modelWorkers);
 					
 					
 		        }		    
