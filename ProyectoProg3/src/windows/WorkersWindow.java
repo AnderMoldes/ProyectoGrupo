@@ -1,26 +1,21 @@
 package windows;
 
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Calendar;
-import java.util.Date;
+import javax.swing.*;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import javax.swing.SpinnerDateModel;
-
-import classes.Grade;
 import classes.PoliceStation;
 import classes.Specialty;
 import classes.Workers;
 
-public class Grade1Window extends JFrame{
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Calendar;
+import java.util.Date;
+
+
+
+public class WorkersWindow extends JFrame{
+	
+	
 	JLabel lgrade;
 	JTextField tgrade;
 	JLabel lname;
@@ -39,7 +34,7 @@ public class Grade1Window extends JFrame{
 	JButton cancel;
 	
 	
-	public Grade1Window (PoliceStation policeStation, Grade grade1, DefaultListModel model) {
+	public WorkersWindow (PoliceStation policeStation, Workers workers, DefaultListModel model) {
 		setLayout(new GridLayout(8,2));
 		lgrade = new JLabel("Grade: ");
 		lname = new JLabel("Name: ");
@@ -67,15 +62,15 @@ public class Grade1Window extends JFrame{
 		cancel = new JButton("Cancel");
 		
 		
-		if (grade1 != null) {
+		if (workers != null) {
 			create.setText("Store");
-			tgrade.setText(String.valueOf(grade1.getGrade()));
-			tname.setText(grade1.getName());
-			tsurname.setText(grade1.getSurname());
-			tgender.setText(grade1.getGender());
-			tassesstment.setText(String.valueOf(grade1.getAssessment()));
-			spinYears.setValue(grade1.getWorkingYears());
-			comboSpecialty.setSelectedItem(grade1.getSpecialty());
+			tgrade.setText(String.valueOf(workers.getGrade()));
+			tname.setText(workers.getName());
+			tsurname.setText(workers.getSurname());
+			tgender.setText(workers.getGender());
+			tassesstment.setText(String.valueOf(workers.getAssesment()));
+			spinYears.setValue(workers.getStartWorkingIn());
+			comboSpecialty.setSelectedItem(workers.getSpecialty());
 		}
 		
 		
@@ -89,24 +84,24 @@ public class Grade1Window extends JFrame{
 		create.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Grade New;
+				Workers creation;
 				
-				if (grade1 != null) {
-					New = grade1;
+				if (workers != null) {
+					creation = workers;
 				} else {
-					New = new Grade();
+					creation = new Workers();
 				}
-				New.setGrade(Integer.valueOf(tgrade.getText()));
-				New.setName(tname.getText());
-				New.setSurname(tsurname.getText());
-				New.setGender(tgender.getText());
-				New.setAssessment(Integer.valueOf(tassesstment.getText()));
-				New.setWorkingYears((Date) spinYears.getValue());
-				New.setSpecialty((Specialty) comboSpecialty.getSelectedItem());
+				creation.setGrade(Integer.valueOf(tgrade.getText()));
+				creation.setName(tname.getText());
+				creation.setSurname(tsurname.getText());
+				creation.setGender(tgender.getText());
+				creation.setAssesment(tassesstment.getText());
+				creation.setStartWorkingIn((Date)spinYears.getValue());
+				creation.setSpecialty((Specialty) comboSpecialty.getSelectedItem());
 				
-				if (grade1 == null) {
-					policeStation.getWorkers().add(New);
-					model.addElement(New);
+				if (workers == null) {
+					policeStation.getWorkers().add(creation);
+					model.addElement(creation);
 				}
 				
 				dispose();

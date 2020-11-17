@@ -11,13 +11,13 @@ public class Workers implements Serializable{
     protected String name;
     protected String surname;
     protected String gender;
-    protected String Specialty;
+    protected Specialty Specialty;
     protected Date startWorkingIn;
     protected String Assesment;
     
 	
 	
-	public Workers(int code, int grade, String name, String surname, String gender, String specialty,
+	public Workers(int code, int grade, String name, String surname, String gender, Specialty specialty,
 			Date startWorkingIn, String assesment) {
 		super();
 		this.code = counter++;
@@ -36,7 +36,7 @@ public class Workers implements Serializable{
 		this.name = "";
 		this.surname = "";
 		this.gender = "";
-		this.Specialty = "";
+		this.Specialty = null;
 		this.startWorkingIn = null;
 		this.Assesment = "";
 	}
@@ -80,11 +80,11 @@ public class Workers implements Serializable{
 		this.gender = gender;
 	}
 
-	public String getSpecialty() {
+	public Specialty getSpecialty() {
 		return Specialty;
 	}
 
-	public void setSpecialty(String specialty) {
+	public void setSpecialty(Specialty specialty) {
 		Specialty = specialty;
 	}
 

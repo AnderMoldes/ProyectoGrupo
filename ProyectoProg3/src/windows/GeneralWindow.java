@@ -110,12 +110,7 @@ public class GeneralWindow extends JFrame {
 		ButtonPanel.add(createWorkers);
 		ButtonPanel.add(consultWorkers);
 
-		modelWorkers = new DefaultListModel();
-		listWorkers = new JList(modelWorkers);
-		JScrollPane scrollWorkers = new JScrollPane(listWorkers);
-
-		up.add(scrollWorkers);
-		up.add(ButtonPanel, BorderLayout.NORTH);
+		
 
 		JPanel ButtonPanel2 = new JPanel();
 
@@ -198,18 +193,27 @@ public class GeneralWindow extends JFrame {
 			}
 		});
 		
+		modelWorkers = new DefaultListModel();
+		listWorkers = new JList(modelWorkers);
+		JScrollPane scrollWorkers = new JScrollPane(listWorkers);
+
+		up.add(scrollWorkers);
+		up.add(ButtonPanel, BorderLayout.NORTH);
+		
+		
 		createWorkers.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new Grade1Window(policeStation, null, modelWorkers);
+				new WorkersWindow(policeStation, null, modelWorkers);
 			}});
 		listWorkers.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent evt) {
 		        JList list = (JList)evt.getSource();
 		        if (evt.getClickCount() == 2) {
 		        	Workers workers = (Workers) listWorkers.getSelectedValue();
-					new Grade1Window(policeStation, null, modelWorkers);	
+		        	new WorkersWindow(policeStation, workers, modelWorkers);
+					
 					
 		        }		    
 		    }
