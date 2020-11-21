@@ -10,7 +10,7 @@ public class PoliceStation implements Serializable{
 	private String address;
 	private List<Boss> boss;
 	private List<Workers> workers;
-	private static List<Detained> detained;
+	private List<Detained> detained;
 
 	public PoliceStation(String name, int numWorkers, String address, ArrayList<Boss> boss, ArrayList<Workers> workers,
 			ArrayList<Detained> detained) {
@@ -73,7 +73,7 @@ public class PoliceStation implements Serializable{
 		this.workers = new ArrayList<Workers>(workers);
 	}
 
-	public static ArrayList<Detained> getDetained() {
+	public ArrayList<Detained> getDetained() {
 		return (ArrayList<Detained>) detained;
 	}
 

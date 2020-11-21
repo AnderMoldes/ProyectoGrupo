@@ -7,6 +7,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
+import classes.Boss;
+import classes.Detained;
 import classes.PoliceStation;
 import classes.Workers;
 
@@ -29,14 +31,18 @@ public class GeneralWindow extends JFrame {
 	
 	JButton createWorkers;
 	JButton consultWorkers;
-	JButton createDetained;
 	JButton consultDetained;
 	JButton bClose;
 	JButton bManageRelations;
 	JButton bManageDetained;
 	JButton bManageWorkers;
+	JButton createBoss;
+	JButton createArrested;
+	JButton createFined;
 	JList listWorkers;
+	JList listBoss;
 	DefaultListModel modelWorkers;
+	DefaultListModel modelBoss;
 	JList listDetained;
 	DefaultListModel modelDetained;
 	
@@ -104,26 +110,69 @@ public class GeneralWindow extends JFrame {
 
 		JPanel ButtonPanel = new JPanel();
 
-		createWorkers = new JButton("Create Worker");
+		createWorkers = new JButton("Create Normal Worker");
+		createBoss = new JButton("Create a Boss");
 		consultWorkers = new JButton("Consult Workers");
 
 		ButtonPanel.add(createWorkers);
 		ButtonPanel.add(consultWorkers);
+		ButtonPanel.add(createBoss);
 
 		
 
 		JPanel ButtonPanel2 = new JPanel();
 
-		JButton createDetained = new JButton("Create Detained");
-		JButton consultDetained = new JButton("Consult Detained");
+		createArrested = new JButton("Create Arrested");
+		createFined = new JButton("Create Fined");
+		consultDetained = new JButton("Consult Detained");
 
-		ButtonPanel2.add(createDetained);
+		ButtonPanel2.add(createArrested);
+		ButtonPanel2.add(createFined);
 		ButtonPanel2.add(consultDetained);
 
 		modelDetained = new DefaultListModel();
 		listDetained = new JList(modelDetained);
 		JScrollPane scrollDetained = new JScrollPane(listDetained);
+		
+		createArrested.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new CreateArrestedWindow(null, policeStation, modelDetained);
+			}});
+		
+		listDetained.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		        JList list = (JList)evt.getSource();
+		        if (evt.getClickCount() == 2) {
+		        	Detained arrested = (Detained) listDetained.getSelectedValue();
+		        	new CreateArrestedWindow(null, policeStation, modelDetained);
+					
+					
+		        }		    
+		    }
+		});
+		createFined.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new FainedWindow(null, policeStation, modelDetained);
+			}});
+		
+		listDetained.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		        JList list = (JList)evt.getSource();
+		        if (evt.getClickCount() == 2) {
+		        	Detained fined = (Detained) listDetained.getSelectedValue();
+		        	new FainedWindow(null, policeStation, modelDetained);
+					
+					
+		        }		    
+		    }
+		});
+		
+		
+		
 		center.add(scrollDetained);
 		center.add(ButtonPanel2, BorderLayout.NORTH);
 
@@ -136,6 +185,7 @@ public class GeneralWindow extends JFrame {
 		JPanel DOWN = new JPanel();
 
 		bClose = new JButton("Close Window");
+		
 		bManageRelations = new JButton("Manage Relations");
 		bManageWorkers= new JButton("Manage Workers");
 		bManageDetained = new JButton("Manage Detained");
@@ -144,6 +194,7 @@ public class GeneralWindow extends JFrame {
 		DOWN.add(bManageRelations, BorderLayout.CENTER);
 		DOWN.add(bManageWorkers, BorderLayout.CENTER);
 		DOWN.add(bManageDetained, BorderLayout.CENTER);
+		
 		
 
 		JPanel MOREDOWN = new JPanel();
@@ -207,11 +258,11 @@ public class GeneralWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				new WorkersWindow(null, policeStation, modelWorkers);
 			}});
-		
+		//Error al modificar los workers normales
 		listWorkers.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent evt) {
 		        JList list = (JList)evt.getSource();
-		        if (evt.getClickCount() == 2) {
+		        if (evt.getClickCount() == 1) {
 		        	Workers workers = (Workers) listWorkers.getSelectedValue();
 		        	new WorkersWindow(workers, policeStation, modelWorkers);
 					
@@ -220,25 +271,32 @@ public class GeneralWindow extends JFrame {
 		    }
 		});
 		
+		listBoss = new JList(modelWorkers);
+		JScrollPane scrollBoss = new JScrollPane(listBoss);
+
+		up.add(scrollBoss);
+		up.add(ButtonPanel, BorderLayout.NORTH);
 		
-		consultWorkers.addActionListener(new ActionListener() {
-			
+		createBoss.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Workers workers=  (Workers) listWorkers.getSelectedValue();
-				new WorkersWindow(workers, policeStation, modelWorkers);
-				
-			}
+				new BossWindow(null, policeStation, modelWorkers);
+			}});
+		
+		listBoss.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		        JList list = (JList)evt.getSource();
+		        if (evt.getClickCount() == 2) {
+		        	Boss boss = (Boss) listBoss.getSelectedValue();
+		        	new BossWindow(boss, policeStation, modelWorkers);
+					
+					
+		        }		    
+		    }
 		});
 		
-		createDetained.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new DetainedWindow(null, policeStation, modelDetained);
-				
-			}
-		});
+		
 		
 		
 		

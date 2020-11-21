@@ -3,6 +3,7 @@ package classes;
 import java.util.Date;
 
 public class Boss extends Workers{
+	public static int counter = 1;
 	private int codeBoss;
 	private String function;
 	
@@ -10,15 +11,21 @@ public class Boss extends Workers{
 	public Boss(int code, int grade, String name, String surname, String gender, classes.Specialty specialty,
 			Date startWorkingIn, String assesment, int codeBoss, String function) {
 		super(code, grade, name, surname, gender, specialty, startWorkingIn, assesment);
-		this.codeBoss = codeBoss;
+		this.codeBoss = counter++;
 		this.function = function;
 	}
 
 	public Boss() {
 		super();
-		this.codeBoss = 0;
+		this.codeBoss = counter++;
 		this.function = "";
 	}
+	
+
+	public static int getCounter() {
+		return counter;
+	}
+
 
 	public int getCodeBoss() {
 		return codeBoss;
@@ -38,9 +45,9 @@ public class Boss extends Workers{
 
 	@Override
 	public String toString() {
-		return "Boss [codeBoss=" + codeBoss + ", function=" + function + ", code=" + code + ", grade=" + grade
-				+ ", name=" + name + ", surname=" + surname + ", gender=" + gender + ", Specialty=" + Specialty
-				+ ", startWorkingIn=" + startWorkingIn + ", Assesment=" + Assesment + "]";
+		return "Code of the Worker: " + code+ ". Function: Boss. Code of the boss: "+ codeBoss + 
+				". Name: " + name + " " + surname + "Gender: " + gender + " Specialty: " + Specialty
+				+ "Start Working: " + startWorkingIn + ". Assessment: " + Assesment;
 	}
 
 	

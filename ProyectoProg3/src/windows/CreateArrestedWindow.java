@@ -38,10 +38,13 @@ public class CreateArrestedWindow extends JFrame {
 
 	ButtonGroup group = new ButtonGroup();
 
-	public CreateArrestedWindow(Arrested arrested, Detained detained, DefaultListModel model) {
+	public CreateArrestedWindow(Arrested arrested, PoliceStation policeStation, DefaultListModel model) {
 
 		setLayout(new GridLayout(1, 2));
 
+		panelDerecha.setLayout(new GridLayout(8, 1));
+		panelIzquierda.setLayout(new GridLayout(9, 1));
+		
 		lName = new JLabel("Name: ");
 		tName = new JTextField(20);
 		lLastName = new JLabel("Last Name: ");
@@ -118,8 +121,6 @@ public class CreateArrestedWindow extends JFrame {
 
 		cancel = new JButton("Cancel");
 		
-		
-		
 
 		cancel.addActionListener(new ActionListener() {
 			@Override
@@ -155,7 +156,7 @@ public class CreateArrestedWindow extends JFrame {
 				creation.setJailRelease(tjailrelease.getText());
 
 				if (arrested == null) {
-					PoliceStation.getDetained().add(creation);
+					policeStation.getDetained().add(creation);
 					model.addElement(creation);
 				}
 
@@ -164,7 +165,6 @@ public class CreateArrestedWindow extends JFrame {
 		});
 		
 
-		panelDerecha.setLayout(new GridLayout(8, 1));
 		panelDerecha.add(lName);
 		panelDerecha.add(lLastName);
 		panelDerecha.add(lGender);
@@ -174,7 +174,7 @@ public class CreateArrestedWindow extends JFrame {
 		panelDerecha.add(ljailrelease);
 		panelDerecha.add(create);
 
-		panelIzquierda.setLayout(new GridLayout(9, 1));
+		
 		panelIzquierda.add(tName);
 		panelIzquierda.add(tLastName);
 		panelIzquierda.add(radioFamale);

@@ -109,14 +109,16 @@ public class Workers implements Serializable{
 	public void setAssesment(String assesment) {
 		Assesment = assesment;
 	}
-	
 
 	@Override
 	public String toString() {
-		return "Workers" + code +  " (  , grade=" + grade + ", name=" + name + ", surname=" + surname + ", gender="
-				+ gender + ", Specialty=" + Specialty + ", startWorkingIn=" + startWorkingIn + ", Assesment="
-				+ Assesment + "]";
+		return "Code of the worker: " + code + ". Function: Worker. Grade: " + grade + ". Name: " + name + " " + surname + "Gender: "
+				+ gender + ". Specialty: " + Specialty + ". He/She start workin in " + startWorkingIn + ". Assesment: "
+				+ Assesment;
 	}
+	
+
+	
 	
 	
 	

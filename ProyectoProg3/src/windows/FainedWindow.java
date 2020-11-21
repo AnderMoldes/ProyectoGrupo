@@ -4,7 +4,10 @@ import java.awt.GridLayout;
 
 import javax.swing.*;
 
+import classes.Arrested;
 import classes.Country;
+import classes.Fined;
+import classes.PoliceStation;
 
 public class FainedWindow extends JFrame {
 	JLabel lName;
@@ -25,7 +28,7 @@ public class FainedWindow extends JFrame {
 	
 	ButtonGroup group = new ButtonGroup();
 
-	public FainedWindow() {
+	public FainedWindow(Fined fined, PoliceStation policeStation, DefaultListModel model) {
 
 		lName = new JLabel("Name: ");
 		tName = new JTextField(20);
