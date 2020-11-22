@@ -24,8 +24,7 @@ public class FainedWindow extends JFrame {
 	JLabel lOther;
 	JTextField tOther;
 	JLabel Empty;
-	
-	
+
 	ButtonGroup group = new ButtonGroup();
 
 	public FainedWindow(Fined fined, PoliceStation policeStation, DefaultListModel model) {
@@ -41,41 +40,16 @@ public class FainedWindow extends JFrame {
 		tNID = new JTextField(9);
 		lCountry = new JLabel("Nationality: ");
 		comboCountry = new JComboBox<Country>();
-		comboCountry.addItem(Country.Austria);
-		comboCountry.addItem(Country.Belgium);
-		comboCountry.addItem(Country.Bulgaria);
-		comboCountry.addItem(Country.Croatia);
-		comboCountry.addItem(Country.Cyprus);
-		comboCountry.addItem(Country.Czechia);
-		comboCountry.addItem(Country.Denmark);
-		comboCountry.addItem(Country.England);
-		comboCountry.addItem(Country.Estonia);
-		comboCountry.addItem(Country.Finland);
-		comboCountry.addItem(Country.France);
-		comboCountry.addItem(Country.Germany);
-		comboCountry.addItem(Country.Greece);
-		comboCountry.addItem(Country.Hungary);
-		comboCountry.addItem(Country.Ireland);
-		comboCountry.addItem(Country.Italy);
-		comboCountry.addItem(Country.Latvia);
-		comboCountry.addItem(Country.Lithuania);
-		comboCountry.addItem(Country.Luxembourg);
-		comboCountry.addItem(Country.Malta);
-		comboCountry.addItem(Country.Netherlands);
-		comboCountry.addItem(Country.Poland);
-		comboCountry.addItem(Country.Portugal);
-		comboCountry.addItem(Country.Romania);
-		comboCountry.addItem(Country.Slovakia);
-		comboCountry.addItem(Country.Slovenia);
-		comboCountry.addItem(Country.Spain);
-		comboCountry.addItem(Country.Sweden);
+		for (int i = 0; i < Country.values().length; i++) {
+			comboCountry.addItem(Country.values()[i]);
+		}
 		lOther = new JLabel("Other: ");
 		tOther = new JTextField(15);
 		Empty = new JLabel();
-		
+
 		group.add(radioMale);
 		group.add(radioFamale);
-		
+
 		this.setLayout(new GridLayout(7, 2));
 		add(lName);
 		add(tName);
