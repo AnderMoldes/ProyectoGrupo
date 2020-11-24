@@ -138,7 +138,7 @@ public class GeneralWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new CreateArrestedWindow(null, policeStation, modelDetained);
+				new ArrestedWindow(null, policeStation, modelDetained);
 			}});
 		
 		listDetained.addMouseListener(new MouseAdapter() {
@@ -146,7 +146,7 @@ public class GeneralWindow extends JFrame {
 		        JList list = (JList)evt.getSource();
 		        if (evt.getClickCount() == 2) {
 		        	Detained arrested = (Detained) listDetained.getSelectedValue();
-		        	new CreateArrestedWindow(null, policeStation, modelDetained);
+		        	new ArrestedWindow(null, policeStation, modelDetained);
 					
 					
 		        }		    

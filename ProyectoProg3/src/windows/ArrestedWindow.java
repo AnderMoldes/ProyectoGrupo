@@ -11,7 +11,7 @@ import classes.Country;
 import classes.Detained;
 import classes.PoliceStation;
 
-public class CreateArrestedWindow extends JFrame {
+public class ArrestedWindow extends JFrame {
 	JLabel lName;
 	JTextField tName;
 	JLabel lLastName;
@@ -36,7 +36,7 @@ public class CreateArrestedWindow extends JFrame {
 
 	ButtonGroup group = new ButtonGroup();
 
-	public CreateArrestedWindow(Arrested arrested, PoliceStation policeStation, DefaultListModel model) {
+	public ArrestedWindow(Arrested arrested, PoliceStation policeStation, DefaultListModel model) {
 
 		setLayout(new GridLayout(1, 2));
 
