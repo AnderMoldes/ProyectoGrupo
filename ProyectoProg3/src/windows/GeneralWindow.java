@@ -7,8 +7,10 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
+import classes.Arrested;
 import classes.Boss;
 import classes.Detained;
+import classes.Fined;
 import classes.PoliceStation;
 import classes.Workers;
 
@@ -39,6 +41,7 @@ public class GeneralWindow extends JFrame {
 	JButton createBoss;
 	JButton createArrested;
 	JButton createFined;
+	JButton delete;
 	JList listWorkers;
 	JList listBoss;
 	DefaultListModel modelWorkers;
@@ -134,43 +137,6 @@ public class GeneralWindow extends JFrame {
 		listDetained = new JList(modelDetained);
 		JScrollPane scrollDetained = new JScrollPane(listDetained);
 		
-		createArrested.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new ArrestedWindow(null, policeStation, modelDetained);
-			}});
-		
-		listDetained.addMouseListener(new MouseAdapter() {
-		    public void mouseClicked(MouseEvent evt) {
-		        JList list = (JList)evt.getSource();
-		        if (evt.getClickCount() == 2) {
-		        	Detained arrested = (Detained) listDetained.getSelectedValue();
-		        	new ArrestedWindow(null, policeStation, modelDetained);
-					
-					
-		        }		    
-		    }
-		});
-		createFined.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new FainedWindow(null, policeStation, modelDetained);
-			}});
-		
-		listDetained.addMouseListener(new MouseAdapter() {
-		    public void mouseClicked(MouseEvent evt) {
-		        JList list = (JList)evt.getSource();
-		        if (evt.getClickCount() == 2) {
-		        	Detained fined = (Detained) listDetained.getSelectedValue();
-		        	new FainedWindow(null, policeStation, modelDetained);
-					
-					
-		        }		    
-		    }
-		});
-		
 		
 		
 		center.add(scrollDetained);
@@ -186,6 +152,7 @@ public class GeneralWindow extends JFrame {
 
 		bClose = new JButton("Close Window");
 		
+		delete = new JButton("Delete");
 		bManageRelations = new JButton("Manage Relations");
 		bManageWorkers= new JButton("Manage Workers");
 		bManageDetained = new JButton("Manage Detained");
@@ -194,6 +161,7 @@ public class GeneralWindow extends JFrame {
 		DOWN.add(bManageRelations, BorderLayout.CENTER);
 		DOWN.add(bManageWorkers, BorderLayout.CENTER);
 		DOWN.add(bManageDetained, BorderLayout.CENTER);
+		DOWN.add(delete,BorderLayout.CENTER);
 		
 		
 
@@ -247,6 +215,7 @@ public class GeneralWindow extends JFrame {
 		modelWorkers = new DefaultListModel();
 		listWorkers = new JList(modelWorkers);
 		JScrollPane scrollWorkers = new JScrollPane(listWorkers);
+		
 
 		up.add(scrollWorkers);
 		up.add(ButtonPanel, BorderLayout.NORTH);
@@ -258,44 +227,91 @@ public class GeneralWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				new WorkersWindow(null, policeStation, modelWorkers);
 			}});
-		//Error al modificar los workers normales
 		listWorkers.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent evt) {
 		        JList list = (JList)evt.getSource();
-		        if (evt.getClickCount() == 1) {
-		        	Workers workers = (Workers) listWorkers.getSelectedValue();
-		        	new WorkersWindow(workers, policeStation, modelWorkers);
-					
-					
-		        }		    
-		    }
-		});
-		
-		listBoss = new JList(modelWorkers);
-		JScrollPane scrollBoss = new JScrollPane(listBoss);
-
-		up.add(scrollBoss);
-		up.add(ButtonPanel, BorderLayout.NORTH);
-		
+		        if (evt.getClickCount() == 2) {
+		        	Workers worker = (Workers) listWorkers.getSelectedValue();
+		        	new WorkersWindow(worker, policeStation, modelWorkers);
+												
+			        }		    
+			    }
+			});
 		createBoss.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new BossWindow(null, policeStation, modelWorkers);
 			}});
-		
-		listBoss.addMouseListener(new MouseAdapter() {
+		//Error al modificar los workers normales
+		listWorkers.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent evt) {
 		        JList list = (JList)evt.getSource();
 		        if (evt.getClickCount() == 2) {
-		        	Boss boss = (Boss) listBoss.getSelectedValue();
+		        	Boss boss = (Boss) listWorkers.getSelectedValue();
 		        	new BossWindow(boss, policeStation, modelWorkers);
-					
+												
+			        }		    
+			    }
+			});
+		createArrested.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new ArrestedWindow(null,policeStation,modelDetained);
+			}
+		});
+		listDetained.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		        JList list = (JList)evt.getSource();
+		        if (evt.getClickCount() == 2) {
+		        	Detained arrested = (Detained) listDetained.getSelectedValue();  
+		        	new ArrestedWindow((Arrested) arrested, policeStation, modelDetained);
+		        	
 					
 		        }		    
 		    }
 		});
+		createFined.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new FainedWindow(null, policeStation, modelDetained);
+			}});
 		
+		listDetained.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		        JList list = (JList)evt.getSource();
+		        if (evt.getClickCount() == 2) {
+		        	Detained fined = (Detained) listDetained.getSelectedValue();
+		        	new FainedWindow((Fined) fined, policeStation, modelDetained);  
+					
+		        }		    
+		    }
+		});
+		delete.addActionListener(new ActionListener() {@Override
+		public void actionPerformed(ActionEvent e) {
+			int question = JOptionPane.showConfirmDialog(null, "Are you sure that you want to delete this?");
+			if (question == 0) {
+					Workers worker = (Workers) listWorkers.getSelectedValue();
+					Workers boss = (Boss) listWorkers.getSelectedValue();
+					Detained arrested = (Arrested) listDetained.getSelectedValue();
+					Detained fined = (Fined) listDetained.getSelectedValue();
+					
+					policeStation.getWorkers().remove(worker);
+					policeStation.getWorkers().remove(boss);
+					policeStation.getDetained().remove(arrested);
+					policeStation.getDetained().remove(fined);
+					
+					modelWorkers.removeElement(worker);
+					modelWorkers.removeElement(boss);
+					modelDetained.removeElement(arrested);
+					modelDetained.removeElement(fined);
+					
+				}
+				
+			}
+		});
 		
 		
 		

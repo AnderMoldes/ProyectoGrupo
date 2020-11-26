@@ -8,7 +8,6 @@ import java.awt.event.*;
 
 import classes.Arrested;
 import classes.Country;
-import classes.Detained;
 import classes.PoliceStation;
 
 public class ArrestedWindow extends JFrame {
@@ -31,17 +30,19 @@ public class ArrestedWindow extends JFrame {
 	JTextField tjailrelease;
 	JButton create;
 	JButton cancel;
-	JPanel panelIzquierda;
-	JPanel panelDerecha;
+	JPanel leftPanel;
+	JPanel rightPanel;
 
 	ButtonGroup group = new ButtonGroup();
 
 	public ArrestedWindow(Arrested arrested, PoliceStation policeStation, DefaultListModel model) {
 
 		setLayout(new GridLayout(1, 2));
-
-		panelDerecha.setLayout(new GridLayout(8, 1));
-		panelIzquierda.setLayout(new GridLayout(9, 1));
+		rightPanel = new JPanel();
+		leftPanel = new JPanel();
+		
+		rightPanel.setLayout(new GridLayout(8, 1));
+		leftPanel.setLayout(new GridLayout(9, 1));
 
 		lName = new JLabel("Name: ");
 		tName = new JTextField(20);
@@ -74,7 +75,6 @@ public class ArrestedWindow extends JFrame {
 		} else {
 
 			create = new JButton("Save data");
-
 			tName.setText(arrested.getName());
 			tLastName.setText(arrested.getLastName());
 			age.setValue(arrested.getAge());
@@ -84,7 +84,6 @@ public class ArrestedWindow extends JFrame {
 			} else {
 				radioMale.setActionCommand(arrested.getGender());
 			}
-
 			pnumberOfArrest.setValue(arrested.getNumberOfArrest());
 			comboCountry.setSelectedItem(arrested.getCitizenship());
 			tdescription.setText(arrested.getDescription());
@@ -135,27 +134,27 @@ public class ArrestedWindow extends JFrame {
 			}
 		});
 
-		panelDerecha.add(lName);
-		panelDerecha.add(lLastName);
-		panelDerecha.add(lGender);
-		panelDerecha.add(numberOfArrest);
-		panelDerecha.add(lCountry);
-		panelDerecha.add(ldescription);
-		panelDerecha.add(ljailrelease);
-		panelDerecha.add(create);
+		rightPanel.add(lName);
+		rightPanel.add(lLastName);
+		rightPanel.add(lGender);
+		rightPanel.add(numberOfArrest);
+		rightPanel.add(lCountry);
+		rightPanel.add(ldescription);
+		rightPanel.add(ljailrelease);
+		rightPanel.add(create);
 
-		panelIzquierda.add(tName);
-		panelIzquierda.add(tLastName);
-		panelIzquierda.add(radioFamale);
-		panelIzquierda.add(radioMale);
-		panelIzquierda.add(pnumberOfArrest);
-		panelIzquierda.add(comboCountry);
-		panelIzquierda.add(tdescription);
-		panelIzquierda.add(tjailrelease);
-		panelIzquierda.add(cancel);
+		leftPanel.add(tName);
+		leftPanel.add(tLastName);
+		leftPanel.add(radioFamale);
+		leftPanel.add(radioMale);
+		leftPanel.add(pnumberOfArrest);
+		leftPanel.add(comboCountry);
+		leftPanel.add(tdescription);
+		leftPanel.add(tjailrelease);
+		leftPanel.add(cancel);
 
-		add(panelDerecha);
-		add(panelIzquierda);
+		add(rightPanel);
+		add(leftPanel);
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("Create new detained");

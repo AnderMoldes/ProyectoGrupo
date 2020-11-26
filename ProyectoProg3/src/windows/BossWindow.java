@@ -20,6 +20,7 @@ import javax.swing.SpinnerNumberModel;
 
 import classes.PoliceStation;
 import classes.Specialty;
+import classes.Workers;
 import classes.Boss;
 
 public class BossWindow extends JFrame{
@@ -115,7 +116,7 @@ public class BossWindow extends JFrame{
 				//creation.setSpecialty((Specialty) comboSpecialty.getSelectedItem());
 
 				if (boss == null) {
-					policeStation.getBoss().add(creation);
+					policeStation.getWorkers().add(creation);
 					model.addElement(creation);
 				}
 
