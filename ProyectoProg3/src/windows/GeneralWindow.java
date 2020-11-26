@@ -129,12 +129,6 @@ public class GeneralWindow extends JFrame {
 		ButtonPanel2.add(createFined);
 		ButtonPanel2.add(consultDetained);
 
-		modelDetained = new DefaultListModel();
-		listDetained = new JList(modelDetained);
-		JScrollPane scrollDetained = new JScrollPane(listDetained);
-
-		center.add(scrollDetained);
-		center.add(ButtonPanel2, BorderLayout.NORTH);
 
 		JPanel UP = new JPanel();
 		UP.add(up);
@@ -209,24 +203,6 @@ public class GeneralWindow extends JFrame {
 		up.add(scrollWorkers);
 		up.add(ButtonPanel, BorderLayout.NORTH);
 
-		listWorkers.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent evt) {
-				JList list = (JList) evt.getSource();
-				if (evt.getClickCount() == 2) {
-					Workers workers = (Workers) listWorkers.getSelectedValue();
-
-					if (workers instanceof Boss) {
-						new BossWindow((Boss) workers, policeStation, modelWorkers);
-					} else {
-						new WorkersWindow(workers, policeStation, modelWorkers);
-					}
-				}
-			}
-		});
-
-		up.add(scrollWorkers);
-		up.add(ButtonPanel, BorderLayout.NORTH);
-
 		createWorkers.addActionListener(new ActionListener() {
 
 			@Override
@@ -256,6 +232,29 @@ public class GeneralWindow extends JFrame {
 				}
 			}
 		});
+		
+		listWorkers.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt) {
+				JList list = (JList) evt.getSource();
+				if (evt.getClickCount() == 2) {
+					Workers workers = (Workers) listWorkers.getSelectedValue();
+
+					if (workers instanceof Boss) {
+						new BossWindow((Boss) workers, policeStation, modelWorkers);
+					} else {
+						new WorkersWindow(workers, policeStation, modelWorkers);
+					}
+				}
+			}
+		});
+
+
+		modelDetained = new DefaultListModel();
+		listDetained = new JList(modelDetained);
+		JScrollPane scrollDetained = new JScrollPane(listDetained);
+
+		center.add(scrollDetained);
+		center.add(ButtonPanel2, BorderLayout.NORTH);
 
 		createArrested.addActionListener(new ActionListener() {
 
@@ -265,21 +264,7 @@ public class GeneralWindow extends JFrame {
 			}
 		});
 
-		listDetained.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent evt) {
-				JList list = (JList) evt.getSource();
-				if (evt.getClickCount() == 2) {
-					Detained detained = (Detained) listDetained.getSelectedValue();
-					 
-					if (detained instanceof Arrested) {
-						new ArrestedWindow((Arrested) detained, policeStation, modelDetained);
-					} else {
-						new FainedWindow((Fined)detained, policeStation, modelDetained);
-					}
-				}
-			}
-		});
-
+		
 		createFined.addActionListener(new ActionListener() {
 
 			@Override
@@ -302,6 +287,21 @@ public class GeneralWindow extends JFrame {
 				
 			}
 		});
+		listDetained.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt) {
+				JList list = (JList) evt.getSource();
+				if (evt.getClickCount() == 2) {
+					Detained detained = (Detained) listDetained.getSelectedValue();
+					 
+					if (detained instanceof Arrested) {
+						new ArrestedWindow((Arrested) detained, policeStation, modelDetained);
+					} else {
+						new FainedWindow((Fined)detained, policeStation, modelDetained);
+					}
+				}
+			}
+		});
+
 
 		delete.addActionListener(new ActionListener() {
 			@Override
