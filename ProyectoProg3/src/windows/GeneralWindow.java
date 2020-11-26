@@ -281,12 +281,13 @@ public class GeneralWindow extends JFrame {
 
 				if (detained instanceof Arrested) {
 					new ArrestedWindow((Arrested) detained, policeStation, modelDetained);
-				} else {
+				} else if (detained instanceof Fined){
 					new FainedWindow((Fined)detained, policeStation, modelDetained);
 				}
 				
 			}
 		});
+		
 		listDetained.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
 				JList list = (JList) evt.getSource();
@@ -295,12 +296,13 @@ public class GeneralWindow extends JFrame {
 					 
 					if (detained instanceof Arrested) {
 						new ArrestedWindow((Arrested) detained, policeStation, modelDetained);
-					} else {
+					} else if (detained instanceof Fined){
 						new FainedWindow((Fined)detained, policeStation, modelDetained);
 					}
 				}
 			}
 		});
+		
 
 
 		delete.addActionListener(new ActionListener() {

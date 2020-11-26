@@ -85,7 +85,7 @@ public class FainedWindow extends JFrame {
 			
 			if (radioFamale.isSelected()) {
 				radioFamale.setActionCommand(fined.getGender());
-			} else {
+			} else if(radioMale.isSelected()){
 				radioMale.setActionCommand(fined.getGender());
 			}
 			tNID.setValue(fined.getNumber());
@@ -121,7 +121,7 @@ public class FainedWindow extends JFrame {
 
 				if (radioFamale.isSelected()) {
 					creation.setGender(radioFamale.getActionCommand());
-				} else {
+				} else if(radioMale.isSelected()) {
 					creation.setGender(radioMale.getActionCommand());
 				}
 

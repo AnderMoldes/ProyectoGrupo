@@ -81,7 +81,7 @@ public class ArrestedWindow extends JFrame {
 
 			if (radioFamale.isSelected()) {
 				radioFamale.setActionCommand(arrested.getGender());
-			} else {
+			} else if (radioMale.isSelected()){
 				radioMale.setActionCommand(arrested.getGender());
 			}
 			pnumberOfArrest.setValue(arrested.getNumberOfArrest());
@@ -117,7 +117,7 @@ public class ArrestedWindow extends JFrame {
 
 				if (radioFamale.isSelected()) {
 					creation.setGender(radioFamale.getActionCommand());
-				} else {
+				} else if(radioMale.isSelected()) {
 					creation.setGender(radioMale.getActionCommand());
 				}
 
