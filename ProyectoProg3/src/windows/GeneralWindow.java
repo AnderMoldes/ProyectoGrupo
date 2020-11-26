@@ -105,6 +105,7 @@ public class GeneralWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new VehicleWindow();
+				dispose();
 				
 			}
 		});
@@ -220,13 +221,6 @@ public class GeneralWindow extends JFrame {
 		up.add(scrollWorkers);
 		up.add(ButtonPanel, BorderLayout.NORTH);
 		
-		
-		createWorkers.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new WorkersWindow(null, policeStation, modelWorkers);
-			}});
 		listWorkers.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent evt) {
 		        JList list = (JList)evt.getSource();
@@ -237,23 +231,40 @@ public class GeneralWindow extends JFrame {
 			        }		    
 			    }
 			});
+		
+		up.add(scrollWorkers);
+		up.add(ButtonPanel, BorderLayout.NORTH);
+		
+		createWorkers.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new WorkersWindow(null, policeStation, modelWorkers);
+			}});
+		
+		
 		createBoss.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new BossWindow(null, policeStation, modelWorkers);
 			}});
+		
 		//Error al modificar los workers normales
-		listWorkers.addMouseListener(new MouseAdapter() {
-		    public void mouseClicked(MouseEvent evt) {
-		        JList list = (JList)evt.getSource();
-		        if (evt.getClickCount() == 2) {
-		        	Boss boss = (Boss) listWorkers.getSelectedValue();
-		        	new BossWindow(boss, policeStation, modelWorkers);
-												
-			        }		    
-			    }
-			});
+		
+		
+		
+		bManageWorkers.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Workers workers = (Workers) listWorkers.getSelectedValue();
+				Boss boss = (Boss) listWorkers.getSelectedValue();
+				new BossWindow(boss, policeStation, modelWorkers);
+				new BossWindow(boss, policeStation, modelWorkers);
+			}
+		});
+		
 		createArrested.addActionListener(new ActionListener() {
 			
 			@Override
@@ -261,6 +272,7 @@ public class GeneralWindow extends JFrame {
 				new ArrestedWindow(null,policeStation,modelDetained);
 			}
 		});
+		
 		listDetained.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent evt) {
 		        JList list = (JList)evt.getSource();
@@ -272,6 +284,7 @@ public class GeneralWindow extends JFrame {
 		        }		    
 		    }
 		});
+		
 		createFined.addActionListener(new ActionListener() {
 
 			@Override
@@ -279,16 +292,7 @@ public class GeneralWindow extends JFrame {
 				new FainedWindow(null, policeStation, modelDetained);
 			}});
 		
-		listDetained.addMouseListener(new MouseAdapter() {
-		    public void mouseClicked(MouseEvent evt) {
-		        JList list = (JList)evt.getSource();
-		        if (evt.getClickCount() == 2) {
-		        	Detained fined = (Detained) listDetained.getSelectedValue();
-		        	new FainedWindow((Fined) fined, policeStation, modelDetained);  
-					
-		        }		    
-		    }
-		});
+		
 		delete.addActionListener(new ActionListener() {@Override
 		public void actionPerformed(ActionEvent e) {
 			int question = JOptionPane.showConfirmDialog(null, "Are you sure that you want to delete this?");

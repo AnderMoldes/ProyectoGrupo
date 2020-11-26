@@ -59,6 +59,7 @@ public class BossWindow extends JFrame{
 		tassesstment = new JTextField(100);
 		
 		//Añadir especialidades especiales
+		
 		comboSpecialty = new JComboBox<Specialty>();
 		comboSpecialty.addItem(Specialty.DRIVER);
 
