@@ -46,7 +46,7 @@ public class FainedWindow extends JFrame {
 		leftPanel.setLayout(new GridLayout(9, 1));
 
 		
-		create= new JButton("Create");
+		
 		cancel= new JButton("Cancel");
 		lName = new JLabel("Name: ");
 		tName = new JTextField(20);
@@ -72,6 +72,7 @@ public class FainedWindow extends JFrame {
 
 		group.add(radioMale);
 		group.add(radioFamale);
+		
 		if (fined == null) {
 			create = new JButton("Create");
 

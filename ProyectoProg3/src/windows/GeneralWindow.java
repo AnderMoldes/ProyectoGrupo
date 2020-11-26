@@ -269,9 +269,13 @@ public class GeneralWindow extends JFrame {
 			public void mouseClicked(MouseEvent evt) {
 				JList list = (JList) evt.getSource();
 				if (evt.getClickCount() == 2) {
-					Detained arrested = (Detained) listDetained.getSelectedValue();
-					new ArrestedWindow((Arrested) arrested, policeStation, modelDetained);
-
+					Detained detained = (Detained) listDetained.getSelectedValue();
+					 
+					if (detained instanceof Arrested) {
+						new ArrestedWindow((Arrested) detained, policeStation, modelDetained);
+					} else {
+						new FainedWindow((Fined)detained, policeStation, modelDetained);
+					}
 				}
 			}
 		});
@@ -281,6 +285,21 @@ public class GeneralWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new FainedWindow(null, policeStation, modelDetained);
+			}
+		});
+		
+		consultDetained.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Detained detained = (Detained) listDetained.getSelectedValue();
+
+				if (detained instanceof Arrested) {
+					new ArrestedWindow((Arrested) detained, policeStation, modelDetained);
+				} else {
+					new FainedWindow((Fined)detained, policeStation, modelDetained);
+				}
+				
 			}
 		});
 
