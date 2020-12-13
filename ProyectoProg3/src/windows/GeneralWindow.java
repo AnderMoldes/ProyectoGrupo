@@ -1,6 +1,8 @@
 package windows;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
 
 import javax.swing.text.BadLocationException;
@@ -42,12 +44,12 @@ public class GeneralWindow extends JFrame {
 	JButton createArrested;
 	JButton createFined;
 	JButton delete;
-	JList listWorkers;
-	JList listBoss;
-	DefaultListModel modelWorkers;
-	DefaultListModel modelBoss;
-	JList listDetained;
-	DefaultListModel modelDetained;
+//	JList listWorkers;
+//	JList listBoss;
+//	DefaultListModel modelWorkers;
+//	DefaultListModel modelBoss;
+//	JList listDetained;
+//	DefaultListModel modelDetained;
 
 	JLabel lbar;
 	JProgressBar progress;
@@ -156,7 +158,7 @@ public class GeneralWindow extends JFrame {
 		progress = new JProgressBar(0, 100);
 		progress.setVisible(false);
 
-		MOREDOWN.add(bClose, BorderLayout.CENTER);
+		MOREDOWN.add(bClose);
 		MOREDOWN.add(lbar);
 		MOREDOWN.add(progress);
 
@@ -196,9 +198,24 @@ public class GeneralWindow extends JFrame {
 			}
 		});
 
-		modelWorkers = new DefaultListModel();
-		listWorkers = new JList(modelWorkers);
-		JScrollPane scrollWorkers = new JScrollPane(listWorkers);
+//		modelWorkers = new DefaultListModel();
+//		listWorkers = new JList(modelWorkers);
+//		JScrollPane scrollWorkers = new JScrollPane(listWorkers);
+		
+		DefaultTableModel modelWorkers= new DefaultTableModel();
+		modelWorkers.addColumn("code");
+		modelWorkers.addColumn("grade");
+		modelWorkers.addColumn("name");
+		modelWorkers.addColumn("surname");
+		modelWorkers.addColumn("gender");
+		modelWorkers.addColumn("Specialty");
+		modelWorkers.addColumn("startWorkingIn");
+		modelWorkers.addColumn("Assesment");
+		
+		
+		
+		JTable table = new JTable(modelWorkers);
+		JScrollPane scrollWorkers= new JScrollPane(table);
 
 		up.add(scrollWorkers);
 		up.add(ButtonPanel, BorderLayout.NORTH);
@@ -207,7 +224,7 @@ public class GeneralWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new WorkersWindow(null, policeStation, modelWorkers);
+				new WorkersWindow(null, policeStation, null); //arreglar debido a la tabla
 			}
 		});
 
@@ -215,120 +232,135 @@ public class GeneralWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new BossWindow(null, policeStation, modelWorkers);
+				new BossWindow(null, policeStation, null); //arreglar debido a la tabla
 			}
 		});
 
-		consultWorkers.addActionListener(new ActionListener() {
+//		consultWorkers.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				Workers workers = (Workers) listWorkers.getSelectedValue();
+//
+//				if (workers instanceof Boss) {
+//					new BossWindow((Boss) workers, policeStation, modelWorkers);
+//				} else {
+//					new WorkersWindow(workers, policeStation, modelWorkers);
+//				}
+//			}
+//		});
+//		
+//		listWorkers.addMouseListener(new MouseAdapter() {
+//			public void mouseClicked(MouseEvent evt) {
+//				JList list = (JList) evt.getSource();
+//				if (evt.getClickCount() == 2) {
+//					Workers workers = (Workers) listWorkers.getSelectedValue();
+//
+//					if (workers instanceof Boss) {
+//						new BossWindow((Boss) workers, policeStation, modelWorkers);
+//					} else {
+//						new WorkersWindow(workers, policeStation, modelWorkers);
+//					}
+//				}
+//			}
+//		});
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Workers workers = (Workers) listWorkers.getSelectedValue();
 
-				if (workers instanceof Boss) {
-					new BossWindow((Boss) workers, policeStation, modelWorkers);
-				} else {
-					new WorkersWindow(workers, policeStation, modelWorkers);
-				}
-			}
-		});
+//		modelDetained = new DefaultListModel();
+//		listDetained = new JList(modelDetained);
+//		JScrollPane scrollDetained = new JScrollPane(listDetained);
 		
-		listWorkers.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent evt) {
-				JList list = (JList) evt.getSource();
-				if (evt.getClickCount() == 2) {
-					Workers workers = (Workers) listWorkers.getSelectedValue();
+		DefaultTableModel modelDetained= new DefaultTableModel();
+		modelDetained.addColumn("name");
+		modelDetained.addColumn("LastName");
+		modelDetained.addColumn("age");
+		modelDetained.addColumn("gender");
 
-					if (workers instanceof Boss) {
-						new BossWindow((Boss) workers, policeStation, modelWorkers);
-					} else {
-						new WorkersWindow(workers, policeStation, modelWorkers);
-					}
-				}
-			}
-		});
-
-
-		modelDetained = new DefaultListModel();
-		listDetained = new JList(modelDetained);
-		JScrollPane scrollDetained = new JScrollPane(listDetained);
+		
+		
+		
+		JTable tableDetained = new JTable(modelDetained);
+		JScrollPane scrollDetained= new JScrollPane(tableDetained);
 
 		center.add(scrollDetained);
 		center.add(ButtonPanel2, BorderLayout.NORTH);
 
-		createArrested.addActionListener(new ActionListener() {
+//		createArrested.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				new ArrestedWindow(null, policeStation, modelDetained);  
+//			}
+//		});
+//
+//		
+//		createFined.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				new FainedWindow(null, policeStation, modelDetained);
+//			}
+//		});
+//		
+//		consultDetained.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				Detained detained = (Detained) listDetained.getSelectedValue();
+//
+//				if (detained instanceof Arrested) {
+//					new ArrestedWindow((Arrested) detained, policeStation, modelDetained);
+//				} else if (detained instanceof Fined){
+//					new FainedWindow((Fined)detained, policeStation, modelDetained);
+//				}
+//				
+//			}
+//		});
+//		
+//		listDetained.addMouseListener(new MouseAdapter() {
+//			public void mouseClicked(MouseEvent evt) {
+//				JList list = (JList) evt.getSource();
+//				if (evt.getClickCount() == 2) {
+//					Detained detained = (Detained) listDetained.getSelectedValue();
+//					 
+//					if (detained instanceof Arrested) {
+//						new ArrestedWindow((Arrested) detained, policeStation, modelDetained);
+//					} else if (detained instanceof Fined){
+//						new FainedWindow((Fined)detained, policeStation, modelDetained);
+//					}
+//				}
+//			}
+//		});
+		
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new ArrestedWindow(null, policeStation, modelDetained);
-			}
-		});
+
+//		delete.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				int question = JOptionPane.showConfirmDialog(null, "Are you sure that you want to delete this?");
+//				if (question == 0) {
+//					Workers worker = (Workers) listWorkers.getSelectedValue();
+//					Workers boss = (Boss) listWorkers.getSelectedValue();
+//					Detained arrested = (Arrested) listDetained.getSelectedValue();
+//					Detained fined = (Fined) listDetained.getSelectedValue();
+//
+//					policeStation.getWorkers().remove(worker);
+//					policeStation.getWorkers().remove(boss);
+//					policeStation.getDetained().remove(arrested);
+//					policeStation.getDetained().remove(fined);
+//
+//					modelWorkers.removeElement(worker);
+//					modelWorkers.removeElement(boss);
+//					modelDetained.removeElement(arrested);
+//					modelDetained.removeElement(fined);
+//
+//				}
+//
+//			}
+//		});
+		
 
 		
-		createFined.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new FainedWindow(null, policeStation, modelDetained);
-			}
-		});
-		
-		consultDetained.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Detained detained = (Detained) listDetained.getSelectedValue();
-
-				if (detained instanceof Arrested) {
-					new ArrestedWindow((Arrested) detained, policeStation, modelDetained);
-				} else if (detained instanceof Fined){
-					new FainedWindow((Fined)detained, policeStation, modelDetained);
-				}
-				
-			}
-		});
-		
-		listDetained.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent evt) {
-				JList list = (JList) evt.getSource();
-				if (evt.getClickCount() == 2) {
-					Detained detained = (Detained) listDetained.getSelectedValue();
-					 
-					if (detained instanceof Arrested) {
-						new ArrestedWindow((Arrested) detained, policeStation, modelDetained);
-					} else if (detained instanceof Fined){
-						new FainedWindow((Fined)detained, policeStation, modelDetained);
-					}
-				}
-			}
-		});
-		
-
-
-		delete.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int question = JOptionPane.showConfirmDialog(null, "Are you sure that you want to delete this?");
-				if (question == 0) {
-					Workers worker = (Workers) listWorkers.getSelectedValue();
-					Workers boss = (Boss) listWorkers.getSelectedValue();
-					Detained arrested = (Arrested) listDetained.getSelectedValue();
-					Detained fined = (Fined) listDetained.getSelectedValue();
-
-					policeStation.getWorkers().remove(worker);
-					policeStation.getWorkers().remove(boss);
-					policeStation.getDetained().remove(arrested);
-					policeStation.getDetained().remove(fined);
-
-					modelWorkers.removeElement(worker);
-					modelWorkers.removeElement(boss);
-					modelDetained.removeElement(arrested);
-					modelDetained.removeElement(fined);
-
-				}
-
-			}
-		});
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("POLICE MANAGEMENT");

@@ -111,6 +111,7 @@ public class WorkersWindow extends JFrame {
 				}
 
 				dispose();
+				
 			}
 		});
 		add(lgrade);
