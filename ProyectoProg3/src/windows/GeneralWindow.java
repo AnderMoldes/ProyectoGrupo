@@ -151,6 +151,7 @@ public class GeneralWindow extends JFrame {
 		bClose.setMinimumSize(new Dimension(20,20));
 		bClose.setMaximumSize(new Dimension(150,60));
 		bClose.setPreferredSize(new Dimension(120,30));
+		bClose.setForeground(Color.RED);
 		
 		MOREDOWN.add(bClose);
 		MOREDOWN.add(lbar);
