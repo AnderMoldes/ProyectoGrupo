@@ -122,9 +122,10 @@ public class GeneralWindow extends JFrame {
 
 
 		JPanel UP = new JPanel();
-		UP.add(up);
-		UP.add(center);
-		UP.add(down);
+		UP.setLayout(new BorderLayout());
+		UP.add(up, BorderLayout.WEST);
+		UP.add(center, BorderLayout.EAST);
+		//UP.add(down);
 
 		JPanel DOWN = new JPanel();
 
@@ -157,9 +158,17 @@ public class GeneralWindow extends JFrame {
 		MOREDOWN.add(lbar);
 		MOREDOWN.add(progress);
 
-		add(UP, BorderLayout.NORTH);
-		add(DOWN, BorderLayout.CENTER);
-		add(MOREDOWN, BorderLayout.SOUTH);
+		this.setLayout(new BorderLayout());
+		
+		JPanel panelDD = new JPanel();
+		panelDD.setLayout(new BorderLayout());
+		panelDD.add(DOWN, BorderLayout.NORTH);
+		panelDD.add(MOREDOWN, BorderLayout.SOUTH);
+		
+		
+		add(UP, BorderLayout.CENTER);
+		//add(DOWN, BorderLayout.SOUTH);
+		add(panelDD, BorderLayout.SOUTH);
 		MOREDOWN.setLayout(new FlowLayout());
 
 		bClose.addActionListener(new ActionListener() {
