@@ -24,14 +24,12 @@ public class GeneralWindow extends JFrame {
 
 	JMenuBar bar;
 	JMenu file;
-	JMenu close;
 	JMenu end;
 
 	JMenuItem workers;
 	JMenuItem vehicle;
 	JMenuItem detained;
 
-	JMenuItem closeWindow;
 
 	JButton createWorkers;
 	JButton consultWorkers;
@@ -71,9 +69,8 @@ public class GeneralWindow extends JFrame {
 
 		file = new JMenu("File");
 
-		close = new JMenu("Close");
-		closeWindow = new JMenuItem("Close this window");
-
+		
+		
 		end = new JMenu("Menu");
 
 		workers = new JMenuItem("Workers");
@@ -84,20 +81,12 @@ public class GeneralWindow extends JFrame {
 		end.add(detained);
 		end.add(vehicle);
 
-		close.add(closeWindow);
 
 		bar.add(file);
 		bar.add(end);
-		bar.add(close);
+		
 
-		closeWindow.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-
-			}
-		});
+		
 
 		vehicle.addActionListener(new ActionListener() {
 
@@ -140,7 +129,8 @@ public class GeneralWindow extends JFrame {
 		JPanel DOWN = new JPanel();
 
 		bClose = new JButton("Close Window");
-
+		
+		
 		delete = new JButton("Delete");
 		bManageRelations = new JButton("Manage Relations");
 		bManageWorkers = new JButton("Manage Workers");
@@ -158,6 +148,10 @@ public class GeneralWindow extends JFrame {
 		progress = new JProgressBar(0, 100);
 		progress.setVisible(false);
 
+		bClose.setMinimumSize(new Dimension(20,20));
+		bClose.setMaximumSize(new Dimension(150,60));
+		bClose.setPreferredSize(new Dimension(120,30));
+		
 		MOREDOWN.add(bClose);
 		MOREDOWN.add(lbar);
 		MOREDOWN.add(progress);
@@ -165,6 +159,7 @@ public class GeneralWindow extends JFrame {
 		add(UP, BorderLayout.NORTH);
 		add(DOWN, BorderLayout.CENTER);
 		add(MOREDOWN, BorderLayout.SOUTH);
+		MOREDOWN.setLayout(new FlowLayout());
 
 		bClose.addActionListener(new ActionListener() {
 
@@ -364,8 +359,8 @@ public class GeneralWindow extends JFrame {
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("POLICE MANAGEMENT");
-		pack();
-		setResizable(false);
+		setSize(1000,800);
+		setResizable(true);
 		setVisible(true);
 
 	}
