@@ -281,6 +281,19 @@ public class GeneralWindow extends JFrame {
 //				}
 //			}
 //		});
+		
+		table.addMouseListener(new MouseAdapter() 
+		   {
+		      public void mouseClicked(MouseEvent e) 
+		      {
+		         int fila = table.rowAtPoint(e.getPoint());
+		         int columna = table.columnAtPoint(e.getPoint());
+		         if ((fila > -1) && (columna > -1)) {
+		        	// System.out.println(modelWorkers.getValueAt(fila,columna)); 
+		        	 new WorkersWindow(worker, policeStation, modelWorkers);
+		         }	 
+		      }
+		   });
 
 
 //		modelDetained = new DefaultListModel();
@@ -302,6 +315,7 @@ public class GeneralWindow extends JFrame {
 		
 		JTable tableDetained = new JTable(modelDetained);
 		JScrollPane scrollDetained= new JScrollPane(tableDetained);
+		
 
 		center.add(scrollDetained);
 		center.add(ButtonPanel2, BorderLayout.NORTH);
