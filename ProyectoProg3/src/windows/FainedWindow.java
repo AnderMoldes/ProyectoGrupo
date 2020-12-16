@@ -78,18 +78,19 @@ public class FainedWindow extends JFrame {
 
 			create = new JButton("Save data");
 			
-//			tName.setText(fined.getName());
-//			tLastName.setText(fined.getLastName());
-//			age.setValue(fined.getAge());
-//			
-//			if (radioFamale.isSelected()) {
-//				radioFamale.setActionCommand(fined.getGender());
-//			} else if(radioMale.isSelected()){
-//				radioMale.setActionCommand(fined.getGender());
-//			}
-//			comboCountry.setSelectedItem(fined.getCitizenship());
-//			tdescription.setText(fined.getDescription());
-//			spinPayment.setValue(fined.getPayment());
+			tName.setText(fined.getName());
+			tLastName.setText(fined.getLastName());
+			age.setValue(fined.getAge());
+			
+			if (radioFamale.isSelected()) {
+				radioFamale.setActionCommand(fined.getGender());
+			} else if(radioMale.isSelected()){
+				radioMale.setActionCommand(fined.getGender());
+			}
+			tdescription.setText(fined.getDescription());
+			comboCountry.setSelectedItem(fined.getCitizenship());
+			spinPayment.setValue(fined.getPayment());
+			
 		}
 
 		cancel = new JButton("Cancel");
@@ -141,6 +142,7 @@ public class FainedWindow extends JFrame {
 //				creation.setCitizenship((Country) comboCountry.getSelectedItem());
 //				creation.setDescription(tdescription.getText());
 //				creation.setPayment((int)spinPayment.getValue());
+				
 
 				if (fined == null) {
 					//policeStation.getDetained().add(creation);

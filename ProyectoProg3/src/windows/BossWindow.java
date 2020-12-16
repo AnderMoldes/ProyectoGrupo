@@ -81,14 +81,15 @@ public class BossWindow extends JFrame{
 		} else {
 
 			create = new JButton("Save data");
-
-//			tfunction.setText(boss.getFunction());
-//			tname.setText(boss.getName());
-//			tsurname.setText(boss.getSurname());
-//			tgender.setText(boss.getGender());
-//			tassesstment.setText(String.valueOf(boss.getAssesment()));
-//			spinYears.setValue(boss.getStartWorkingIn());
-//			//comboSpecialty.setSelectedItem(boss.getSpecialty());
+			
+			tgrade.setValue(boss.getGrade());
+			tname.setText(boss.getName());
+			tsurname.setText(boss.getSurname());
+			tgender.setText(boss.getGender());
+			tassesstment.setText(String.valueOf(boss.getAssesment()));
+			spinYears.setValue(boss.getStartWorkingIn());
+			comboSpecialty.setSelectedItem(boss.getSpecialty());
+			tfunction.setText(boss.getFunction());
 		}
 
 		panel = new JPanel();

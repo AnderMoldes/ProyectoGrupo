@@ -66,13 +66,13 @@ public class WorkersWindow extends JFrame {
 
 			create = new JButton("Save data");
 
-//			tgrade.setValue(workers.getGrade());
-//			tname.setText(workers.getName());
-//			tsurname.setText(workers.getSurname());
-//			tgender.setText(workers.getGender());
-//			tassesstment.setText(String.valueOf(workers.getAssesment()));
-//			spinYears.setValue(workers.getStartWorkingIn());
-//			comboSpecialty.setSelectedItem(workers.getSpecialty());
+			tgrade.setValue(workers.getGrade());
+			tname.setText(workers.getName());
+			tsurname.setText(workers.getSurname());
+			tgender.setText(workers.getGender());
+			tassesstment.setText(String.valueOf(workers.getAssesment()));
+			spinYears.setValue(workers.getStartWorkingIn());
+			comboSpecialty.setSelectedItem(workers.getSpecialty());
 		}
 
 		panel = new JPanel();

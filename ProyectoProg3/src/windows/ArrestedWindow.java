@@ -78,19 +78,21 @@ public class ArrestedWindow extends JFrame {
 
 			create = new JButton("Save data");
 			
-//			tName.setText(arrested.getName());
-//			tLastName.setText(arrested.getLastName());
-//			age.setValue(arrested.getAge());
-//
-//			if (radioFamale.isSelected()) {
-//				radioFamale.setActionCommand(arrested.getGender());
-//			} else if (radioMale.isSelected()){
-//				radioMale.setActionCommand(arrested.getGender());
-//			}
-//			pnumberOfArrest.setValue(arrested.getNumberOfArrest());
-//			comboCountry.setSelectedItem(arrested.getCitizenship());
-//			tdescription.setText(arrested.getDescription());
-//			tjailrelease.setText(arrested.getJailRelease());
+			tName.setText(arrested.getName());
+			tLastName.setText(arrested.getLastName());
+			age.setValue(arrested.getAge());
+
+			if (radioFamale.isSelected()) {
+				radioFamale.setActionCommand(arrested.getGender());
+			} else if (radioMale.isSelected()){
+				radioMale.setActionCommand(arrested.getGender());
+			}
+			pnumberOfArrest.setValue(arrested.getNumberOfArrest());
+			tdescription.setText(arrested.getDescription());
+			tjailrelease.setText(arrested.getJailRelease());
+			comboCountry.setSelectedItem(arrested.getCitizenship());
+			
+			
 		}
 
 		cancel = new JButton("Cancel");

@@ -51,6 +51,17 @@ public class GeneralWindow extends JFrame {
 
 	JLabel lbar;
 	JProgressBar progress;
+	
+	
+	
+	public class MiModelo extends DefaultTableModel {
+		   public boolean isCellEditable (int row, int column) {
+		       // Aquí devolvemos true o false según queramos que una celda
+		       // identificada por fila,columna (row,column), sea o no editable
+			   
+		       return false;
+		   }
+		}
 
 	public GeneralWindow() {
 
@@ -207,7 +218,7 @@ public class GeneralWindow extends JFrame {
 //		listWorkers = new JList(modelWorkers);
 //		JScrollPane scrollWorkers = new JScrollPane(listWorkers);
 		
-		DefaultTableModel modelWorkers= new DefaultTableModel();
+		MiModelo modelWorkers= new MiModelo();
 		modelWorkers.addColumn("code");
 		modelWorkers.addColumn("grade");
 		modelWorkers.addColumn("name");
@@ -246,7 +257,7 @@ public class GeneralWindow extends JFrame {
 //
 //			@Override
 //			public void actionPerformed(ActionEvent e) {
-//				Workers workers = (Workers) listWorkers.getSelectedValue();
+//				Workers workers = (Workers) modelWorkers.getValueAt(1, 1 );
 //
 //				if (workers instanceof Boss) {
 //					new BossWindow((Boss) workers, policeStation, modelWorkers);
@@ -256,11 +267,11 @@ public class GeneralWindow extends JFrame {
 //			}
 //		});
 //		
-//		listWorkers.addMouseListener(new MouseAdapter() {
+//		table.addMouseListener(new MouseAdapter() {
 //			public void mouseClicked(MouseEvent evt) {
 //				JList list = (JList) evt.getSource();
 //				if (evt.getClickCount() == 2) {
-//					Workers workers = (Workers) listWorkers.getSelectedValue();
+//					Workers workers = (Workers) table.getSelectionModel();
 //
 //					if (workers instanceof Boss) {
 //						new BossWindow((Boss) workers, policeStation, modelWorkers);
@@ -276,7 +287,7 @@ public class GeneralWindow extends JFrame {
 //		listDetained = new JList(modelDetained);
 //		JScrollPane scrollDetained = new JScrollPane(listDetained);
 		
-		DefaultTableModel modelDetained= new DefaultTableModel();
+		MiModelo modelDetained= new MiModelo();
 		modelDetained.addColumn("identificative");
 		modelDetained.addColumn("name");
 		modelDetained.addColumn("LastName");
@@ -368,6 +379,7 @@ public class GeneralWindow extends JFrame {
 //
 //			}
 //		});
+		
 		
 
 		
