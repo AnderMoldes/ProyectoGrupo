@@ -114,7 +114,7 @@ public class FainedWindow extends JFrame {
 					object = new Object[10];
 				}
 				
-				object[0] = Detained.getContainer();
+				object[0] = Detained.container++;
 				object[1] = tName.getText();
 				object[2] = tLastName.getText();
 				object[3] = age.getValue();

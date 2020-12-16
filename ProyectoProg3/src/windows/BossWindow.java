@@ -116,7 +116,7 @@ public class BossWindow extends JFrame{
 				}
 
 				
-				//object[0] = workers.getCode();
+				object[0] = Workers.getCounter();
 				object[1] = tgrade.getValue();
 				object[2] = tname.getText();
 				object[3] = tsurname.getText();

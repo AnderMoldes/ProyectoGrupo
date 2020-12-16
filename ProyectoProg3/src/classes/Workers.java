@@ -46,7 +46,7 @@ public class Workers implements Serializable{
 	
 
 	public static int getCounter() {
-		return counter;
+		return counter++;
 	}
 
 	public int getCode() {

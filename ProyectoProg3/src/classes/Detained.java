@@ -39,7 +39,7 @@ public class Detained {
 	
 
 	public static int getContainer() {
-		return container;
+		return container++;
 	}
 
 	public int getIdentificative() {
