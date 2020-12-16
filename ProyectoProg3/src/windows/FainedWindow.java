@@ -5,9 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import classes.Arrested;
 import classes.Country;
+import classes.Detained;
 import classes.Fined;
 import classes.PoliceStation;
 
@@ -21,8 +23,6 @@ public class FainedWindow extends JFrame {
 	JLabel lGender;
 	JRadioButton radioMale;
 	JRadioButton radioFamale;
-	JLabel lNID;
-	JSpinner tNID;
 	JLabel lCountry;
 	JComboBox<Country> comboCountry;
 	JLabel ldescription;
@@ -37,7 +37,7 @@ public class FainedWindow extends JFrame {
 
 	ButtonGroup group = new ButtonGroup();
 
-	public FainedWindow(Fined fined, PoliceStation policeStation, DefaultListModel model) {
+	public FainedWindow(Fined fined, PoliceStation policeStation, DefaultTableModel model) {
 		setLayout(new GridLayout(1, 2));
 		rightPanel = new JPanel();
 		leftPanel = new JPanel();
@@ -57,8 +57,6 @@ public class FainedWindow extends JFrame {
 		lGender = new JLabel("Gender: ");
 		radioMale = new JRadioButton("Male");
 		radioFamale = new JRadioButton("Famale");
-		lNID = new JLabel("ID/INID: ");
-		tNID = new JSpinner(new SpinnerNumberModel(0, 0, 100000, 1));
 		lCountry = new JLabel("Nationality: ");
 		comboCountry = new JComboBox<Country>();
 		for (int i = 0; i < Country.values().length; i++) {
@@ -79,19 +77,19 @@ public class FainedWindow extends JFrame {
 		} else {
 
 			create = new JButton("Save data");
-			tName.setText(fined.getName());
-			tLastName.setText(fined.getLastName());
-			age.setValue(fined.getAge());
 			
-			if (radioFamale.isSelected()) {
-				radioFamale.setActionCommand(fined.getGender());
-			} else if(radioMale.isSelected()){
-				radioMale.setActionCommand(fined.getGender());
-			}
-			tNID.setValue(fined.getNumber());
-			comboCountry.setSelectedItem(fined.getCitizenship());
-			tdescription.setText(fined.getDescription());
-			spinPayment.setValue(fined.getPayment());
+//			tName.setText(fined.getName());
+//			tLastName.setText(fined.getLastName());
+//			age.setValue(fined.getAge());
+//			
+//			if (radioFamale.isSelected()) {
+//				radioFamale.setActionCommand(fined.getGender());
+//			} else if(radioMale.isSelected()){
+//				radioMale.setActionCommand(fined.getGender());
+//			}
+//			comboCountry.setSelectedItem(fined.getCitizenship());
+//			tdescription.setText(fined.getDescription());
+//			spinPayment.setValue(fined.getPayment());
 		}
 
 		cancel = new JButton("Cancel");
@@ -107,31 +105,46 @@ public class FainedWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Fined creation;
+				Object[] object;
+
 
 				if (fined != null) {
-					creation = fined;
+					object= null;
 				} else {
-					creation = new Fined();
+					object = new Object[10];
 				}
-				creation.setName(tName.getText());
-				creation.setLastName(tLastName.getText());
-				creation.setAge((int) age.getValue());
-				creation.setNumber((int) tNID.getValue());
-
+				
+				object[0] = Detained.getContainer();
+				object[1] = tName.getText();
+				object[2] = tLastName.getText();
+				object[3] = age.getValue();
+				
 				if (radioFamale.isSelected()) {
-					creation.setGender(radioFamale.getActionCommand());
-				} else if(radioMale.isSelected()) {
-					creation.setGender(radioMale.getActionCommand());
+					object[4] = radioFamale.getActionCommand();
+				} else if (radioMale.isSelected()){
+					object[4] = radioMale.getActionCommand();
 				}
-
-				creation.setCitizenship((Country) comboCountry.getSelectedItem());
-				creation.setDescription(tdescription.getText());
-				creation.setPayment((int)spinPayment.getValue());
+				object[6] = tdescription.getText();
+				object[8] = comboCountry.getSelectedItem();
+				object[9] = spinPayment.getValue();
+				
+//				creation.setName(tName.getText());
+//				creation.setLastName(tLastName.getText());
+//				creation.setAge((int) age.getValue());
+//
+//				if (radioFamale.isSelected()) {
+//					creation.setGender(radioFamale.getActionCommand());
+//				} else if(radioMale.isSelected()) {
+//					creation.setGender(radioMale.getActionCommand());
+//				}
+//
+//				creation.setCitizenship((Country) comboCountry.getSelectedItem());
+//				creation.setDescription(tdescription.getText());
+//				creation.setPayment((int)spinPayment.getValue());
 
 				if (fined == null) {
-					policeStation.getDetained().add(creation);
-					model.addElement(creation);
+					//policeStation.getDetained().add(creation);
+					model.addRow(object);
 				}
 
 				dispose();
@@ -140,7 +153,7 @@ public class FainedWindow extends JFrame {
 		rightPanel.add(lName);
 		rightPanel.add(lLastName);
 		rightPanel.add(lGender);
-		rightPanel.add(lNID);
+		rightPanel.add(lage);
 		rightPanel.add(lCountry);
 		rightPanel.add(ldescription);
 		rightPanel.add(lpayment);
@@ -150,7 +163,7 @@ public class FainedWindow extends JFrame {
 		leftPanel.add(tLastName);
 		leftPanel.add(radioMale);
 		leftPanel.add(radioFamale);
-		leftPanel.add(tNID);
+		leftPanel.add(age);
 		leftPanel.add(comboCountry);
 		leftPanel.add(tdescription);
 		leftPanel.add(spinPayment);

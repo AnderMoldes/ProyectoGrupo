@@ -17,6 +17,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.table.DefaultTableModel;
 
 import classes.PoliceStation;
 import classes.Specialty;
@@ -25,6 +26,8 @@ import classes.Boss;
 
 public class BossWindow extends JFrame{
 	JLabel lfunction;
+	JLabel lgrade;
+	JSpinner tgrade;
 	JLabel lname;
 	JLabel lsurname;
 	JLabel lgender;
@@ -42,11 +45,13 @@ public class BossWindow extends JFrame{
 	JButton cancel;
 	JPanel panel;
 
-	public BossWindow(Boss boss, PoliceStation policeStation, DefaultListModel model) {
+	public BossWindow(Boss boss, PoliceStation policeStation, DefaultTableModel model) {
 
-		setLayout(new GridLayout(8,2));
+		setLayout(new GridLayout(9,2));
 		lfunction = new JLabel("This boss function is: ");
 		tfunction = new JTextField(40);
+		lgrade = new JLabel("Grade: ");
+		tgrade = new JSpinner(new SpinnerNumberModel(0, 0, 5, 1));
 		lname = new JLabel("Name: ");
 		tname = new JTextField(30);
 		lsurname = new JLabel("Surname: ");
@@ -62,7 +67,8 @@ public class BossWindow extends JFrame{
 		
 		comboSpecialty = new JComboBox<Specialty>();
 		comboSpecialty.addItem(Specialty.DRIVER);
-
+		comboSpecialty.addItem(Specialty.DOCTOR);
+		
 		spinYears = new JSpinner(new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH));
 		spinYears.setEditor(new JSpinner.DateEditor(spinYears, "dd/MM/yyyy"));
 
@@ -76,13 +82,13 @@ public class BossWindow extends JFrame{
 
 			create = new JButton("Save data");
 
-			tfunction.setText(boss.getFunction());
-			tname.setText(boss.getName());
-			tsurname.setText(boss.getSurname());
-			tgender.setText(boss.getGender());
-			tassesstment.setText(String.valueOf(boss.getAssesment()));
-			spinYears.setValue(boss.getStartWorkingIn());
-			//comboSpecialty.setSelectedItem(boss.getSpecialty());
+//			tfunction.setText(boss.getFunction());
+//			tname.setText(boss.getName());
+//			tsurname.setText(boss.getSurname());
+//			tgender.setText(boss.getGender());
+//			tassesstment.setText(String.valueOf(boss.getAssesment()));
+//			spinYears.setValue(boss.getStartWorkingIn());
+//			//comboSpecialty.setSelectedItem(boss.getSpecialty());
 		}
 
 		panel = new JPanel();
@@ -101,24 +107,36 @@ public class BossWindow extends JFrame{
 		create.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Boss creation;
+				Object[] object;
 
 				if (boss != null) {
-					creation = boss;
+					object = null;
 				} else {
-					creation = new Boss();
+					object = new Object[9];
 				}
-				creation.setFunction(tfunction.getText());
-				creation.setName(tname.getText());
-				creation.setSurname(tsurname.getText());
-				creation.setGender(tgender.getText());
-				creation.setAssesment(tassesstment.getText());
-				creation.setStartWorkingIn((Date) spinYears.getValue());
-				//creation.setSpecialty((Specialty) comboSpecialty.getSelectedItem());
+
+				
+				//object[0] = workers.getCode();
+				object[1] = tgrade.getValue();
+				object[2] = tname.getText();
+				object[3] = tsurname.getText();
+				object[4] = tgender.getText();
+				object[5] = tassesstment.getText();
+				object[6] = spinYears.getValue();
+				object[7] = comboSpecialty.getSelectedItem();
+				object[8] = tfunction.getText();
+
+//				creation.setFunction(tfunction.getText());
+//				creation.setName(tname.getText());
+//				creation.setSurname(tsurname.getText());
+//				creation.setGender(tgender.getText());
+//				creation.setAssesment(tassesstment.getText());
+//				creation.setStartWorkingIn((Date) spinYears.getValue());
+//				//creation.setSpecialty((Specialty) comboSpecialty.getSelectedItem());
 
 				if (boss == null) {
-					policeStation.getWorkers().add(creation);
-					model.addElement(creation);
+					//policeStation.getWorkers().add(creation);
+					model.addRow(object);
 				}
 
 				dispose();
@@ -126,6 +144,8 @@ public class BossWindow extends JFrame{
 		});
 		add(lfunction);
 		add(tfunction);
+		add(lgrade);
+		add(tgrade);
 		add(lname);
 		add(tname);
 		add(lsurname);

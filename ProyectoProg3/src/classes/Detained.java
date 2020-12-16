@@ -14,7 +14,9 @@ public class Detained {
 	
 	
 	
-	public Detained( String name, String lastName, int age, String gender) {
+	
+
+	public Detained(int identificative, String name, String lastName, int age, String gender) {
 		super();
 		this.identificative = container++;
 		this.name = name;
@@ -22,6 +24,8 @@ public class Detained {
 		this.age = age;
 		this.gender = gender;
 	}
+
+
 
 	public Detained() {
 		super();

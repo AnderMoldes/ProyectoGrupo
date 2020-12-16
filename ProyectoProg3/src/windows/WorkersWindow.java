@@ -1,6 +1,7 @@
 package windows;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import classes.PoliceStation;
 import classes.Specialty;
@@ -31,12 +32,12 @@ public class WorkersWindow extends JFrame {
 	JButton cancel;
 	JPanel panel;
 
-	public WorkersWindow(Workers workers, PoliceStation policeStation, DefaultListModel model) {
+	public WorkersWindow(Workers workers, PoliceStation policeStation, DefaultTableModel modelWorkers) {
 
 		setLayout(new GridLayout(8, 2));
 
 		lgrade = new JLabel("Grade: ");
-		tgrade = new JSpinner(new SpinnerNumberModel(0, 0, 50, 1));
+		tgrade = new JSpinner(new SpinnerNumberModel(0, 0, 5, 1));
 		lname = new JLabel("Name: ");
 		tname = new JTextField(30);
 		lsurname = new JLabel("Surname: ");
@@ -65,13 +66,13 @@ public class WorkersWindow extends JFrame {
 
 			create = new JButton("Save data");
 
-			tgrade.setValue(workers.getGrade());
-			tname.setText(workers.getName());
-			tsurname.setText(workers.getSurname());
-			tgender.setText(workers.getGender());
-			tassesstment.setText(String.valueOf(workers.getAssesment()));
-			spinYears.setValue(workers.getStartWorkingIn());
-			comboSpecialty.setSelectedItem(workers.getSpecialty());
+//			tgrade.setValue(workers.getGrade());
+//			tname.setText(workers.getName());
+//			tsurname.setText(workers.getSurname());
+//			tgender.setText(workers.getGender());
+//			tassesstment.setText(String.valueOf(workers.getAssesment()));
+//			spinYears.setValue(workers.getStartWorkingIn());
+//			comboSpecialty.setSelectedItem(workers.getSpecialty());
 		}
 
 		panel = new JPanel();
@@ -90,28 +91,39 @@ public class WorkersWindow extends JFrame {
 		create.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Workers creation;
+				//Workers creation;
+				Object[] object;
 
 				if (workers != null) {
-					creation = workers;
+					object = null;
 				} else {
-					creation = new Workers();
+					object = new Object[8];
 				}
-				creation.setGrade((int) tgrade.getValue());
-				creation.setName(tname.getText());
-				creation.setSurname(tsurname.getText());
-				creation.setGender(tgender.getText());
-				creation.setAssesment(tassesstment.getText());
-				creation.setStartWorkingIn((Date) spinYears.getValue());
-				creation.setSpecialty((Specialty) comboSpecialty.getSelectedItem());
+
+				
+				//object[0] = workers.getCode();
+				object[1] = tgrade.getValue();
+				object[2] = tname.getText();
+				object[3] = tsurname.getText();
+				object[4] = tgender.getText();
+				object[5] = tassesstment.getText();
+				object[6] = spinYears.getValue();
+				object[7] = comboSpecialty.getSelectedItem();
+
+				// creation.setGrade((int) tgrade.getValue());
+				// creation.setName(tname.getText());
+				// creation.setSurname(tsurname.getText());
+				// creation.setGender(tgender.getText());
+				// creation.setAssesment(tassesstment.getText());
+				// creation.setStartWorkingIn((Date) spinYears.getValue());
+				// creation.setSpecialty((Specialty) comboSpecialty.getSelectedItem());
 
 				if (workers == null) {
-					policeStation.getWorkers().add(creation);
-					model.addElement(creation);
+					modelWorkers.addRow(object);
 				}
 
 				dispose();
-				
+
 			}
 		});
 		add(lgrade);
@@ -135,6 +147,7 @@ public class WorkersWindow extends JFrame {
 		setSize(500, 500);
 		setResizable(false);
 		setVisible(true);
+		
 	}
 
 }

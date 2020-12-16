@@ -3,11 +3,13 @@ package windows;
 import java.awt.*;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import java.awt.event.*;
 
 import classes.Arrested;
 import classes.Country;
+import classes.Detained;
 import classes.PoliceStation;
 
 public class ArrestedWindow extends JFrame {
@@ -35,14 +37,14 @@ public class ArrestedWindow extends JFrame {
 
 	ButtonGroup group = new ButtonGroup();
 
-	public ArrestedWindow(Arrested arrested, PoliceStation policeStation, DefaultListModel model) {
+	public ArrestedWindow(Arrested arrested, PoliceStation policeStation, DefaultTableModel model) {
 
 		setLayout(new GridLayout(1, 2));
 		rightPanel = new JPanel();
 		leftPanel = new JPanel();
 		
-		rightPanel.setLayout(new GridLayout(8, 1));
-		leftPanel.setLayout(new GridLayout(9, 1));
+		rightPanel.setLayout(new GridLayout(9, 1));
+		leftPanel.setLayout(new GridLayout(10, 1));
 
 		lName = new JLabel("Name: ");
 		tName = new JTextField(20);
@@ -75,19 +77,20 @@ public class ArrestedWindow extends JFrame {
 		} else {
 
 			create = new JButton("Save data");
-			tName.setText(arrested.getName());
-			tLastName.setText(arrested.getLastName());
-			age.setValue(arrested.getAge());
-
-			if (radioFamale.isSelected()) {
-				radioFamale.setActionCommand(arrested.getGender());
-			} else if (radioMale.isSelected()){
-				radioMale.setActionCommand(arrested.getGender());
-			}
-			pnumberOfArrest.setValue(arrested.getNumberOfArrest());
-			comboCountry.setSelectedItem(arrested.getCitizenship());
-			tdescription.setText(arrested.getDescription());
-			tjailrelease.setText(arrested.getJailRelease());
+			
+//			tName.setText(arrested.getName());
+//			tLastName.setText(arrested.getLastName());
+//			age.setValue(arrested.getAge());
+//
+//			if (radioFamale.isSelected()) {
+//				radioFamale.setActionCommand(arrested.getGender());
+//			} else if (radioMale.isSelected()){
+//				radioMale.setActionCommand(arrested.getGender());
+//			}
+//			pnumberOfArrest.setValue(arrested.getNumberOfArrest());
+//			comboCountry.setSelectedItem(arrested.getCitizenship());
+//			tdescription.setText(arrested.getDescription());
+//			tjailrelease.setText(arrested.getJailRelease());
 		}
 
 		cancel = new JButton("Cancel");
@@ -103,31 +106,49 @@ public class ArrestedWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Arrested creation;
+				Object[] object;
 
 				if (arrested != null) {
-					creation = arrested;
+					object= null;
 				} else {
-					creation = new Arrested();
+					object = new Object[9];
 				}
-				creation.setName(tName.getText());
-				creation.setLastName(tLastName.getText());
-				creation.setAge((int) age.getValue());
-				creation.setNumberOfArrest((int) pnumberOfArrest.getValue());
-
+				
+				object[0] = Detained.getContainer();
+				object[1] = tName.getText();
+				object[2] = tLastName.getText();
+				object[3] = age.getValue();
+				
 				if (radioFamale.isSelected()) {
-					creation.setGender(radioFamale.getActionCommand());
-				} else if(radioMale.isSelected()) {
-					creation.setGender(radioMale.getActionCommand());
+					object[4] = radioFamale.getActionCommand();
+				} else if (radioMale.isSelected()){
+					object[4] = radioMale.getActionCommand();
 				}
-
-				creation.setCitizenship((Country) comboCountry.getSelectedItem());
-				creation.setDescription(tdescription.getText());
-				creation.setJailRelease(tjailrelease.getText());
+				
+				object[5] = pnumberOfArrest.getValue();
+				object[6] = tdescription.getText();
+				object[7] = tjailrelease.getText();
+				object[8] = comboCountry.getSelectedItem();
+				
+				
+//				creation.setName(tName.getText());
+//				creation.setLastName(tLastName.getText());
+//				creation.setAge((int) age.getValue());
+//				creation.setNumberOfArrest((int) pnumberOfArrest.getValue());
+//
+//				if (radioFamale.isSelected()) {
+//					creation.setGender(radioFamale.getActionCommand());
+//				} else if(radioMale.isSelected()) {
+//					creation.setGender(radioMale.getActionCommand());
+//				}
+//
+//				creation.setCitizenship((Country) comboCountry.getSelectedItem());
+//				creation.setDescription(tdescription.getText());
+//				creation.setJailRelease(tjailrelease.getText());
 
 				if (arrested == null) {
-					policeStation.getDetained().add(creation);
-					model.addElement(creation);
+					//policeStation.getDetained().add(creation);
+					model.addRow(object);
 				}
 
 				dispose();
@@ -135,6 +156,7 @@ public class ArrestedWindow extends JFrame {
 		});
 
 		rightPanel.add(lName);
+		rightPanel.add(lage);
 		rightPanel.add(lLastName);
 		rightPanel.add(lGender);
 		rightPanel.add(numberOfArrest);
@@ -144,6 +166,7 @@ public class ArrestedWindow extends JFrame {
 		rightPanel.add(create);
 
 		leftPanel.add(tName);
+		leftPanel.add(age);
 		leftPanel.add(tLastName);
 		leftPanel.add(radioFamale);
 		leftPanel.add(radioMale);

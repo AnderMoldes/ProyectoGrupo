@@ -1,37 +1,27 @@
 package classes;
 
 public class Fined extends Detained {
-	private static int counter = 1;
-	private int number;
 	private String description;
 	protected Country citizenship;
 	private int payment;
 
 	
 
-	public Fined(String name, String lastName, int age, String gender, int number, String description, int payment,Country citizenship) {
-		super(name, lastName, age, gender);
-		this.number = number;
+	public Fined(int identificative, String name, String lastName, int age, String gender, String description,
+			Country citizenship, int payment) {
+		super(identificative, name, lastName, age, gender);
 		this.description = description;
+		this.citizenship = citizenship;
 		this.payment = payment;
-		this.citizenship= citizenship;
 	}
 
 	public Fined() {
 		super();
-		this.number = 0;
 		this.description = "";
 		this.payment = 0;
-		this.citizenship= null;
+		this.citizenship= Country.Austria;
 	}
 
-	public int getNumber() {
-		return number;
-	}
-
-	public void setNumber(int number) {
-		this.number = number;
-	}
 
 	public String getDescription() {
 		return description;
@@ -48,6 +38,7 @@ public class Fined extends Detained {
 	public void setPayment(int payment) {
 		this.payment = payment;
 	}
+	
 	public Country getCitizenship() {
 		return citizenship;
 	}
@@ -58,7 +49,7 @@ public class Fined extends Detained {
 
 	@Override
 	public String toString() {
-		return "Fined number: " + number + ". Description: " + description + ". Citizenship: " + citizenship
+		return " Description: " + description + ". Citizenship: " + citizenship
 				+ ". Payment: " + payment + ". Identificative: " + identificative + ". Name: " + name + " " 
 				+ lastName + ". Age: " + age + ". Gender: " + gender ;
 	}

@@ -8,16 +8,15 @@ public class Arrested extends Detained {
 	protected String description;
 	protected String jailRelease;
 	protected Country citizenship;
-
 	
 
-	public Arrested(String name, String lastName, int age, String gender, int numberOfArrest, String description,
-			String jailRelease, Country citizenship) {
-		super(name, lastName, age, gender);
+	public Arrested(int identificative, String name, String lastName, int age, String gender, int numberOfArrest,
+			String description, String jailRelease, Country citizenship) {
+		super(identificative, name, lastName, age, gender);
 		this.numberOfArrest = numberOfArrest;
 		this.description = description;
 		this.jailRelease = jailRelease;
-		this.citizenship= citizenship;
+		this.citizenship = citizenship;
 	}
 
 	public Arrested() {

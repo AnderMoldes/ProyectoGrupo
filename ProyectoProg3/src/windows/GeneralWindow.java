@@ -216,6 +216,7 @@ public class GeneralWindow extends JFrame {
 		modelWorkers.addColumn("Specialty");
 		modelWorkers.addColumn("startWorkingIn");
 		modelWorkers.addColumn("Assesment");
+		modelWorkers.addColumn("boss function");
 		
 		
 		
@@ -229,7 +230,7 @@ public class GeneralWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new WorkersWindow(null, policeStation, null); //arreglar debido a la tabla
+				new WorkersWindow(worker, policeStation, modelWorkers); 
 			}
 		});
 
@@ -237,7 +238,7 @@ public class GeneralWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new BossWindow(null, policeStation, null); //arreglar debido a la tabla
+				new BossWindow(null, policeStation, modelWorkers); 
 			}
 		});
 
@@ -276,12 +277,16 @@ public class GeneralWindow extends JFrame {
 //		JScrollPane scrollDetained = new JScrollPane(listDetained);
 		
 		DefaultTableModel modelDetained= new DefaultTableModel();
+		modelDetained.addColumn("identificative");
 		modelDetained.addColumn("name");
 		modelDetained.addColumn("LastName");
 		modelDetained.addColumn("age");
 		modelDetained.addColumn("gender");
-
-		
+		modelDetained.addColumn("numberOfArrest");
+		modelDetained.addColumn("description");
+		modelDetained.addColumn("jailRelease");
+		modelDetained.addColumn("citizenship");
+		modelDetained.addColumn("payment");
 		
 		
 		JTable tableDetained = new JTable(modelDetained);
@@ -290,22 +295,22 @@ public class GeneralWindow extends JFrame {
 		center.add(scrollDetained);
 		center.add(ButtonPanel2, BorderLayout.NORTH);
 
-//		createArrested.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				new ArrestedWindow(null, policeStation, modelDetained);  
-//			}
-//		});
-//
-//		
-//		createFined.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				new FainedWindow(null, policeStation, modelDetained);
-//			}
-//		});
+		createArrested.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new ArrestedWindow(null, policeStation, modelDetained);  
+			}
+		});
+
+		
+		createFined.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new FainedWindow(null, policeStation, modelDetained);
+			}
+		});
 //		
 //		consultDetained.addActionListener(new ActionListener() {
 //			
@@ -369,9 +374,10 @@ public class GeneralWindow extends JFrame {
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("POLICE MANAGEMENT");
-		setSize(1000,800);
+		pack();
 		setResizable(true);
 		setVisible(true);
+		
 
 	}
 }
