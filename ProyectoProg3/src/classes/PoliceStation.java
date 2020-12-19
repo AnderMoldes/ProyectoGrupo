@@ -1,5 +1,9 @@
 package classes;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +72,25 @@ public class PoliceStation implements Serializable{
 
 	public void setDetained(ArrayList<Detained> detained) {
 		this.detained = new ArrayList<Detained>(detained);;
+	}
+	
+	public void saveFile(String fileName) {
+		try {
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName));
+			
+			PoliceStation police = (PoliceStation) ois.readObject();
+			
+			this.setAddress(police.getAddress());
+			this.setDetained(police.getDetained());
+			this.setName(police.getName());
+			this.setWorkers(police.getWorkers());
+			
+			ois.close();
+		} catch (IOException e) {
+			System.out.println("Error accessing the file "+ fileName);
+		} catch (ClassNotFoundException e) {
+			System.out.println("Erro reading de file" + fileName);
+		}
 	}
 
 	@Override

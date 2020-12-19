@@ -19,6 +19,7 @@ import classes.Workers;
 import java.awt.event.*;
 
 public class GeneralWindow extends JFrame {
+	protected static String fileName = "Police.DAT";
 	protected static final Workers worker = null;
 	PoliceStation policeStation;
 
@@ -29,6 +30,8 @@ public class GeneralWindow extends JFrame {
 	JMenuItem workers;
 	JMenuItem vehicle;
 	JMenuItem detained;
+	JMenuItem save;
+	JMenuItem close;
 
 	JButton createWorkers;
 	JButton consultWorkers;
@@ -41,11 +44,11 @@ public class GeneralWindow extends JFrame {
 	JButton createArrested;
 	JButton createFined;
 	JButton delete;
-	JList listWorkers;
+//	JList listWorkers;
 //	JList listBoss;
 	DefaultListModel modelWorkers;
 //	DefaultListModel modelBoss;
-	JList listDetained;
+//	JList listDetained;
 	DefaultListModel modelDetained;
 
 	JLabel lbar;
@@ -76,6 +79,11 @@ public class GeneralWindow extends JFrame {
 		bar = new JMenuBar();
 
 		file = new JMenu("File");
+		save = new JMenuItem("Save");
+		close = new JMenuItem("Close");
+
+		file.add(save);
+		file.add(close);
 
 		end = new JMenu("Menu");
 
@@ -96,6 +104,16 @@ public class GeneralWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				new VehicleWindow();
 				dispose();
+
+			}
+		});
+
+		save.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				policeStation.saveFile(fileName);
+				JOptionPane.showMessageDialog(null, "File saved");
 
 			}
 		});
@@ -201,6 +219,37 @@ public class GeneralWindow extends JFrame {
 
 			}
 		});
+		close.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				Thread thread = new Thread(new Runnable() {
+					@Override
+					public void run() {
+
+						lbar.setVisible(true);
+						progress.setVisible(true);
+
+						for (int i = 0; i <= 100; i++) {
+							progress.setValue(i);
+							try {
+								Thread.sleep(7);
+							} catch (InterruptedException el) {
+								el.printStackTrace();
+							}
+						}
+
+						lbar.setVisible(false);
+						progress.setVisible(false);
+						dispose();
+					}
+				});
+
+				thread.start();
+
+			}
+		});
 
 //		modelWorkers = new DefaultListModel();
 //		listWorkers = new JList(modelWorkers);
@@ -274,50 +323,44 @@ public class GeneralWindow extends JFrame {
 				int columna = table.columnAtPoint(e.getPoint());
 				if ((fila > -1) && (columna > -1)) {
 					// System.out.println(modelWorkers.getValueAt(fila,columna));
-					Workers worker = (Workers) listWorkers.getSelectedValue();
+
 					new WorkersWindow(worker, policeStation, modelWorkers);
 				}
 			}
 		});
 
-//		modelDetained = new DefaultListModel();
-//		listDetained = new JList(modelDetained);
-//		JScrollPane scrollDetained = new JScrollPane(listDetained);
-
-//		MiModelo modelDetained = new MiModelo();
-//		modelDetained.addColumn("identificative");
-//		modelDetained.addColumn("name");
-//		modelDetained.addColumn("LastName");
-//		modelDetained.addColumn("age");
-//		modelDetained.addColumn("gender");
-//		modelDetained.addColumn("numberOfArrest");
-//		modelDetained.addColumn("description");
-//		modelDetained.addColumn("jailRelease");
-//		modelDetained.addColumn("citizenship");
-//		modelDetained.addColumn("payment");
-
-//		JTable tableDetained = new JTable(modelDetained);
-//		JScrollPane scrollDetained = new JScrollPane(tableDetained);
-		
 		modelDetained = new DefaultListModel();
-		listDetained = new JList(modelDetained);
-		JScrollPane scrollDetained = new JScrollPane(listDetained);
-		
-		listDetained.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent evt) {
-				JList list = (JList) evt.getSource();
-				if (evt.getClickCount() == 2) {
-					Detained detained = (Detained) listDetained.getSelectedValue();
-					if (detained instanceof Fined) {
-						new FainedWindow((Fined) detained, policeStation, modelDetained);
-					} else if (detained instanceof Arrested) {
-						new ArrestedWindow((Arrested) detained, policeStation, modelDetained);
-					}
-				}
-					
-				}
-			
-		});
+
+		JScrollPane scrollDetained = new JScrollPane();
+		MiModelo modelDetained = new MiModelo();
+		modelDetained.addColumn("identificative");
+		modelDetained.addColumn("name");
+		modelDetained.addColumn("LastName");
+		modelDetained.addColumn("age");
+		modelDetained.addColumn("gender");
+		modelDetained.addColumn("numberOfArrest");
+		modelDetained.addColumn("description");
+		modelDetained.addColumn("jailRelease");
+		modelDetained.addColumn("citizenship");
+		modelDetained.addColumn("payment");
+
+		JTable tableDetained = new JTable(modelDetained);
+
+		// tableDetained.addMouseListener(new MouseAdapter() {
+		// public void mouseClicked(MouseEvent evt) {
+		// JList list = (JList) evt.getSource();
+		// if (evt.getClickCount() == 2) {
+		// Detained detained = (Detained) modelDetained.getTableModelListeners());
+		// if (detained instanceof Fined) {
+		// new FainedWindow((Fined) detained, policeStation, modelDetained);
+		// } else if (detained instanceof Arrested) {
+		// new ArrestedWindow((Arrested) detained, policeStation, modelDetained);
+		// }
+		// }
+		//
+		// }
+		//
+		// });
 
 		center.add(scrollDetained);
 		center.add(ButtonPanel2, BorderLayout.NORTH);
