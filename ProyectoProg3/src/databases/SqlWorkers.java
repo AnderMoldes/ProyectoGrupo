@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import classes.Specialty;
+import classes.Workers;
 
 public class SqlWorkers {
 
@@ -23,7 +24,7 @@ public class SqlWorkers {
 		if (!LOGGING)
 			return;
 		if (logger == null) { // Logger por defecto local:
-			logger = Logger.getLogger(SqlDetained.class.getName()); // Nombre del logger - el de la clase
+			logger = Logger.getLogger(SqlWorkers.class.getName()); // Nombre del logger - el de la clase
 			logger.setLevel(Level.ALL); // Loguea todos los niveles
 		}
 		if (excepcion == null)
@@ -36,7 +37,7 @@ public class SqlWorkers {
 
 	// Conectarse a la base de datos
 
-	public static Connection initBD(String nombreBD) {
+	public  Connection initBD(String nombreBD) {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection("jdbc:sqlite:" + nombreBD);
@@ -48,46 +49,62 @@ public class SqlWorkers {
 		}
 	}
 
-	public static void conexion(String nombreBD) {
+	public  void conexion() {
 		try {
 			statement = connection.createStatement();
 			try {
-				statement.executeUpdate(
-						"create table " + nombreBD + " (int code, int grade, name string, surName string, gender string, specialty Specialty, startWorkingIn Date, Assesment String )");
+				statement.executeUpdate("CREATE TABLE IF NOT EXISTS workers (code INTEGER PRIMARY KEY AUTOINCREMENT, grande INTEGER, name VARCHAR, surname VARCHAR, gender VARCHAR,Specialty VARCHAR, startWorkingIn DATE,  Assesment VARCHAR )");
+				log(Level.INFO, "Creada tabla " , null);
 			} catch (SQLException e) {
-				if (!e.getMessage().equals("table " + nombreBD + " already exists")) // Este error sí es correcto si la
+				if (!e.getMessage().equals("table workers already exists")) // Este error sí es correcto si la
 																						// tabla ya existe
-					log(Level.SEVERE, "La tabla " + nombreBD + " ya existe", e);
+					log(Level.SEVERE, "La tabla 'workers' ya existe", e);
 			}
 		} catch (SQLException e) {
-			log(Level.SEVERE, "Error en conexiÃ³n de base de datos " + nombreBD, e);
+			log(Level.SEVERE, "Error en conexiÃ³n de base de datos 'workers' ", e);
 		}
 
 	}
 
-	public static void insertIntoPrepStat(int code, int grade, String name, String surname, String gender, long specialty,
-			Date startWorkingIn, String assesment) {
-		try {
-			PreparedStatement insertSql = connection.prepareStatement("INSERT INTO workers VALUES (?,?,?,?,?,?,?,?)");
+	
+	//InsertarDatos
+		public static void insertInto( int code, int grade, String name, String surname, String gender ,String specialty,Date startWorkingIn, String assesment) {
+			String sent = "insert into Alumnos values(" + code + ", '" + grade + "', '" + name + "', " + surname + ", " + gender + ", " + specialty + ", " + startWorkingIn + ", " + assesment +
+					")";
+			//String sent = "drop table if exists Alumnos";
+			try {
+				statement = connection.createStatement();
+				statement.executeUpdate(sent);
+			} catch (SQLException e2) {
+				log( Level.SEVERE, "ERROR EN SENTENCIA SQL: " + sent, e2 );
+			}
+		}
 
-			insertSql.setInt(1, code);
-			insertSql.setInt(2, grade);
-			insertSql.setString(3, name);
-			insertSql.setString(4, surname);
-			insertSql.setString(5, gender);
-			insertSql.setLong(6, specialty);
-			insertSql.setDate(7, (java.sql.Date) startWorkingIn);
-			insertSql.setString(8, assesment);
+	public void insertIntoPrepStat(Workers workers) {
+		try {
+			PreparedStatement insertSql = connection.prepareStatement("INSERT INTO workers(code, grade, name, surname, gender, specialty, startWorkingIn, assesment) VALUES (?,?,?,?,?,?,?,?)");
+			
+			
+			insertSql.setInt(1, workers.getCode());
+			insertSql.setInt(2, workers.getGrade());
+			insertSql.setString(3, workers.getName());
+			insertSql.setString(4, workers.getSurname());
+			insertSql.setString(5, workers.getGender());
+			insertSql.setString(6, workers.getSpecialty().toString());
+			insertSql.setDate(7, (java.sql.Date) workers.getStartWorkingIn());
+			insertSql.setString(8, workers.getAssesment());
 
 			insertSql.executeUpdate();
 
 		} catch (SQLException e) {
-			log(Level.SEVERE, "ERROR EN SENTENCIA SQL: " + "INSERT INTO workers VALUES (?,?,?,?,?,?,?,?)", e);
+			log(Level.SEVERE, "ERROR EN SENTENCIA SQL: " + "INSERT INTO workers(code, grade, name, surname, gender, specialty, startWorkingIn, assesment) VALUES (?,?,?,?,?,?,?,?)", e);
 		}
 	}
 
+
+
 	// Sacar los datos
-	public static String getAlumno(int code) {
+	public  String getAlumno(int code) {
 		try (PreparedStatement stmt = connection
 				.prepareStatement("SELECT * FROM workers WHERE =" + code)) {
 
@@ -107,7 +124,7 @@ public class SqlWorkers {
 	}
 
 	// Cerrar conexion
-	public static void cerrarBD(Connection con, Statement st) {
+	public  void cerrarBD(Connection con, Statement st) {
 		try {
 			if (st != null)
 				st.close();
@@ -116,6 +133,14 @@ public class SqlWorkers {
 			log(Level.INFO, "Cierre de base de datos", null);
 		} catch (SQLException e) {
 			log(Level.SEVERE, "Error en cierre de base de datos", e);
+		}
+	}
+	
+	public void dropUserTable() {
+		try (Statement statement = connection.createStatement()) {
+			statement.executeUpdate("DROP TABLE IF EXISTS workers");
+		} catch (SQLException e) {
+			log(Level.SEVERE, "Error borrando la tabla 'workers' en la BD", e);
 		}
 	}
 
