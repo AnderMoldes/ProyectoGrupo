@@ -23,8 +23,11 @@ import classes.PoliceStation;
 import classes.Specialty;
 import classes.Workers;
 import classes.Boss;
+import classes.Counter;
 
 public class BossWindow extends JFrame{
+	
+	
 	JLabel lfunction;
 	JLabel lgrade;
 	JSpinner tgrade;
@@ -109,15 +112,18 @@ public class BossWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Object[] object;
+				Boss creation;
 
 				if (boss != null) {
 					object = null;
+					creation= null;
 				} else {
 					object = new Object[9];
+					creation= new Boss();
 				}
 
 				
-				object[0] = Workers.getCounter();
+				object[0] = Counter.getCounterT();
 				object[1] = tgrade.getValue();
 				object[2] = tname.getText();
 				object[3] = tsurname.getText();
@@ -127,17 +133,20 @@ public class BossWindow extends JFrame{
 				object[7] = comboSpecialty.getSelectedItem();
 				object[8] = tfunction.getText();
 
-//				creation.setFunction(tfunction.getText());
-//				creation.setName(tname.getText());
-//				creation.setSurname(tsurname.getText());
-//				creation.setGender(tgender.getText());
-//				creation.setAssesment(tassesstment.getText());
-//				creation.setStartWorkingIn((Date) spinYears.getValue());
-//				//creation.setSpecialty((Specialty) comboSpecialty.getSelectedItem());
+				
+				creation.setGrade((int) tgrade.getValue());
+				creation.setName(tname.getText());
+				creation.setSurname(tsurname.getText());
+				creation.setGender(tgender.getText());
+				creation.setAssesment(tassesstment.getText());
+				creation.setStartWorkingIn((Date) spinYears.getValue());
+				creation.setSpecialty((Specialty) comboSpecialty.getSelectedItem());		
+				creation.setFunction(tfunction.getText());
 
 				if (boss == null) {
-					//policeStation.getWorkers().add(creation);
+					policeStation.getWorkers().add(creation);
 					model.addRow(object);
+					System.out.println(creation);
 				}
 
 				dispose();

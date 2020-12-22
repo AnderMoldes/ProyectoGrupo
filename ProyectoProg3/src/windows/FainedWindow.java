@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import classes.Arrested;
+import classes.Counter;
 import classes.Country;
 import classes.Detained;
 import classes.Fined;
@@ -107,15 +108,17 @@ public class FainedWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Object[] object;
-
+				Fined creation;
 
 				if (fined != null) {
 					object= null;
+					creation= null;
 				} else {
 					object = new Object[10];
+					creation= new Fined();
 				}
 				
-				object[0] = Detained.container++;
+				object[0] = Counter.getCounterD();
 				object[1] = tName.getText();
 				object[2] = tLastName.getText();
 				object[3] = age.getValue();
@@ -129,23 +132,24 @@ public class FainedWindow extends JFrame {
 				object[8] = comboCountry.getSelectedItem();
 				object[9] = spinPayment.getValue();
 				
-//				creation.setName(tName.getText());
-//				creation.setLastName(tLastName.getText());
-//				creation.setAge((int) age.getValue());
-//
-//				if (radioFamale.isSelected()) {
-//					creation.setGender(radioFamale.getActionCommand());
-//				} else if(radioMale.isSelected()) {
-//					creation.setGender(radioMale.getActionCommand());
-//				}
-//
-//				creation.setCitizenship((Country) comboCountry.getSelectedItem());
-//				creation.setDescription(tdescription.getText());
-//				creation.setPayment((int)spinPayment.getValue());
+				creation.setName(tName.getText());
+				creation.setLastName(tLastName.getText());
+				creation.setAge((int) age.getValue());
+
+				if (radioFamale.isSelected()) {
+					creation.setGender(radioFamale.getActionCommand());
+				} else if(radioMale.isSelected()) {
+					creation.setGender(radioMale.getActionCommand());
+				}
+
+				creation.setCitizenship((Country) comboCountry.getSelectedItem());
+				creation.setDescription(tdescription.getText());
+				creation.setPayment((int)spinPayment.getValue());
 				
 
 				if (fined == null) {
-					//policeStation.getDetained().add(creation);
+					policeStation.getDetained().add(creation);
+					System.out.println(creation.toString());
 					model.addRow(object);
 				}
 

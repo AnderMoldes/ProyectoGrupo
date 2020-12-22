@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
 
 import classes.Arrested;
+import classes.Counter;
 import classes.Country;
 import classes.Detained;
 import classes.PoliceStation;
@@ -109,14 +110,17 @@ public class ArrestedWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Object[] object;
+				Arrested creation;
 
 				if (arrested != null) {
 					object= null;
+					creation= null;
 				} else {
 					object = new Object[9];
+					creation= new Arrested();    
 				}
 				
-				object[0] = Detained.getContainer();
+				object[0] = Counter.getCounterD();
 				object[1] = tName.getText();
 				object[2] = tLastName.getText();
 				object[3] = age.getValue();
@@ -133,24 +137,25 @@ public class ArrestedWindow extends JFrame {
 				object[8] = comboCountry.getSelectedItem();
 				
 				
-//				creation.setName(tName.getText());
-//				creation.setLastName(tLastName.getText());
-//				creation.setAge((int) age.getValue());
-//				creation.setNumberOfArrest((int) pnumberOfArrest.getValue());
-//
-//				if (radioFamale.isSelected()) {
-//					creation.setGender(radioFamale.getActionCommand());
-//				} else if(radioMale.isSelected()) {
-//					creation.setGender(radioMale.getActionCommand());
-//				}
-//
-//				creation.setCitizenship((Country) comboCountry.getSelectedItem());
-//				creation.setDescription(tdescription.getText());
-//				creation.setJailRelease(tjailrelease.getText());
+				creation.setName(tName.getText());
+				creation.setLastName(tLastName.getText());
+				creation.setAge((int) age.getValue());
+				creation.setNumberOfArrest((int) pnumberOfArrest.getValue());
+
+				if (radioFamale.isSelected()) {
+					creation.setGender(radioFamale.getActionCommand());
+				} else if(radioMale.isSelected()) {
+					creation.setGender(radioMale.getActionCommand());
+				}
+
+				creation.setCitizenship((Country) comboCountry.getSelectedItem());
+				creation.setDescription(tdescription.getText());
+				creation.setJailRelease(tjailrelease.getText());
 
 				if (arrested == null) {
-					//policeStation.getDetained().add(creation);
+					policeStation.getDetained().add(creation);
 					model.addRow(object);
+					System.out.println(creation.toString());
 				}
 
 				dispose();
