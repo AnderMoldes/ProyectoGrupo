@@ -99,9 +99,9 @@ public class BDWorkers {
 		try {
 			if (st!=null) st.close();
 			if (con!=null) con.close();
-			log( Level.INFO, "Cierre de base de datos", null );
+			log( Level.INFO, "Cierre de base de datos", null ); 
 		} catch (SQLException e) {
-			log( Level.SEVERE, "Error en cierre de base de datos", e );
+			log( Level.SEVERE, "Error in the database", e );
 		}
 	}
 	
