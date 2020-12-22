@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import classes.Arrested;
+import classes.Country;
+
 public class BDetained {
 	private static Logger logger = null;
 	private static Connection connection;
@@ -39,57 +42,59 @@ public class BDetained {
 			return null;
 		}
 	}
-	// Conectarse a la Base de Datos
-	public static void conection(String nombreBD) {
-		try {
-			statement = connection.createStatement();
+	// Conectarse a la base de datos
+		public static void conection(String nombreBD) {
 			try {
-				statement.executeUpdate("create table "+nombreBD+" (identificative string,name string,LastName string, age string,gender string,numberOfArrest string, description string,jailRelease string,cityzenship string,payment string)");
-				log( Level.SEVERE, "The table " + nombreBD + " created", null);
+				statement = connection.createStatement();
+				try {
+					statement.executeUpdate("create table "+nombreBD+" (identificative int, name string, LastName string, age int, gender string, numberOfArrest int, description string, jailRelease string, cityzenship string)");
+					log( Level.SEVERE, "The table " + nombreBD + " created", null);
+				} catch (SQLException e) {
+					if (!e.getMessage().equals("table "+nombreBD+" already exists"))  // Este error sí es correcto si la tabla ya existe
+						log( Level.SEVERE, "The table " + nombreBD + " already exists", e );
+				}
 			} catch (SQLException e) {
-				if (!e.getMessage().equals("table "+nombreBD+" already exists"))  // Este error sí es correcto si la tabla ya existe
-					log( Level.SEVERE, "The table " + nombreBD + " already exists", e );
+				log( Level.SEVERE, "Error coneccting to database " + nombreBD, e );
 			}
-		} catch (SQLException e) {
-			log( Level.SEVERE, "Error conecting to database " + nombreBD, e );
+			
+		}
+		public Connection getConection() {
+			return connection;
+		}
+		//InsertarDatos
+		public static void insertInto( int identificative,int age, String name, String LastName, String gender,int numberOfArrest, String description, String jailRelease, Country cityzenship) {
+			String sent = "insert into DetainedTable values(" + identificative + ", '" + name + "', " + LastName + ", "+ age + "', '"  + gender + ", " + description+ ", " + cityzenship+ ", " + jailRelease+ ")";
+			try {
+				statement = connection.createStatement();
+				statement.executeUpdate(sent);
+			} catch (SQLException e) {
+				log( Level.SEVERE, "ERROR IN SQL: " + sent, e );
+			}
+		}
+		// InsertarDatos con preparedStatement
+		public static void insertIntoPrepStat( Arrested arrested){
+			try {
+				PreparedStatement insertSql=connection.prepareStatement("INSERT INTO DetainedTable VALUES (?,?,?,?,?,?,?,?,?)");
+				
+				insertSql.setLong(1,arrested.getIdentificative());
+				insertSql.setString(2,arrested.getName());
+				insertSql.setString(3,arrested.getLastName());
+				insertSql.setLong(4,arrested.getAge());
+				insertSql.setString(5,arrested.getGender());
+				insertSql.setLong(6,arrested.getNumberOfArrest());
+				insertSql.setString(7,arrested.getJailRelease());
+				insertSql.setString(8,arrested.getCitizenship().toString());
+				insertSql.setString(9,arrested.getDescription());
+				
+				
+				insertSql.executeUpdate();
+				log( Level.SEVERE, "Completed", null );
+			
+			} catch (SQLException e) {
+				log( Level.SEVERE, "ERROR EN SENTENCIA SQL: " + "INSERT INTO DetainedTable VALUES (?,?,?,?,?,?,?,?,?)", e );
+			}
 		}
 		
-	}
-	public Connection getConection() {
-		return connection;
-	}
-	//Insertar Datos
-	public static void insertInto( String identificative,String age, String name, String LastName, String gender,String numberOfArrest, String description, String jailRelease,String cityzenship,String payment) {
-		String sent = "insert into Workers values(" + identificative + ", '" + name + "', " + LastName + ", "+ age + "', '"  + gender + ", " + description+ ", " + cityzenship+ ", " + jailRelease+ ", " + payment+")";
-		try {
-			statement = connection.createStatement();
-			statement.executeUpdate(sent);
-		} catch (SQLException e) {
-			log( Level.SEVERE, "ERROR IN SQL: " + sent, e );
-		}
-	}
-	// Insertar Datos con preparedStatement
-	public static void insertIntoPrepStat( String identificative,String age, String name, String LastName, String gender,String numberOfArrest, String description, String jailRelease,String cityzenship,String payment){
-		try {
-			PreparedStatement insertSql=connection.prepareStatement("INSERT INTO Workers VALUES (?,?,?,?,?,?,?,?,?,?,?)");
-			
-			insertSql.setString(1,identificative);
-			insertSql.setString(2,name);
-			insertSql.setString(3,LastName);
-			insertSql.setString(4,age);
-			insertSql.setString(5,gender);
-			insertSql.setString(6,numberOfArrest);
-			insertSql.setString(7,jailRelease);
-			insertSql.setString(8,cityzenship);
-			insertSql.setString(9,description);
-			insertSql.setString(10,payment);
-			
-			insertSql.executeUpdate();
-		
-		} catch (SQLException e) {
-			log( Level.SEVERE, "AN ERROR HAS OCURRED IN SQL SENTENCE: " + "INSERT INTO Workers VALUES (?,?,?,?,?,?,?,?,?,?)", e );
-		}
-	}
 	
 	
 	
@@ -108,7 +113,7 @@ public class BDetained {
 	public static void dropTable( String nombreBD ) {
 		try {
 			statement = connection.createStatement();
-			statement.executeUpdate("drop table if exists Workers" );
+			statement.executeUpdate("drop table if exists DetainedTable" );
 			log( Level.INFO, "Deleted the table", null );
 		} catch (SQLException e) {
 			log( Level.SEVERE, "An error has ocurred deleting database", e );
