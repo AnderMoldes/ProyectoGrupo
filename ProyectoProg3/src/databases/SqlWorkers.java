@@ -84,7 +84,6 @@ public class SqlWorkers {
 		try {
 			PreparedStatement insertSql = connection.prepareStatement("INSERT INTO workers(code, grade, name, surname, gender, specialty, startWorkingIn, assesment) VALUES (?,?,?,?,?,?,?,?)");
 			
-			
 			insertSql.setInt(1, workers.getCode());
 			insertSql.setInt(2, workers.getGrade());
 			insertSql.setString(3, workers.getName());

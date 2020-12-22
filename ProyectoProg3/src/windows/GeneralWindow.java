@@ -375,6 +375,7 @@ public class GeneralWindow extends JFrame {
 
 				if (table.getRowCount() > 0) {
 					for (int i = 0; i < table.getRowCount(); i++) {
+						
 
 //						sqlWorkers.insertIntoPrepStat(  table.getValueAt(i, 0) ,  table.getValueAt(i, 1)
 //										,  table.getValueAt(i, 2) ,  table.getValueAt(i, 3) ,
