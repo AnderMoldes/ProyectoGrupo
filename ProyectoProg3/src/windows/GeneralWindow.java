@@ -17,6 +17,7 @@ import classes.Fined;
 import classes.PoliceStation;
 import classes.Workers;
 import databases.BDWorkers;
+import databases.BDetained;
 
 import java.awt.event.*;
 import java.sql.PreparedStatement;
@@ -29,7 +30,7 @@ public class GeneralWindow extends JFrame {
 	PoliceStation policeStation;
 
 	BDWorkers bDWorkers;
-	
+
 	JMenuBar bar;
 	JMenu file;
 	JMenu end;
@@ -55,12 +56,6 @@ public class GeneralWindow extends JFrame {
 	JButton createArrested;
 	JButton createFined;
 	JButton delete;
-//	JList listWorkers;
-//	JList listBoss;
-//	DefaultListModel modelWorkers;
-//	DefaultListModel modelBoss;
-//	JList listDetained;
-//	DefaultListModel modelDetained;
 
 	JLabel lbar;
 	JProgressBar progress;
@@ -75,10 +70,10 @@ public class GeneralWindow extends JFrame {
 	}
 
 	public GeneralWindow() {
-		
+
 		BDWorkers cc = new BDWorkers();
 		Connection cn = cc.getConection();
-		
+
 		setLayout(new GridLayout(3, 1));
 
 		JPanel up = new JPanel();
@@ -157,7 +152,7 @@ public class GeneralWindow extends JFrame {
 
 		bClose = new JButton("Close Window");
 
-		delete = new JButton("Delete All");
+		delete = new JButton("Delete");
 		bManageRelations = new JButton("Manage Relations");
 		bManageWorkers = new JButton("Manage Workers");
 		bManageDetained = new JButton("Manage Detained");
@@ -227,10 +222,6 @@ public class GeneralWindow extends JFrame {
 			}
 		});
 
-//		modelWorkers = new DefaultListModel();
-//		listWorkers = new JList(modelWorkers);
-//		JScrollPane scrollWorkers = new JScrollPane(listWorkers);
-
 		MiModelo modelWorkers = new MiModelo();
 		modelWorkers.addColumn("code");
 		modelWorkers.addColumn("grade");
@@ -293,10 +284,6 @@ public class GeneralWindow extends JFrame {
 				}
 			}
 		});
-
-//		modelDetained = new DefaultListModel();
-//		listDetained = new JList(modelDetained);
-//		JScrollPane scrollDetained = new JScrollPane(listDetained);
 
 		MiModelo modelDetained = new MiModelo();
 		modelDetained.addColumn("identificative");
@@ -378,76 +365,84 @@ public class GeneralWindow extends JFrame {
 		 * } });
 		 */
 		delete.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for( int i = modelWorkers.getRowCount() - 1; i >= 0; i-- ) {
-					modelWorkers.removeRow(i);
-			       }
+				int fila = tableWorkers.getSelectedRow();
+				int fila2 = tableDetained.getSelectedColumn();
+				if (fila >= 0 && tableWorkers.isColumnSelected(fila)) {
+					modelWorkers.removeRow(fila);
+				} else if (fila2 >= 0 && tableDetained.isColumnSelected(fila)) {
+					modelDetained.removeRow(fila);
+				} else {
+					JOptionPane.showMessageDialog(null, "Select Row");
+				}
 			}
-		}
-			      
-			);
-		
+
+		});
+
 		consultWorkers.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int fila = Integer.parseInt(getTitle());
 				int columna = Integer.parseInt(getName());
-				
+
 			}
 		});
-		
+
 		consultDetained.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int fila = Integer.parseInt(getName());
 				int columna = Integer.parseInt(getTitle());
-				
-				
+
 			}
 		});
 
-		
 		createBD.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				BDWorkers.initBD("Workers.db");
 				BDWorkers.conection("WorkersTable");
 				
+				BDetained.initBD("Detained.db");
+				BDetained.conection("DetainedTable");
 			}
 		});
-		dropBD.addActionListener(new ActionListener() {@Override
+		
+		dropBD.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				BDWorkers.dropTable("WorkersTable");
-		}});
+				BDetained.dropTable("DetainedTable");
+			}
+		});
+
 		saveDataWorkers.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for (int i = 0; i < tableWorkers.getRowCount(); i++) {
-					try {
-						//BD.insertInto(tableWorkers.getValueAt(i,0).toString(), tableWorkers.getValueAt(i,1).toString(), tableWorkers.getValueAt(i,2).toString(), tableWorkers.getValueAt(i,3).toString(), tableWorkers.getValueAt(i,4).toString(), tableWorkers.getValueAt(i,5).toString(), tableWorkers.getValueAt(i,6).toString(), tableWorkers.getValueAt(i,7).toString(),tableWorkers.getValueAt(i,8).toString());
-							PreparedStatement pst = cn.prepareStatement("INSERT INTO WorkersTable VALUES (?,?,?,?,?,?,?,?,?,?)");
-							pst.setString(1, tableWorkers.getValueAt(i,0).toString());
-							pst.setString(2, tableWorkers.getValueAt(i,1).toString());
-							pst.setString(3, tableWorkers.getValueAt(i,2).toString());
-							pst.setString(4, tableWorkers.getValueAt(i,3).toString());
-							pst.setString(5, tableWorkers.getValueAt(i,4).toString());
-							pst.setString(6, tableWorkers.getValueAt(i,5).toString());
-							pst.setString(7, tableWorkers.getValueAt(i,6).toString());
-							pst.setString(8, tableWorkers.getValueAt(i,7).toString());
-							pst.setString(9, tableWorkers.getValueAt(i,8).toString());
-							pst.executeUpdate();
-						System.out.println("Saved!");
-						} catch (Exception a) {
-							// TODO Auto-generated catch block
-							System.out.println("Error!!!");
-						}
+				for (Workers workers : policeStation.getWorkers()) {
+					BDWorkers.insertIntoPrepStat(workers);
+
+				}
+
+			}
+		});
+		
+		
+		saveDataDetained.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (Detained detained : policeStation.getDetained()) {
+					if (detained instanceof Arrested) {
+						BDetained.insertIntoPrepStat((Arrested) detained);
 					}
+				}
 				
 			}
 		});
