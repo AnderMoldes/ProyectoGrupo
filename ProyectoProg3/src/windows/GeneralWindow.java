@@ -157,7 +157,7 @@ public class GeneralWindow extends JFrame {
 
 		bClose = new JButton("Close Window");
 
-		delete = new JButton("Delete");
+		delete = new JButton("Delete All");
 		bManageRelations = new JButton("Manage Relations");
 		bManageWorkers = new JButton("Manage Workers");
 		bManageDetained = new JButton("Manage Detained");
@@ -378,21 +378,16 @@ public class GeneralWindow extends JFrame {
 		 * } });
 		 */
 		delete.addActionListener(new ActionListener() {
-
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int fila = tableWorkers.getSelectedRow();
-				int fila2 = tableDetained.getSelectedColumn();
-				if (fila >= 0 && tableWorkers.isColumnSelected(fila)) {
-					modelWorkers.removeRow(fila);
-				} else if (fila2 >= 0 && tableDetained.isColumnSelected(fila)) {
-						modelDetained.removeRow(fila);
-				} else {
-						JOptionPane.showMessageDialog(null, "Select Row");
-					}
-				}
-				
-		});
+				for( int i = modelWorkers.getRowCount() - 1; i >= 0; i-- ) {
+					modelWorkers.removeRow(i);
+			       }
+			}
+		}
+			      
+			);
 		
 		consultWorkers.addActionListener(new ActionListener() {
 			
@@ -447,10 +442,10 @@ public class GeneralWindow extends JFrame {
 							pst.setString(8, tableWorkers.getValueAt(i,7).toString());
 							pst.setString(9, tableWorkers.getValueAt(i,8).toString());
 							pst.executeUpdate();
-						System.out.println("Se ha guardado");
+						System.out.println("Saved!");
 						} catch (Exception a) {
 							// TODO Auto-generated catch block
-							System.out.println("No guardado");
+							System.out.println("Error!!!");
 						}
 					}
 				

@@ -15,7 +15,7 @@ public class BDWorkers {
 	private static Connection connection;
 	private static Statement statement;
 	
-	// Meodo local para loggear
+	// Loggin
 	private static void log( Level level, String msg, Throwable excepcion ) {
 		if (!LOGGING) return;
 		if (logger==null) {  
@@ -53,7 +53,7 @@ public class BDWorkers {
 					log( Level.SEVERE, "The table " + nombreBD + " already exists", e );
 			}
 		} catch (SQLException e) {
-			log( Level.SEVERE, "Error coneccting to database " + nombreBD, e );
+			log( Level.SEVERE, "Error conecting to database " + nombreBD, e );
 		}
 		
 	}
@@ -88,18 +88,18 @@ public class BDWorkers {
 			insertSql.executeUpdate();
 		
 		} catch (SQLException e) {
-			log( Level.SEVERE, "ERROR EN SENTENCIA SQL: " + "INSERT INTO Workers VALUES (?,?,?,?,?,?,?,?,?,?)", e );
+			log( Level.SEVERE, "ERROR IN THE SQL SENTENCE: " + "INSERT INTO Workers VALUES (?,?,?,?,?,?,?,?,?,?)", e );
 		}
 	}
 	
 	
 	
 	//Cerrar conexion
-	public static void cerrarBD( Connection con, Statement st ) {
+	public static void closeBD( Connection con, Statement st ) {
 		try {
 			if (st!=null) st.close();
 			if (con!=null) con.close();
-			log( Level.INFO, "Cierre de base de datos", null ); 
+			log( Level.INFO, "Close the database", null ); 
 		} catch (SQLException e) {
 			log( Level.SEVERE, "Error in the database", e );
 		}

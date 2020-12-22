@@ -13,7 +13,7 @@ public class BDetained {
 	private static Connection connection;
 	private static Statement statement;
 	
-	// Meodo local para loggear
+	// Loggin
 	private static void log( Level level, String msg, Throwable excepcion ) {
 		if (!LOGGING) return;
 		if (logger==null) {  
@@ -27,7 +27,7 @@ public class BDetained {
 	}
 	
 	private static boolean LOGGING = true;
-	// Conectarse a la base de datos
+	// Inicializar la Base de Datos
 	public static Connection initBD( String nombreBD ) {
 		try {
 		    Class.forName("org.sqlite.JDBC");
@@ -39,7 +39,7 @@ public class BDetained {
 			return null;
 		}
 	}
-	// Conectarse a la base de datos
+	// Conectarse a la Base de Datos
 	public static void conection(String nombreBD) {
 		try {
 			statement = connection.createStatement();
@@ -51,14 +51,14 @@ public class BDetained {
 					log( Level.SEVERE, "The table " + nombreBD + " already exists", e );
 			}
 		} catch (SQLException e) {
-			log( Level.SEVERE, "Error coneccting to database " + nombreBD, e );
+			log( Level.SEVERE, "Error conecting to database " + nombreBD, e );
 		}
 		
 	}
 	public Connection getConection() {
 		return connection;
 	}
-	//InsertarDatos
+	//Insertar Datos
 	public static void insertInto( String identificative,String age, String name, String LastName, String gender,String numberOfArrest, String description, String jailRelease,String cityzenship,String payment) {
 		String sent = "insert into Workers values(" + identificative + ", '" + name + "', " + LastName + ", "+ age + "', '"  + gender + ", " + description+ ", " + cityzenship+ ", " + jailRelease+ ", " + payment+")";
 		try {
@@ -68,7 +68,7 @@ public class BDetained {
 			log( Level.SEVERE, "ERROR IN SQL: " + sent, e );
 		}
 	}
-	// InsertarDatos con preparedStatement
+	// Insertar Datos con preparedStatement
 	public static void insertIntoPrepStat( String identificative,String age, String name, String LastName, String gender,String numberOfArrest, String description, String jailRelease,String cityzenship,String payment){
 		try {
 			PreparedStatement insertSql=connection.prepareStatement("INSERT INTO Workers VALUES (?,?,?,?,?,?,?,?,?,?,?)");
@@ -87,24 +87,24 @@ public class BDetained {
 			insertSql.executeUpdate();
 		
 		} catch (SQLException e) {
-			log( Level.SEVERE, "ERROR EN SENTENCIA SQL: " + "INSERT INTO Workers VALUES (?,?,?,?,?,?,?,?,?,?)", e );
+			log( Level.SEVERE, "AN ERROR HAS OCURRED IN SQL SENTENCE: " + "INSERT INTO Workers VALUES (?,?,?,?,?,?,?,?,?,?)", e );
 		}
 	}
 	
 	
 	
 	//Cerrar conexion
-	public static void cerrarBD( Connection con, Statement st ) {
+	public static void closeBD( Connection con, Statement st ) {
 		try {
 			if (st!=null) st.close();
 			if (con!=null) con.close();
-			log( Level.INFO, "Cierre de base de datos", null );
+			log( Level.INFO, "Close the database", null );
 		} catch (SQLException e) {
-			log( Level.SEVERE, "Error en cierre de base de datos", e );
+			log( Level.SEVERE, "An error has ocurred closing the database", e );
 		}
 	}
 	
-	//Reiniciar 
+	//Borrar la table de la base de datos
 	public static void dropTable( String nombreBD ) {
 		try {
 			statement = connection.createStatement();
