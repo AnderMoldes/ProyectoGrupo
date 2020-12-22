@@ -377,6 +377,45 @@ public class GeneralWindow extends JFrame {
 		 * 
 		 * } });
 		 */
+		delete.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int fila = tableWorkers.getSelectedRow();
+				int fila2 = tableDetained.getSelectedColumn();
+				if (fila >= 0 && tableWorkers.isColumnSelected(fila)) {
+					modelWorkers.removeRow(fila);
+				} else if (fila2 >= 0 && tableDetained.isColumnSelected(fila)) {
+						modelDetained.removeRow(fila);
+				} else {
+						JOptionPane.showMessageDialog(null, "Select Row");
+					}
+				}
+				
+		});
+		
+		consultWorkers.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int fila = Integer.parseInt(getTitle());
+				int columna = Integer.parseInt(getName());
+				
+			}
+		});
+		
+		consultDetained.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int fila = Integer.parseInt(getName());
+				int columna = Integer.parseInt(getTitle());
+				
+				
+			}
+		});
+
+		
 		createBD.addActionListener(new ActionListener() {
 			
 			@Override
