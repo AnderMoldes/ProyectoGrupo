@@ -1,6 +1,8 @@
 package windows;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
 
 import javax.swing.text.BadLocationException;
@@ -9,12 +11,14 @@ import javax.swing.text.StyleConstants;
 
 import classes.Brand;
 import classes.VehicleTypes;
+import windows.GeneralWindow.MiModelo;
 
 import java.awt.event.*;
 
 public class VehicleWindow extends JFrame{
 	
 	JPanel panel1;
+	JPanel panel2;
 
 	JMenuBar bar;
 	JMenu types;
@@ -35,6 +39,7 @@ public class VehicleWindow extends JFrame{
 	
 	public VehicleWindow(){
 		JPanel panel1 = new JPanel();
+		JPanel panel2 = new JPanel();
 		
 		JMenuBar bar = new JMenuBar();
 		JMenu types = new JMenu("Types of Vehicle");
@@ -64,7 +69,34 @@ public class VehicleWindow extends JFrame{
 		
 		this.setLayout(new FlowLayout());
 		
+		//public class MiModelo extends DefaultTableModel {
+			 //  public boolean isCellEditable (int row, int column) {
+			       // Aquí devolvemos true o false según queramos que una celda
+			       // identificada por fila,columna (row,column), sea o no editable
+				   
+			      // return false;
+			  // }
+			//}
+		
+		JTable table = new JTable();
+		JScrollPane scrollVehicles= new JScrollPane(table);
+		
+		//MiModelo modelDetained= new MiModelo();
+		//modelDetained.addColumn("identificative");
+		//modelDetained.addColumn("name");
+		//modelDetained.addColumn("LastName");
+		//modelDetained.addColumn("age");
+		//modelDetained.addColumn("gender");
+		//modelDetained.addColumn("numberOfArrest");
+		//modelDetained.addColumn("description");
+		//modelDetained.addColumn("jailRelease");
+		//modelDetained.addColumn("citizenship");
+		//modelDetained.addColumn("payment");
+		
+		add(panel2);
 		add(panel1);
+		
+		panel2.add(scrollVehicles);
 		
 		bar.add(types);
 		types.add(patrolCar);
@@ -126,8 +158,8 @@ public class VehicleWindow extends JFrame{
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("VEHICLE MANAGEMENT");
-		setSize(500, 500);
-		//pack();
+		
+		pack();
 		setResizable(false);
 		setVisible(true);
 	}
