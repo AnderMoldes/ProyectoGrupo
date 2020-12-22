@@ -364,6 +364,42 @@ public class GeneralWindow extends JFrame {
 		 * 
 		 * } });
 		 */
+		delete.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int fila = table.getSelectedRow();
+				int fila2 = tableDetained.getSelectedColumn();
+				if (fila >= 0 && table.isColumnSelected(fila)) {
+					modelWorkers.removeRow(fila);
+				} else if (fila2 >= 0 && tableDetained.isColumnSelected(fila)) {
+						modelDetained.removeRow(fila);
+				} else {
+						JOptionPane.showMessageDialog(null, "Select Row");
+					}
+				}
+				
+		});
+		
+		consultWorkers.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int fila = Integer.parseInt();
+				int columna = Integer.parseInt();
+				
+			}
+		});
+		
+		consultDetained.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int fila = Integer.parseInt();
+				int columna = Integer.parseInt();
+				
+			}
+		});
 
 		saveDataWorkers.addActionListener(new ActionListener() {
 
@@ -375,7 +411,6 @@ public class GeneralWindow extends JFrame {
 
 				if (table.getRowCount() > 0) {
 					for (int i = 0; i < table.getRowCount(); i++) {
-						
 
 //						sqlWorkers.insertIntoPrepStat(  table.getValueAt(i, 0) ,  table.getValueAt(i, 1)
 //										,  table.getValueAt(i, 2) ,  table.getValueAt(i, 3) ,
