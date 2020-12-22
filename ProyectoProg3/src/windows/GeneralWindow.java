@@ -16,17 +16,20 @@ import classes.Detained;
 import classes.Fined;
 import classes.PoliceStation;
 import classes.Workers;
-import databases.SqlWorkers;
+import databases.BDWorkers;
 
 import java.awt.event.*;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 public class GeneralWindow extends JFrame {
 	Workers workers;
 	PoliceStation policeStation;
 
-	SqlWorkers sqlWorkers;
-
+	BDWorkers bDWorkers;
+	
 	JMenuBar bar;
 	JMenu file;
 	JMenu end;
@@ -37,6 +40,9 @@ public class GeneralWindow extends JFrame {
 	JMenuItem workersI;
 	JMenuItem vehicle;
 	JMenuItem detained;
+	JMenuItem createBD;
+	JMenuItem initBD;
+	JMenuItem dropBD;
 
 	JButton createWorkers;
 	JButton consultWorkers;
@@ -69,7 +75,10 @@ public class GeneralWindow extends JFrame {
 	}
 
 	public GeneralWindow() {
-
+		
+		BDWorkers cc = new BDWorkers();
+		Connection cn = cc.getConection();
+		
 		setLayout(new GridLayout(3, 1));
 
 		JPanel up = new JPanel();
@@ -84,8 +93,12 @@ public class GeneralWindow extends JFrame {
 		bar = new JMenuBar();
 
 		file = new JMenu("File");
+		createBD = new JMenuItem("Create Database");
+		dropBD = new JMenuItem("Delete Database");
 		saveDataWorkers = new JMenuItem("Save data Workers");
 		saveDataDetained = new JMenuItem("Save data Detained");
+		file.add(createBD);
+		file.add(dropBD);
 		file.add(saveDataWorkers);
 		file.add(saveDataDetained);
 
@@ -229,8 +242,8 @@ public class GeneralWindow extends JFrame {
 		modelWorkers.addColumn("Assesment");
 		modelWorkers.addColumn("boss function");
 
-		JTable table = new JTable(modelWorkers);
-		JScrollPane scrollWorkers = new JScrollPane(table);
+		JTable tableWorkers = new JTable(modelWorkers);
+		JScrollPane scrollWorkers = new JScrollPane(tableWorkers);
 
 		up.add(scrollWorkers);
 		up.add(ButtonPanel, BorderLayout.NORTH);
@@ -270,10 +283,10 @@ public class GeneralWindow extends JFrame {
 		 * modelWorkers); } else { new WorkersWindow(workers, policeStation,
 		 * modelWorkers); } } } });
 		 */
-		table.addMouseListener(new MouseAdapter() {
+		tableWorkers.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				int fila = table.rowAtPoint(e.getPoint());
-				int columna = table.columnAtPoint(e.getPoint());
+				int fila = tableWorkers.rowAtPoint(e.getPoint());
+				int columna = tableWorkers.columnAtPoint(e.getPoint());
 				if ((fila > -1) && (columna > -1)) {
 					// System.out.println(modelWorkers.getValueAt(fila,columna));
 					new WorkersWindow(workers, policeStation, modelWorkers);
@@ -364,30 +377,44 @@ public class GeneralWindow extends JFrame {
 		 * 
 		 * } });
 		 */
-
+		createBD.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				BDWorkers.initBD("Workers.db");
+				BDWorkers.conection("WorkersTable");
+				
+			}
+		});
+		dropBD.addActionListener(new ActionListener() {@Override
+			public void actionPerformed(ActionEvent e) {
+				BDWorkers.dropTable("WorkersTable");
+		}});
 		saveDataWorkers.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				sqlWorkers = new SqlWorkers();
-				sqlWorkers.initBD("policeStation.db");
-				sqlWorkers.conexion();
-
-				if (table.getRowCount() > 0) {
-					for (int i = 0; i < table.getRowCount(); i++) {
-						
-
-//						sqlWorkers.insertIntoPrepStat(  table.getValueAt(i, 0) ,  table.getValueAt(i, 1)
-//										,  table.getValueAt(i, 2) ,  table.getValueAt(i, 3) ,
-//										 table.getValueAt(i, 4) , table.getValueAt(i, 5) ,
-//										 table.getValueAt(i, 6) , table.getValueAt(i, 7));
-
+				for (int i = 0; i < tableWorkers.getRowCount(); i++) {
+					try {
+						//BD.insertInto(tableWorkers.getValueAt(i,0).toString(), tableWorkers.getValueAt(i,1).toString(), tableWorkers.getValueAt(i,2).toString(), tableWorkers.getValueAt(i,3).toString(), tableWorkers.getValueAt(i,4).toString(), tableWorkers.getValueAt(i,5).toString(), tableWorkers.getValueAt(i,6).toString(), tableWorkers.getValueAt(i,7).toString(),tableWorkers.getValueAt(i,8).toString());
+							PreparedStatement pst = cn.prepareStatement("INSERT INTO WorkersTable VALUES (?,?,?,?,?,?,?,?,?,?)");
+							pst.setString(1, tableWorkers.getValueAt(i,0).toString());
+							pst.setString(2, tableWorkers.getValueAt(i,1).toString());
+							pst.setString(3, tableWorkers.getValueAt(i,2).toString());
+							pst.setString(4, tableWorkers.getValueAt(i,3).toString());
+							pst.setString(5, tableWorkers.getValueAt(i,4).toString());
+							pst.setString(6, tableWorkers.getValueAt(i,5).toString());
+							pst.setString(7, tableWorkers.getValueAt(i,6).toString());
+							pst.setString(8, tableWorkers.getValueAt(i,7).toString());
+							pst.setString(9, tableWorkers.getValueAt(i,8).toString());
+							pst.executeUpdate();
+						System.out.println("Se ha guardado");
+						} catch (Exception a) {
+							// TODO Auto-generated catch block
+							System.out.println("No guardado");
+						}
 					}
-
-				} else {
-					JOptionPane.showInputDialog(this, "La tabla se encuentra vacia");
-				}
-
+				
 			}
 		});
 
