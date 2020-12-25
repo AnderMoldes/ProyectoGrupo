@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import classes.Arrested;
 import classes.Country;
+import classes.Fined;
 
 public class BDetained {
 	private static Logger logger = null;
@@ -58,6 +59,24 @@ public class BDetained {
 			}
 			
 		}
+		
+		// Conectarse a la base de datos
+				public static void conectionFained(String nombreBD) {
+					try {
+						statement = connection.createStatement();
+						try {
+							statement.executeUpdate("create table "+nombreBD+" (identificative int, name string, LastName string, age int, gender string, description string, cityzenship string, payment int)");
+							log( Level.SEVERE, "The table " + nombreBD + " created", null);
+						} catch (SQLException e) {
+							if (!e.getMessage().equals("table "+nombreBD+" already exists"))  // Este error sí es correcto si la tabla ya existe
+								log( Level.SEVERE, "The table " + nombreBD + " already exists", e );
+						}
+					} catch (SQLException e) {
+						log( Level.SEVERE, "Error coneccting to database " + nombreBD, e );
+					}
+					
+				}
+		
 		public Connection getConection() {
 			return connection;
 		}
@@ -95,6 +114,29 @@ public class BDetained {
 			}
 		}
 		
+		
+		// InsertarDatos con preparedStatement
+				public static void insertIntoPrepStatFained( Fined fained){
+					try {
+						PreparedStatement insertSql=connection.prepareStatement("INSERT INTO FainedTable VALUES (?,?,?,?,?,?,?,?)");
+						
+						insertSql.setLong(1,fained.getIdentificative());
+						insertSql.setString(2,fained.getName());
+						insertSql.setString(3,fained.getLastName());
+						insertSql.setLong(4,fained.getAge());
+						insertSql.setString(5,fained.getGender());
+						insertSql.setString(6,fained.getDescription());
+						insertSql.setString(7,fained.getCitizenship().toString());
+						insertSql.setInt(8,(int) fained.getPayment());
+						
+						
+						insertSql.executeUpdate();
+						log( Level.SEVERE, "Completed", null );
+					
+					} catch (SQLException e) {
+						log( Level.SEVERE, "ERROR EN SENTENCIA SQL: " + "INSERT INTO FainedTable VALUES (?,?,?,?,?,?,?,?)", e );
+					}
+				}
 	
 	
 	
@@ -114,7 +156,8 @@ public class BDetained {
 		try {
 			statement = connection.createStatement();
 			statement.executeUpdate("drop table if exists DetainedTable" );
-			log( Level.INFO, "Deleted the table", null );
+			statement.executeUpdate("drop table if exists FainedTable" );
+			log( Level.INFO, "Deleted the tables", null );
 		} catch (SQLException e) {
 			log( Level.SEVERE, "An error has ocurred deleting database", e );
 		}

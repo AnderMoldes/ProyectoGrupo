@@ -22,6 +22,8 @@ import databases.BDetained;
 import java.awt.event.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
@@ -36,7 +38,10 @@ public class GeneralWindow extends JFrame {
 	JMenu end;
 
 	JMenuItem saveDataWorkers;
+	JMenuItem saveDataBoss;
 	JMenuItem saveDataDetained;
+	JMenuItem saveDataFained;
+	JMenuItem ShowData;
 
 	JMenuItem workersI;
 	JMenuItem vehicle;
@@ -91,11 +96,19 @@ public class GeneralWindow extends JFrame {
 		createBD = new JMenuItem("Create Database");
 		dropBD = new JMenuItem("Delete Database");
 		saveDataWorkers = new JMenuItem("Save data Workers");
-		saveDataDetained = new JMenuItem("Save data Detained");
+		saveDataBoss = new JMenuItem("Save data Boss");
+		saveDataDetained = new JMenuItem("Save data Arrested");
+		saveDataFained= new JMenuItem("Save data Fained");
+		ShowData= new JMenuItem("Show Data Workers");
+		
 		file.add(createBD);
 		file.add(dropBD);
 		file.add(saveDataWorkers);
+		file.add(saveDataBoss);
 		file.add(saveDataDetained);
+		file.add(saveDataFained);
+		file.add(ShowData);
+		
 
 		end = new JMenu("Menu");
 
@@ -407,17 +420,21 @@ public class GeneralWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				BDWorkers.initBD("Workers.db");
 				BDWorkers.conection("WorkersTable");
-				
+				BDWorkers.conectionBoss("WorkersTableBoss");
+
 				BDetained.initBD("Detained.db");
 				BDetained.conection("DetainedTable");
+				BDetained.conectionFained("FainedTable");
 			}
 		});
-		
+
 		dropBD.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				BDWorkers.dropTable("WorkersTable");
+				BDWorkers.dropTable("WorkersTableBoss");
 				BDetained.dropTable("DetainedTable");
+				BDetained.dropTable("FainedTable");
 			}
 		});
 
@@ -433,9 +450,34 @@ public class GeneralWindow extends JFrame {
 			}
 		});
 		
-		
-		saveDataDetained.addActionListener(new ActionListener() {
+		ShowData.addActionListener(new ActionListener() {
 			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<Workers> workers= BDWorkers.getAllWorkers();
+				for (Workers w : workers) {
+					System.out.println("Usuarios en la base de datos");
+					System.out.println(w);
+					
+				}
+				
+			}
+		});
+
+		saveDataBoss.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (Workers workers : policeStation.getWorkers()) {
+					if (workers instanceof Boss) {
+						BDWorkers.insertIntoPrepStatBoss((Boss) workers);
+					}
+				}
+			}
+		});
+
+		saveDataDetained.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for (Detained detained : policeStation.getDetained()) {
@@ -443,9 +485,24 @@ public class GeneralWindow extends JFrame {
 						BDetained.insertIntoPrepStat((Arrested) detained);
 					}
 				}
+
+			}
+		});
+		
+		saveDataFained.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (Detained detained : policeStation.getDetained()) {
+					if (detained instanceof Fined) {
+						BDetained.insertIntoPrepStatFained((Fined) detained);
+					}
+				}
 				
 			}
 		});
+		
+		
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("POLICE MANAGEMENT");
