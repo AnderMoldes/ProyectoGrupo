@@ -36,6 +36,9 @@ public class GeneralWindow extends JFrame {
 	JMenuBar bar;
 	JMenu file;
 	JMenu end;
+	JMenu workersMenu;
+	JMenu DetainedMenu;
+	
 
 	JMenuItem saveDataWorkers;
 	JMenuItem saveDataBoss;
@@ -93,21 +96,26 @@ public class GeneralWindow extends JFrame {
 		bar = new JMenuBar();
 
 		file = new JMenu("File");
+		workersMenu= new JMenu("Database Workers");
+		DetainedMenu= new JMenu("Database Detained");
+		
 		createBD = new JMenuItem("Create Database");
 		dropBD = new JMenuItem("Delete Database");
 		saveDataWorkers = new JMenuItem("Save data Workers");
 		saveDataBoss = new JMenuItem("Save data Boss");
 		saveDataDetained = new JMenuItem("Save data Arrested");
-		saveDataFained= new JMenuItem("Save data Fained");
-		ShowData= new JMenuItem("Show Data Workers");
+		saveDataFained = new JMenuItem("Save data Fained");
+		ShowData = new JMenuItem("Show Data");
 		
+
 		file.add(createBD);
 		file.add(dropBD);
-		file.add(saveDataWorkers);
-		file.add(saveDataBoss);
-		file.add(saveDataDetained);
-		file.add(saveDataFained);
 		file.add(ShowData);
+		
+		workersMenu.add(saveDataWorkers);
+		workersMenu.add(saveDataBoss);
+		DetainedMenu.add(saveDataDetained);
+		DetainedMenu.add(saveDataFained);
 		
 
 		end = new JMenu("Menu");
@@ -121,6 +129,8 @@ public class GeneralWindow extends JFrame {
 		end.add(vehicle);
 
 		bar.add(file);
+		bar.add(workersMenu);
+		bar.add(DetainedMenu);
 		bar.add(end);
 
 		vehicle.addActionListener(new ActionListener() {
@@ -449,18 +459,21 @@ public class GeneralWindow extends JFrame {
 
 			}
 		});
-		
+
 		ShowData.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<Workers> workers= BDWorkers.getAllWorkers();
-				for (Workers w : workers) {
-					System.out.println("Usuarios en la base de datos");
-					System.out.println(w);
-					
+				try {
+					BDWorkers.consultarDatos("WorkersTable");
+					BDWorkers.consultarDatosBoss("WorkersTableBoss");	
+					BDetained.consultarDatosArrested("DetainedTable");
+					BDetained.consultarDatosFained("FainedTable");
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-				
+
 			}
 		});
 
@@ -488,9 +501,9 @@ public class GeneralWindow extends JFrame {
 
 			}
 		});
-		
+
 		saveDataFained.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for (Detained detained : policeStation.getDetained()) {
@@ -498,11 +511,9 @@ public class GeneralWindow extends JFrame {
 						BDetained.insertIntoPrepStatFained((Fined) detained);
 					}
 				}
-				
+
 			}
 		});
-		
-		
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("POLICE MANAGEMENT");

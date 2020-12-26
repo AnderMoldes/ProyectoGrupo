@@ -131,6 +131,28 @@ public class BDWorkers {
 		}
 	}
 
+	public static void consultarDatos(String nombreBD) throws SQLException {
+		String consultaSQL= "SELECT * FROM " + nombreBD+ ";" ;
+		try {
+			ResultSet rs= connection.createStatement().executeQuery(consultaSQL);
+			while (rs.next()) {
+				int code= rs.getInt("code");
+				int grade= rs.getInt("grade");
+				String name= rs.getString("name");
+				String surname= rs.getString("surname");
+				String gender= rs.getString("gender");
+				String Specialty= rs.getString("Specialty");
+				String startWorkingIn= rs.getString("startWorkingIn");
+				String Assessment= rs.getString("Assessment");
+				System.out.println("Code of the worker: " +code+ ". Grade: " +grade+ ". Name: "+name+ ". Surname: "+ surname+ ". Gender: "+gender+ 
+						". Specialty: "+Specialty+ ". StartWorkingIn: " +startWorkingIn+ ". Assesment: " +Assessment);	
+			}
+			rs.close();
+		} catch (Exception e) {
+			log(Level.SEVERE, "ERROR AL RECUPERAR DATOS", e);
+		}
+	}
+
 	public static void insertIntoPrepStatBoss(Boss boss) {
 		try {
 			PreparedStatement insertSql = connection.prepareStatement(
@@ -153,6 +175,29 @@ public class BDWorkers {
 		} catch (SQLException e) {
 			log(Level.SEVERE, "ERROR IN THE SQL SENTENCE: " + "INSERT INTO WorkersTableBoss VALUES (?,?,?,?,?,?,?,?,?)",
 					e);
+		}
+	}
+	
+	public static void consultarDatosBoss(String nombreBD) throws SQLException {
+		String consultaSQL= "SELECT * FROM " + nombreBD+ ";" ;
+		try {
+			ResultSet rs= connection.createStatement().executeQuery(consultaSQL);
+			while (rs.next()) {
+				int code= rs.getInt("code");
+				int grade= rs.getInt("grade");
+				String name= rs.getString("name");
+				String surname= rs.getString("surname");
+				String gender= rs.getString("gender");
+				String Specialty= rs.getString("Specialty");
+				String startWorkingIn= rs.getString("startWorkingIn");
+				String Assessment= rs.getString("Assessment");
+				String function= rs.getString("Function");
+				System.out.println("Code of the worker: " +code+ ". Grade: " +grade+ ". Name: "+name+ ". Surname: "+ surname+ ". Gender: "+gender+ 
+						". Specialty: "+Specialty+ ". StartWorkingIn: " +startWorkingIn+ ". Assesment: " +Assessment+ ". Function: " +function);	
+			}
+			rs.close();
+		} catch (Exception e) {
+			log(Level.SEVERE, "ERROR AL RECUPERAR DATOS", e);
 		}
 	}
 
@@ -181,29 +226,6 @@ public class BDWorkers {
 		}
 	}
 
-	public static ArrayList<Workers> getAllWorkers() {  //cambiar para que funcione correctamente
-		ArrayList<Workers> workers = new ArrayList<Workers>();
-		try (Statement Statement = connection.createStatement()) {
-			ResultSet rs = statement
-					.executeQuery("SELECT  grade, name, surname, gender, startWorkingIn, Assessment FROM WorkersTable");
 
-			while (rs.next()) {
-				Workers worker = new Workers();
-				worker.setGrade(rs.getInt("grade"));
-				worker.setName(rs.getString("name"));
-				worker.setSurname(rs.getString("surname"));
-				worker.setGender(rs.getString("Gender"));
-				worker.setStartWorkingIn((java.sql.Date) rs.getDate("startWorkingIn"));
-				worker.setAssesment(rs.getString("Assesment"));
-				workers.add(worker);
-
-			}
-			
-		} catch (SQLException | DateTimeParseException e) {
-			log(Level.SEVERE, "Error obteniendo todos los usuarios", e);
-		}
-		return workers;
-
-	}
 
 }
