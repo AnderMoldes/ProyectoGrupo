@@ -191,31 +191,43 @@ public class BDWorkers{
 		}
 	}
 
-	public static void consultarDatosBoss(String nombreBD) throws SQLException {
+	public static ArrayList<Object[]> consultarDatosBoss(String nombreBD) throws SQLException {
+		
+		ArrayList<Object[]> datos = new ArrayList<Object[]>();
 		String consultaSQL = "SELECT * FROM " + nombreBD + ";";
 		try {
+			
 			ResultSet rs = connection.createStatement().executeQuery(consultaSQL);
+			
 			while (rs.next()) {
-				int code = rs.getInt("code");
-				int grade = rs.getInt("grade");
-				String name = rs.getString("name");
-				String surname = rs.getString("surname");
-				String gender = rs.getString("gender");
-				String Specialty = rs.getString("Specialty");
-				String startWorkingIn = rs.getString("startWorkingIn");
-				String Assessment = rs.getString("Assessment");
-				String function = rs.getString("Function");
-				System.out
-						.println("Code of the worker: " + code + ". Grade: " + grade + ". Name: " + name + ". Surname: "
-								+ surname + ". Gender: " + gender + ". Specialty: " + Specialty + ". StartWorkingIn: "
-								+ startWorkingIn + ". Assesment: " + Assessment + ". Function: " + function);
-
+				Object filas[]= new Object[9];
+				for (int i = 0; i < filas.length; i++) {
+					filas[i]= rs.getObject(i+1);
+				}
+				datos.add(filas);
 			}
+		
+//				int code = rs.getInt("code");
+//				int grade = rs.getInt("grade");
+//				String name = rs.getString("name");
+//				String surname = rs.getString("surname");
+//				String gender = rs.getString("gender");
+//				String Specialty = rs.getString("Specialty");
+//				String startWorkingIn = rs.getString("startWorkingIn");
+//				String Assessment = rs.getString("Assessment");
+//				String function = rs.getString("Function");
+//				System.out
+//						.println("Code of the worker: " + code + ". Grade: " + grade + ". Name: " + name + ". Surname: "
+//								+ surname + ". Gender: " + gender + ". Specialty: " + Specialty + ". StartWorkingIn: "
+//								+ startWorkingIn + ". Assesment: " + Assessment + ". Function: " + function);
+
+			
 			rs.close();
 
 		} catch (Exception e) {
 			log(Level.SEVERE, "ERROR AL RECUPERAR DATOS", e);
 		}
+		return datos;
 	}
 
 	// Cerrar conexion

@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -126,30 +127,55 @@ public class BDetained {
 		}
 	}
 
-	public static void consultarDatosArrested(String nombreBD) throws SQLException {
+	public static ArrayList<Object[]> consultarDatosArrested(String nombreBD) throws SQLException {
+		
+//		String consultaSQL = "SELECT * FROM " + nombreBD + ";";
+//		try {
+//			ResultSet rs = connection.createStatement().executeQuery(consultaSQL);
+//			while (rs.next()) {
+//				int identificative = rs.getInt("identificative");
+//				String name = rs.getString("name");
+//				String lastname = rs.getString("lastname");
+//				int age = rs.getInt("age");
+//				String gender = rs.getString("gender");
+//				int NumberOfArrest = rs.getInt("NumberOfArrest");
+//				String JailRelease = rs.getString("JailRelease");
+//				String Citizenship = rs.getString("Citizenship");
+//				String Description = rs.getString("Description");
+//				System.out.println("Identificative of the Arrested: " + identificative + ". Name: " + name
+//						+ ". Lastname: " + lastname + ". Age: " + age + ". Gender: " + gender + ". NumberOfArrest: "
+//						+ NumberOfArrest + ". JailRelease: " + JailRelease + ". Citizenship: " + Citizenship
+//						+ ". Description: " + Description);
+//			}
+//			rs.close();
+//		} catch (Exception e) {
+//			log(Level.SEVERE, "ERROR AL RECUPERAR DATOS", e);
+//		}
+//	}
+	
+		ArrayList<Object[]> datos = new ArrayList<Object[]>();
 		String consultaSQL = "SELECT * FROM " + nombreBD + ";";
 		try {
+			
 			ResultSet rs = connection.createStatement().executeQuery(consultaSQL);
+			
 			while (rs.next()) {
-				int identificative = rs.getInt("identificative");
-				String name = rs.getString("name");
-				String lastname = rs.getString("lastname");
-				int age = rs.getInt("age");
-				String gender = rs.getString("gender");
-				int NumberOfArrest = rs.getInt("NumberOfArrest");
-				String JailRelease = rs.getString("JailRelease");
-				String Citizenship = rs.getString("Citizenship");
-				String Description = rs.getString("Description");
-				System.out.println("Identificative of the Arrested: " + identificative + ". Name: " + name
-						+ ". Lastname: " + lastname + ". Age: " + age + ". Gender: " + gender + ". NumberOfArrest: "
-						+ NumberOfArrest + ". JailRelease: " + JailRelease + ". Citizenship: " + Citizenship
-						+ ". Description: " + Description);
+				Object filas[]= new Object[9];
+				for (int i = 0; i < filas.length; i++) {
+					filas[i]= rs.getObject(i+1);
+				}
+				datos.add(filas);
 			}
+			
 			rs.close();
+
 		} catch (Exception e) {
 			log(Level.SEVERE, "ERROR AL RECUPERAR DATOS", e);
 		}
+		return datos;
 	}
+		
+		
 
 	// InsertarDatos con preparedStatement
 	public static void insertIntoPrepStatFained(Fined fained) {
@@ -174,28 +200,51 @@ public class BDetained {
 		}
 	}
 
-	public static void consultarDatosFained(String nombreBD) throws SQLException {
+	public static ArrayList<Object[]> consultarDatosFained(String nombreBD) throws SQLException {
+//		String consultaSQL = "SELECT * FROM " + nombreBD + ";";
+//		try {
+//			ResultSet rs = connection.createStatement().executeQuery(consultaSQL);
+//			while (rs.next()) {
+//				int identificative = rs.getInt("identificative");
+//				String name = rs.getString("name");
+//				String lastname = rs.getString("lastname");
+//				int age = rs.getInt("age");
+//				String gender = rs.getString("gender");
+//				String Description = rs.getString("Description");
+//				String Citizenship = rs.getString("Citizenship");
+//				int Payment = rs.getInt("Payment");
+//				System.out.println("Identificative of the Arrested: " + identificative + ". Name: " + name
+//						+ ". Lastname: " + lastname + ". Age: " + age + ". Gender: " + gender + ". Description: "
+//						+ Description + ". Citizenship: " + Citizenship + ". Payment: " + Payment);
+//			}
+//			rs.close();
+//		} catch (Exception e) {
+//			log(Level.SEVERE, "ERROR AL RECUPERAR DATOS", e);
+//		}
+		
+		ArrayList<Object[]> datos = new ArrayList<Object[]>();
 		String consultaSQL = "SELECT * FROM " + nombreBD + ";";
 		try {
+			
 			ResultSet rs = connection.createStatement().executeQuery(consultaSQL);
+			
 			while (rs.next()) {
-				int identificative = rs.getInt("identificative");
-				String name = rs.getString("name");
-				String lastname = rs.getString("lastname");
-				int age = rs.getInt("age");
-				String gender = rs.getString("gender");
-				String Description = rs.getString("Description");
-				String Citizenship = rs.getString("Citizenship");
-				int Payment = rs.getInt("Payment");
-				System.out.println("Identificative of the Arrested: " + identificative + ". Name: " + name
-						+ ". Lastname: " + lastname + ". Age: " + age + ". Gender: " + gender + ". Description: "
-						+ Description + ". Citizenship: " + Citizenship + ". Payment: " + Payment);
+				Object filas[]= new Object[9];
+				for (int i = 0; i < filas.length; i++) {
+					filas[i]= rs.getObject(i+1);
+				}
+				datos.add(filas);
 			}
+			
 			rs.close();
+
 		} catch (Exception e) {
 			log(Level.SEVERE, "ERROR AL RECUPERAR DATOS", e);
 		}
+		return datos;
 	}
+		
+	
 	
 
 	// Cerrar conexion

@@ -468,7 +468,7 @@ public class GeneralWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					ArrayList<Object[]> datos = new ArrayList<Object[]>();
-					datos = bDWorkers.consultarDatos("workersTable");
+					datos = BDWorkers.consultarDatos("workersTable");
 
 					for (int i = 0; i < datos.size(); i++) {
 						modelWorkers.addRow(datos.get(i));
@@ -479,6 +479,50 @@ public class GeneralWindow extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
+				try {
+					ArrayList<Object[]> datos = new ArrayList<Object[]>();
+					datos = BDWorkers.consultarDatosBoss("workersTableBoss");
+
+					for (int i = 0; i < datos.size(); i++) {
+						modelWorkers.addRow(datos.get(i));
+					}
+					tableWorkers.setModel(modelWorkers);
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				try {
+					ArrayList<Object[]> datos = new ArrayList<Object[]>();
+					datos = BDetained.consultarDatosArrested("DetainedTable");
+
+					for (int i = 0; i < datos.size(); i++) {
+						modelDetained.addRow(datos.get(i));
+					}
+					tableDetained.setModel(modelDetained);
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				try {
+					ArrayList<Object[]> datos = new ArrayList<Object[]>();
+					datos = BDetained.consultarDatosFained("FainedTable");
+
+					for (int i = 0; i < datos.size(); i++) {
+						modelDetained.addRow(datos.get(i));
+					}
+					tableDetained.setModel(modelDetained);
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
 			}
 		});
 
