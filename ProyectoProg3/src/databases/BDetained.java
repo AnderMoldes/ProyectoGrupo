@@ -229,7 +229,7 @@ public class BDetained {
 			ResultSet rs = connection.createStatement().executeQuery(consultaSQL);
 			
 			while (rs.next()) {
-				Object filas[]= new Object[9];
+				Object filas[]= new Object[8];
 				for (int i = 0; i < filas.length; i++) {
 					filas[i]= rs.getObject(i+1);
 				}
