@@ -1,5 +1,6 @@
 package databases;
 
+import java.awt.Component;
 import java.awt.List;
 import java.sql.Connection;
 
@@ -9,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +18,8 @@ import classes.Boss;
 import classes.Specialty;
 import classes.Workers;
 
-public class BDWorkers {
+public class BDWorkers{
+	
 	private static Logger logger = null;
 	private static Connection connection;
 	private static Statement statement;
@@ -131,26 +132,38 @@ public class BDWorkers {
 		}
 	}
 
-	public static void consultarDatos(String nombreBD) throws SQLException {
-		String consultaSQL= "SELECT * FROM " + nombreBD+ ";" ;
+	public static ArrayList<Object[]> consultarDatos(String nombreBD) throws SQLException {
+		ArrayList<Object[]> datos = new ArrayList<Object[]>();
+		String consultaSQL = "SELECT * FROM " + nombreBD + ";";
 		try {
-			ResultSet rs= connection.createStatement().executeQuery(consultaSQL);
+			
+			ResultSet rs = connection.createStatement().executeQuery(consultaSQL);
+			
 			while (rs.next()) {
-				int code= rs.getInt("code");
-				int grade= rs.getInt("grade");
-				String name= rs.getString("name");
-				String surname= rs.getString("surname");
-				String gender= rs.getString("gender");
-				String Specialty= rs.getString("Specialty");
-				String startWorkingIn= rs.getString("startWorkingIn");
-				String Assessment= rs.getString("Assessment");
-				System.out.println("Code of the worker: " +code+ ". Grade: " +grade+ ". Name: "+name+ ". Surname: "+ surname+ ". Gender: "+gender+ 
-						". Specialty: "+Specialty+ ". StartWorkingIn: " +startWorkingIn+ ". Assesment: " +Assessment);	
+				Object filas[]= new Object[8];
+				for (int i = 0; i < filas.length; i++) {
+					filas[i]= rs.getObject(i+1);
+				}
+				datos.add(filas);
 			}
+//				int code = rs.getInt("code");
+//				int grade = rs.getInt("grade");
+//				String name = rs.getString("name");
+//				String surname = rs.getString("surname");
+//				String gender = rs.getString("gender");
+//				String Specialty = rs.getString("Specialty");
+//				String startWorkingIn = rs.getString("startWorkingIn");
+//				String Assessment = rs.getString("Assessment");
+//				System.out.println("Code of the worker: " + code + ". Grade: " + grade + ". Name: " + name
+//						+ ". Surname: " + surname + ". Gender: " + gender + ". Specialty: " + Specialty
+//						+ ". StartWorkingIn: " + startWorkingIn + ". Assesment: " + Assessment);
+			
+//			}
 			rs.close();
 		} catch (Exception e) {
 			log(Level.SEVERE, "ERROR AL RECUPERAR DATOS", e);
 		}
+		return datos;
 	}
 
 	public static void insertIntoPrepStatBoss(Boss boss) {
@@ -177,25 +190,29 @@ public class BDWorkers {
 					e);
 		}
 	}
-	
+
 	public static void consultarDatosBoss(String nombreBD) throws SQLException {
-		String consultaSQL= "SELECT * FROM " + nombreBD+ ";" ;
+		String consultaSQL = "SELECT * FROM " + nombreBD + ";";
 		try {
-			ResultSet rs= connection.createStatement().executeQuery(consultaSQL);
+			ResultSet rs = connection.createStatement().executeQuery(consultaSQL);
 			while (rs.next()) {
-				int code= rs.getInt("code");
-				int grade= rs.getInt("grade");
-				String name= rs.getString("name");
-				String surname= rs.getString("surname");
-				String gender= rs.getString("gender");
-				String Specialty= rs.getString("Specialty");
-				String startWorkingIn= rs.getString("startWorkingIn");
-				String Assessment= rs.getString("Assessment");
-				String function= rs.getString("Function");
-				System.out.println("Code of the worker: " +code+ ". Grade: " +grade+ ". Name: "+name+ ". Surname: "+ surname+ ". Gender: "+gender+ 
-						". Specialty: "+Specialty+ ". StartWorkingIn: " +startWorkingIn+ ". Assesment: " +Assessment+ ". Function: " +function);	
+				int code = rs.getInt("code");
+				int grade = rs.getInt("grade");
+				String name = rs.getString("name");
+				String surname = rs.getString("surname");
+				String gender = rs.getString("gender");
+				String Specialty = rs.getString("Specialty");
+				String startWorkingIn = rs.getString("startWorkingIn");
+				String Assessment = rs.getString("Assessment");
+				String function = rs.getString("Function");
+				System.out
+						.println("Code of the worker: " + code + ". Grade: " + grade + ". Name: " + name + ". Surname: "
+								+ surname + ". Gender: " + gender + ". Specialty: " + Specialty + ". StartWorkingIn: "
+								+ startWorkingIn + ". Assesment: " + Assessment + ". Function: " + function);
+
 			}
 			rs.close();
+
 		} catch (Exception e) {
 			log(Level.SEVERE, "ERROR AL RECUPERAR DATOS", e);
 		}
@@ -225,7 +242,5 @@ public class BDWorkers {
 			log(Level.SEVERE, "An error has ocurred deleting database", e);
 		}
 	}
-
-
 
 }

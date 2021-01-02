@@ -21,16 +21,19 @@ import databases.BDetained;
 
 import java.awt.event.*;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class GeneralWindow extends JFrame {
 	Workers workers;
 	PoliceStation policeStation;
-
+	MiModelo modelWorkers;
 	BDWorkers bDWorkers;
 
 	JMenuBar bar;
@@ -38,7 +41,6 @@ public class GeneralWindow extends JFrame {
 	JMenu end;
 	JMenu workersMenu;
 	JMenu DetainedMenu;
-	
 
 	JMenuItem saveDataWorkers;
 	JMenuItem saveDataBoss;
@@ -75,6 +77,7 @@ public class GeneralWindow extends JFrame {
 
 			return false;
 		}
+
 	}
 
 	public GeneralWindow() {
@@ -96,9 +99,9 @@ public class GeneralWindow extends JFrame {
 		bar = new JMenuBar();
 
 		file = new JMenu("File");
-		workersMenu= new JMenu("Database Workers");
-		DetainedMenu= new JMenu("Database Detained");
-		
+		workersMenu = new JMenu("Database Workers");
+		DetainedMenu = new JMenu("Database Detained");
+
 		createBD = new JMenuItem("Create Database");
 		dropBD = new JMenuItem("Delete Database");
 		saveDataWorkers = new JMenuItem("Save data Workers");
@@ -106,17 +109,15 @@ public class GeneralWindow extends JFrame {
 		saveDataDetained = new JMenuItem("Save data Arrested");
 		saveDataFained = new JMenuItem("Save data Fained");
 		ShowData = new JMenuItem("Show Data");
-		
 
 		file.add(createBD);
 		file.add(dropBD);
 		file.add(ShowData);
-		
+
 		workersMenu.add(saveDataWorkers);
 		workersMenu.add(saveDataBoss);
 		DetainedMenu.add(saveDataDetained);
 		DetainedMenu.add(saveDataFained);
-		
 
 		end = new JMenu("Menu");
 
@@ -429,10 +430,11 @@ public class GeneralWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				BDWorkers.initBD("Workers.db");
+				BDetained.initBD("Detained.db");
+
 				BDWorkers.conection("WorkersTable");
 				BDWorkers.conectionBoss("WorkersTableBoss");
 
-				BDetained.initBD("Detained.db");
 				BDetained.conection("DetainedTable");
 				BDetained.conectionFained("FainedTable");
 			}
@@ -465,15 +467,18 @@ public class GeneralWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					BDWorkers.consultarDatos("WorkersTable");
-					BDWorkers.consultarDatosBoss("WorkersTableBoss");	
-					BDetained.consultarDatosArrested("DetainedTable");
-					BDetained.consultarDatosFained("FainedTable");
+					ArrayList<Object[]> datos = new ArrayList<Object[]>();
+					datos = bDWorkers.consultarDatos("workersTable");
+
+					for (int i = 0; i < datos.size(); i++) {
+						modelWorkers.addRow(datos.get(i));
+					}
+					tableWorkers.setModel(modelWorkers);
+
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-
 			}
 		});
 
