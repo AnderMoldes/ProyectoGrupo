@@ -121,6 +121,7 @@ public class BDWorkers{
 			if (rs.next()) {
 				int newCode= rs.getInt("code");
 				workers.setCode(newCode);
+				
 			}else {
 				log(Level.SEVERE, "Error generando el id autoincremental", null);
 			}
