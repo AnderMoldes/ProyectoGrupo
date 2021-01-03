@@ -3,6 +3,7 @@ package windows;
 import javax.swing.*;
 
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import java.awt.*;
 
@@ -25,6 +26,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.Connection;
@@ -54,6 +57,7 @@ public class GeneralWindow extends JFrame {
 	JMenuItem createBD;
 	JMenuItem initBD;
 	JMenuItem dropBD;
+	JMenuItem sortTable;
 
 	JButton createWorkers;
 	JButton consultWorkers;
@@ -104,6 +108,7 @@ public class GeneralWindow extends JFrame {
 
 		createBD = new JMenuItem("Create Database");
 		dropBD = new JMenuItem("Delete Database");
+		sortTable = new JMenuItem("Sort table");
 		saveDataWorkers = new JMenuItem("Save data Workers");
 		saveDataBoss = new JMenuItem("Save data Boss");
 		saveDataDetained = new JMenuItem("Save data Arrested");
@@ -113,6 +118,7 @@ public class GeneralWindow extends JFrame {
 		file.add(createBD);
 		file.add(dropBD);
 		file.add(ShowData);
+		file.add(sortTable);
 
 		workersMenu.add(saveDataWorkers);
 		workersMenu.add(saveDataBoss);
@@ -562,6 +568,22 @@ public class GeneralWindow extends JFrame {
 
 			}
 		});
+		ArrayList list = new ArrayList();
+
+		for (int i = 0; i < tableWorkers.getRowCount(); i++) {
+			list.add(tableWorkers.getName());
+		}
+		
+		
+		sortTable.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Collections.sort(list);
+				
+			}
+		});
+		TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(modelWorkers);
+		tableWorkers.setRowSorter(sorter);
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("POLICE MANAGEMENT");

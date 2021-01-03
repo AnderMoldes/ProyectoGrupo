@@ -4,7 +4,7 @@ import java.awt.Container;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Workers implements Serializable{
+public class Workers implements Serializable, Comparable<Workers>{
     public static int counter = 1;
 
     protected int code;
@@ -118,6 +118,12 @@ public class Workers implements Serializable{
 		return " worker:  Function: Worker. Grade: " + grade + ". Name: " + name + " " + surname + "Gender: "
 				+ gender + ". Specialty: " + Specialty + ". He/She start workin in " + startWorkingIn + ". Assesment: "
 				+ Assesment;
+	}
+
+	@Override
+	public int compareTo(Workers o) {
+		// TODO Auto-generated method stub
+		return this.getName().compareTo(o.getName());
 	}
 	
 

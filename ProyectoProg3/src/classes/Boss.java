@@ -32,7 +32,10 @@ public class Boss extends Workers{
 				+ surname + "Gender: " + gender + " Specialty: " + Specialty
 				+ "Start Working: " + startWorkingIn + ". Assessment: " + Assesment;
 	}	
-
+	public int compareTo(Workers o) {
+		// TODO Auto-generated method stub
+		return this.getName().compareTo(o.getName());
+	}
 	
 	
 	
