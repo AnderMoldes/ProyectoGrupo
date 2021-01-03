@@ -567,7 +567,7 @@ public class GeneralWindow extends JFrame {
 				}
 
 			}
-		});
+		});//Parte recursivo
 		ArrayList list = new ArrayList();
 
 		for (int i = 0; i < tableWorkers.getRowCount(); i++) {

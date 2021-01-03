@@ -55,7 +55,7 @@ public class BDetained {
 			statement = connection.createStatement();
 			try {
 				statement.executeUpdate("create table " + nombreBD
-						+ " (identificative integer primary key autoincrement, name varchar, LastName varchar, "
+						+ " (ID integer primary key autoincrement, name varchar, LastName varchar, "
 						+ "age integer, gender varchar, numberOfArrest integer, description varchar, jailRelease varchar, cityzenship varchar)");
 				
 				log(Level.SEVERE, "The table " + nombreBD + " created", null);
@@ -76,7 +76,7 @@ public class BDetained {
 			statement = connection.createStatement();
 			try {
 				statement.executeUpdate("create table " + nombreBD
-						+ " (identificative integer primary key autoincrement, name varchar,"
+						+ " (ID integer primary key autoincrement, name varchar,"
 						+ " LastName varchar, age integer, gender varchar, description varchar, cityzenship varchar, payment integer)");
 				
 				log(Level.SEVERE, "The table " + nombreBD + " created", null);
@@ -116,10 +116,10 @@ public class BDetained {
 
 			insertSql.executeUpdate();
 			
-			ResultSet rs= stmtForId.executeQuery("SELECT LAST_INSERT_ROWID() AS code FROM  DetainedTable" );
+			ResultSet rs= stmtForId.executeQuery("SELECT LAST_INSERT_ROWID() AS ID FROM  DetainedTable" );
 			if (rs.next()) {
-				int newIdentificative= rs.getInt("identificative");
-				arrested.setIdentificative(newIdentificative);
+				int newID= rs.getInt("ID");
+				arrested.setIdentificative(newID);
 			}else {
 				log(Level.SEVERE, "Error generando el id autoincremental", null);
 			}
@@ -200,10 +200,10 @@ public class BDetained {
 
 			insertSql.executeUpdate();
 			
-			ResultSet rs= stmtForId.executeQuery("SELECT LAST_INSERT_ROWID() AS code FROM  FainedTable" );
+			ResultSet rs= stmtForId.executeQuery("SELECT LAST_INSERT_ROWID() AS ID FROM  FainedTable" );
 			if (rs.next()) {
-				int newIdentificative= rs.getInt("identificative");
-				fained.setIdentificative(newIdentificative);
+				int newID= rs.getInt("ID");
+				fained.setIdentificative(newID);
 			}else {
 				log(Level.SEVERE, "Error generando el id autoincremental", null);
 			}
@@ -211,7 +211,7 @@ public class BDetained {
 			log(Level.SEVERE, "Completed", null);
 
 		} catch (SQLException e) {
-			log(Level.SEVERE, "ERROR EN SENTENCIA SQL: " + "INSERT INTO FainedTable VALUES (?,?,?,?,?,?,?)", e);
+			log(Level.SEVERE, " ERROR EN SENTENCIA SQL: " + " INSERT INTO FainedTable VALUES (?,?,?,?,?,?,?) ", e);
 		}
 	}
 
