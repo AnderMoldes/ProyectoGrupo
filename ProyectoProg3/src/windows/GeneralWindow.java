@@ -461,6 +461,45 @@ public class GeneralWindow extends JFrame {
 
 			}
 		});
+		
+		
+		saveDataBoss.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (Workers workers : policeStation.getWorkers()) {
+					if (workers instanceof Boss) {
+						BDWorkers.insertIntoPrepStatBoss((Boss) workers);
+					}
+				}
+			}
+		});
+
+		saveDataDetained.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (Detained detained : policeStation.getDetained()) {
+					if (detained instanceof Arrested) {
+						BDetained.insertIntoPrepStat((Arrested) detained);
+					}
+				}
+
+			}
+		});
+
+		saveDataFained.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (Detained detained : policeStation.getDetained()) {
+					if (detained instanceof Fined) {
+						BDetained.insertIntoPrepStatFained((Fined) detained);
+					}
+				}
+
+			}
+		});
 
 		ShowData.addActionListener(new ActionListener() {
 
@@ -525,43 +564,7 @@ public class GeneralWindow extends JFrame {
 			}
 		});
 
-		saveDataBoss.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				for (Workers workers : policeStation.getWorkers()) {
-					if (workers instanceof Boss) {
-						BDWorkers.insertIntoPrepStatBoss((Boss) workers);
-					}
-				}
-			}
-		});
-
-		saveDataDetained.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				for (Detained detained : policeStation.getDetained()) {
-					if (detained instanceof Arrested) {
-						BDetained.insertIntoPrepStat((Arrested) detained);
-					}
-				}
-
-			}
-		});
-
-		saveDataFained.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				for (Detained detained : policeStation.getDetained()) {
-					if (detained instanceof Fined) {
-						BDetained.insertIntoPrepStatFained((Fined) detained);
-					}
-				}
-
-			}
-		});
+		
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("POLICE MANAGEMENT");
