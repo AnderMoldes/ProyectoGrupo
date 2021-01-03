@@ -115,7 +115,7 @@ public class WorkersWindow extends JFrame {
 				}
 				
 				
-			    object[0] = Counter.getCounterT();
+			    object[0] = null;
 				object[1] = tgrade.getValue();
 				object[2] = tname.getText();
 				object[3] = tsurname.getText();

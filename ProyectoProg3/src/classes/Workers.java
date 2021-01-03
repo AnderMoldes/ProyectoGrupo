@@ -53,6 +53,9 @@ public class Workers implements Serializable{
 		return code;
 	}
 
+	public void setCode(int code) {
+		this.code= code;
+	}
 
 	public int getGrade() {
 		return grade;
@@ -112,7 +115,7 @@ public class Workers implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Code of the worker: " + code + ". Function: Worker. Grade: " + grade + ". Name: " + name + " " + surname + "Gender: "
+		return " worker:  Function: Worker. Grade: " + grade + ". Name: " + name + " " + surname + "Gender: "
 				+ gender + ". Specialty: " + Specialty + ". He/She start workin in " + startWorkingIn + ". Assesment: "
 				+ Assesment;
 	}

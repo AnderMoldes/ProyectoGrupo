@@ -118,7 +118,7 @@ public class FainedWindow extends JFrame {
 					creation= new Fined();
 				}
 				
-				object[0] = Counter.getCounterD();
+				object[0] = null;
 				object[1] = tName.getText();
 				object[2] = tLastName.getText();
 				object[3] = age.getValue();

@@ -28,7 +28,7 @@ public class Boss extends Workers{
 
 	@Override
 	public String toString() {
-		return "Code of the Worker: " + code+ ". Function:" +function+ ". Name: " + name + " " 
+		return "  Boss: . Function:" +function+ ". Name: " + name + " " 
 				+ surname + "Gender: " + gender + " Specialty: " + Specialty
 				+ "Start Working: " + startWorkingIn + ". Assessment: " + Assesment;
 	}	

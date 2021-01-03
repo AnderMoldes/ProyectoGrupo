@@ -123,7 +123,7 @@ public class BossWindow extends JFrame{
 				}
 
 				
-				object[0] = Counter.getCounterT();
+				object[0] = null;
 				object[1] = tgrade.getValue();
 				object[2] = tname.getText();
 				object[3] = tsurname.getText();
@@ -171,7 +171,7 @@ public class BossWindow extends JFrame{
 		add(panel);
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setTitle("Create a worker");
+		setTitle("Create a Boss");
 		setSize(500, 500);
 		setResizable(false);
 		setVisible(true);

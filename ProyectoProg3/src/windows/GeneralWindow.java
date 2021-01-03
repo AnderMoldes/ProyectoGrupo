@@ -468,7 +468,7 @@ public class GeneralWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					ArrayList<Object[]> datos = new ArrayList<Object[]>();
-					datos = BDWorkers.consultarDatos("workersTable");
+					datos = BDWorkers.consultarDatos("WorkersTable");
 
 					for (int i = 0; i < datos.size(); i++) {
 						modelWorkers.addRow(datos.get(i));
@@ -481,11 +481,11 @@ public class GeneralWindow extends JFrame {
 				}
 				
 				try {
-					ArrayList<Object[]> datos = new ArrayList<Object[]>();
-					datos = BDWorkers.consultarDatosBoss("workersTableBoss");
+					ArrayList<Object[]> datosBoss = new ArrayList<Object[]>();
+					datosBoss = BDWorkers.consultarDatosBoss("WorkersTableBoss");
 
-					for (int i = 0; i < datos.size(); i++) {
-						modelWorkers.addRow(datos.get(i));
+					for (int i = 0; i < datosBoss.size(); i++) {
+						modelWorkers.addRow(datosBoss.get(i));
 					}
 					tableWorkers.setModel(modelWorkers);
 
@@ -495,11 +495,11 @@ public class GeneralWindow extends JFrame {
 				}
 				
 				try {
-					ArrayList<Object[]> datos = new ArrayList<Object[]>();
-					datos = BDetained.consultarDatosArrested("DetainedTable");
+					ArrayList<Object[]> datosArrested = new ArrayList<Object[]>();
+					datosArrested = BDetained.consultarDatosArrested("DetainedTable");
 
-					for (int i = 0; i < datos.size(); i++) {
-						modelDetained.addRow(datos.get(i));
+					for (int i = 0; i < datosArrested.size(); i++) {
+						modelDetained.addRow(datosArrested.get(i));
 					}
 					tableDetained.setModel(modelDetained);
 
@@ -509,11 +509,11 @@ public class GeneralWindow extends JFrame {
 				}
 				
 				try {
-					ArrayList<Object[]> datos = new ArrayList<Object[]>();
-					datos = BDetained.consultarDatosFained("FainedTable");
+					ArrayList<Object[]> datosFained = new ArrayList<Object[]>();
+					datosFained = BDetained.consultarDatosFained("FainedTable");
 
-					for (int i = 0; i < datos.size(); i++) {
-						modelDetained.addRow(datos.get(i));
+					for (int i = 0; i < datosFained.size(); i++) {
+						modelDetained.addRow(datosFained.get(i));
 					}
 					tableDetained.setModel(modelDetained);
 
@@ -521,7 +521,6 @@ public class GeneralWindow extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
 				
 			}
 		});

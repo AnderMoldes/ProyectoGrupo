@@ -61,7 +61,7 @@ public class Arrested extends Detained {
 
 	@Override
 	public String toString() {
-		return "Arrested" + identificative + " = " + numberOfArrest + ", " + description + ", "
+		return "Arrested = " + numberOfArrest + ", " + description + ", "
 				+ jailRelease + ", " + identificative + ", " + name + ", " + lastName
 				+ ", " + age + ", " + gender + "," +citizenship+ ", ";
 	}

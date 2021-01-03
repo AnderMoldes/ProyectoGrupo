@@ -59,7 +59,9 @@ public class BDWorkers{
 			statement = connection.createStatement();
 			try {
 				statement.executeUpdate("create table " + nombreBD
-						+ " (code int, grade int, name string, surname string, gender string, Specialty string, startWorkingIn string,Assessment string )");
+						+ " (code integer primary key autoincrement, grade integer, name varchar, surname varchar, "
+						+ "gender varchar, Specialty varchar, startWorkingIn varchar, Assessment varchar )");
+				
 				log(Level.SEVERE, "The table " + nombreBD + " created", null);
 			} catch (SQLException e) {
 				if (!e.getMessage().equals("table " + nombreBD + " already exists")) // Este error sí es correcto si la
@@ -69,7 +71,6 @@ public class BDWorkers{
 		} catch (SQLException e) {
 			log(Level.SEVERE, "Error conecting to database " + nombreBD, e);
 		}
-
 	}
 
 	// Conectarse a la base de datos
@@ -78,7 +79,9 @@ public class BDWorkers{
 			statement = connection.createStatement();
 			try {
 				statement.executeUpdate("create table " + nombreBD
-						+ " (code int, grade int, name string, surname string, gender string, Specialty string, startWorkingIn string,Assessment string, function string )");
+						+ " (code integer primary key autoincrement, grade integer, name varchar, surname varchar, "
+						+ "gender varchar, Specialty varchar, startWorkingIn varchar,Assessment varchar, function varchar )");
+				
 				log(Level.SEVERE, "The table " + nombreBD + " created", null);
 			} catch (SQLException e) {
 				if (!e.getMessage().equals("table " + nombreBD + " already exists")) // Este error sí es correcto si la
@@ -95,40 +98,37 @@ public class BDWorkers{
 		return connection;
 	}
 
-	// InsertarDatos
-	public static void insertInto(String code, String grade, String name, String surname, String gender,
-			String Specialty, String startWorkingIn, String Assessment) {
-		String sent = "insert into WorkersTable values(" + code + ", '" + grade + "', '" + name + "', " + surname + ", "
-				+ gender + ", " + Specialty + ", " + startWorkingIn + ", " + Assessment + ")";
-		try {
-			statement = connection.createStatement();
-			statement.executeUpdate(sent);
-		} catch (SQLException e) {
-			log(Level.SEVERE, "ERROR IN SQL: " + sent, e);
-		}
-	}
 
 	// InsertarDatos con preparedStatement
 	public static void insertIntoPrepStat(Workers workers) {
 		try {
 			PreparedStatement insertSql = connection.prepareStatement(
-					"INSERT INTO WorkersTable(code, grade, name, surname, gender, Specialty, startWorkingIn, Assessment)  VALUES (?,?,?,?,?,?,?,?)");
-
-			insertSql.setLong(1, workers.getCode());
-			insertSql.setLong(2, workers.getGrade());
-			insertSql.setString(3, workers.getName());
-			insertSql.setString(4, workers.getSurname());
-			insertSql.setString(5, workers.getGender());
-			insertSql.setString(6, workers.getSpecialty().toString());
-			insertSql.setString(7, workers.getStartWorkingIn().toString());
-			insertSql.setString(8, workers.getAssesment());
+					"INSERT INTO WorkersTable( grade, name, surname, gender, Specialty, startWorkingIn, Assessment)  VALUES (?, ?, ?, ?, ?, ?, ?)");
+			Statement stmtForId= connection.createStatement(); 
+			
+//			insertSql.setLong(1, workers.getCode());
+			insertSql.setLong(1, workers.getGrade());
+			insertSql.setString(2, workers.getName());
+			insertSql.setString(3, workers.getSurname());
+			insertSql.setString(4, workers.getGender());
+			insertSql.setString(5, workers.getSpecialty().toString());
+			insertSql.setString(6, workers.getStartWorkingIn().toString());
+			insertSql.setString(7, workers.getAssesment());
 
 			insertSql.executeUpdate();
+			
+			ResultSet rs= stmtForId.executeQuery("SELECT LAST_INSERT_ROWID() AS code FROM  WorkersTable" );
+			if (rs.next()) {
+				int newCode= rs.getInt("code");
+				workers.setCode(newCode);
+			}else {
+				log(Level.SEVERE, "Error generando el id autoincremental", null);
+			}
 
 			log(Level.SEVERE, "Completed", null);
 
 		} catch (SQLException e) {
-			log(Level.SEVERE, "ERROR IN THE SQL SENTENCE: " + "INSERT INTO WorkersTable VALUES (?,?,?,?,?,?,?,?)", e);
+			log(Level.SEVERE, "ERROR IN THE SQL SENTENCE: " + "INSERT INTO WorkersTable VALUES (?,?,?,?,?,?,?)", e);
 		}
 	}
 
@@ -169,20 +169,29 @@ public class BDWorkers{
 	public static void insertIntoPrepStatBoss(Boss boss) {
 		try {
 			PreparedStatement insertSql = connection.prepareStatement(
-					"INSERT INTO WorkersTableBoss(code, grade, name, surname, gender, Specialty, startWorkingIn, Assessment,function)  VALUES (?,?,?,?,?,?,?,?,?)");
-
-			insertSql.setLong(1, boss.getCode());
-			insertSql.setLong(2, boss.getGrade());
-			insertSql.setString(3, boss.getName());
-			insertSql.setString(4, boss.getSurname());
-			insertSql.setString(5, boss.getGender());
-			insertSql.setString(6, boss.getSpecialty().toString());
-			insertSql.setString(7, boss.getStartWorkingIn().toString());
-			insertSql.setString(8, boss.getAssesment());
-			insertSql.setString(9, boss.getFunction());
+					"INSERT INTO WorkersTableBoss(grade, name, surname, gender, Specialty, startWorkingIn, Assessment, function)  VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+			Statement stmtForId= connection.createStatement(); 
+			
+//			insertSql.setLong(1, boss.getCode());
+			insertSql.setLong(1, boss.getGrade());
+			insertSql.setString(2, boss.getName());
+			insertSql.setString(3, boss.getSurname());
+			insertSql.setString(4, boss.getGender());
+			insertSql.setString(5, boss.getSpecialty().toString());
+			insertSql.setString(6, boss.getStartWorkingIn().toString());
+			insertSql.setString(7, boss.getAssesment());
+			insertSql.setString(8, boss.getFunction());
 
 			insertSql.executeUpdate();
 
+			ResultSet rs = stmtForId.executeQuery("SELECT last_insert_rowid() AS code FROM WorkersTableBoss");
+			if (rs.next()) {
+				int newCode = rs.getInt("code");
+				boss.setCode(newCode);
+			} else {
+				log(Level.SEVERE, "Error generando el id autoincremental", null);
+			}
+			
 			log(Level.SEVERE, "Completed", null);
 
 		} catch (SQLException e) {

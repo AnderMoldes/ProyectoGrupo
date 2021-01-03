@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 import classes.Arrested;
 import classes.Country;
+import classes.Detained;
 import classes.Fined;
 
 public class BDetained {
@@ -54,7 +55,9 @@ public class BDetained {
 			statement = connection.createStatement();
 			try {
 				statement.executeUpdate("create table " + nombreBD
-						+ " (identificative int, name string, LastName string, age int, gender string, numberOfArrest int, description string, jailRelease string, cityzenship string)");
+						+ " (identificative integer primary key autoincrement, name varchar, LastName varchar, "
+						+ "age integer, gender varchar, numberOfArrest integer, description varchar, jailRelease varchar, cityzenship varchar)");
+				
 				log(Level.SEVERE, "The table " + nombreBD + " created", null);
 			} catch (SQLException e) {
 				if (!e.getMessage().equals("table " + nombreBD + " already exists")) // Este error sí es correcto si la
@@ -73,7 +76,9 @@ public class BDetained {
 			statement = connection.createStatement();
 			try {
 				statement.executeUpdate("create table " + nombreBD
-						+ " (identificative int, name string, LastName string, age int, gender string, description string, cityzenship string, payment int)");
+						+ " (identificative integer primary key autoincrement, name varchar,"
+						+ " LastName varchar, age integer, gender varchar, description varchar, cityzenship varchar, payment integer)");
+				
 				log(Level.SEVERE, "The table " + nombreBD + " created", null);
 			} catch (SQLException e) {
 				if (!e.getMessage().equals("table " + nombreBD + " already exists")) // Este error sí es correcto si la
@@ -90,40 +95,39 @@ public class BDetained {
 		return connection;
 	}
 
-	// InsertarDatos
-	public static void insertInto(int identificative, int age, String name, String LastName, String gender,
-			int numberOfArrest, String description, String jailRelease, Country cityzenship) {
-		String sent = "insert into DetainedTable values(" + identificative + ", '" + name + "', " + LastName + ", "
-				+ age + "', '" + gender + ", " + description + ", " + cityzenship + ", " + jailRelease + ")";
-		try {
-			statement = connection.createStatement();
-			statement.executeUpdate(sent);
-		} catch (SQLException e) {
-			log(Level.SEVERE, "ERROR IN SQL: " + sent, e);
-		}
-	}
 
 	// InsertarDatos con preparedStatement
 	public static void insertIntoPrepStat(Arrested arrested) {
 		try {
-			PreparedStatement insertSql = connection
-					.prepareStatement("INSERT INTO DetainedTable VALUES (?,?,?,?,?,?,?,?,?)");
-
-			insertSql.setLong(1, arrested.getIdentificative());
-			insertSql.setString(2, arrested.getName());
-			insertSql.setString(3, arrested.getLastName());
-			insertSql.setLong(4, arrested.getAge());
-			insertSql.setString(5, arrested.getGender());
-			insertSql.setLong(6, arrested.getNumberOfArrest());
+			PreparedStatement insertSql = connection.prepareStatement(
+					"INSERT INTO DetainedTable( name, LastName, age, gender, numberOfArrest, description, jailRelease, cityzenship) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+			Statement stmtForId= connection.createStatement();
+			
+			//insertSql.setLong(1, arrested.getIdentificative());
+			insertSql.setString(1, arrested.getName());
+			insertSql.setString(2, arrested.getLastName());
+			insertSql.setLong(3, arrested.getAge());
+			insertSql.setString(4, arrested.getGender());
+			insertSql.setLong(5, arrested.getNumberOfArrest());
+			insertSql.setString(6, arrested.getDescription());
 			insertSql.setString(7, arrested.getJailRelease());
 			insertSql.setString(8, arrested.getCitizenship().toString());
-			insertSql.setString(9, arrested.getDescription());
+		
 
 			insertSql.executeUpdate();
+			
+			ResultSet rs= stmtForId.executeQuery("SELECT LAST_INSERT_ROWID() AS code FROM  DetainedTable" );
+			if (rs.next()) {
+				int newIdentificative= rs.getInt("identificative");
+				arrested.setIdentificative(newIdentificative);
+			}else {
+				log(Level.SEVERE, "Error generando el id autoincremental", null);
+			}
+			
 			log(Level.SEVERE, "Completed", null);
 
 		} catch (SQLException e) {
-			log(Level.SEVERE, "ERROR EN SENTENCIA SQL: " + "INSERT INTO DetainedTable VALUES (?,?,?,?,?,?,?,?,?)", e);
+			log(Level.SEVERE, "ERROR IN THE SQL SENTENCE: " + "INSERT INTO DetainedTable VALUES (?,?,?,?,?,?,?,?)", e);
 		}
 	}
 
@@ -180,23 +184,34 @@ public class BDetained {
 	// InsertarDatos con preparedStatement
 	public static void insertIntoPrepStatFained(Fined fained) {
 		try {
-			PreparedStatement insertSql = connection
-					.prepareStatement("INSERT INTO FainedTable VALUES (?,?,?,?,?,?,?,?)");
-
-			insertSql.setLong(1, fained.getIdentificative());
-			insertSql.setString(2, fained.getName());
-			insertSql.setString(3, fained.getLastName());
-			insertSql.setLong(4, fained.getAge());
-			insertSql.setString(5, fained.getGender());
-			insertSql.setString(6, fained.getDescription());
-			insertSql.setString(7, fained.getCitizenship().toString());
-			insertSql.setInt(8, (int) fained.getPayment());
+			PreparedStatement insertSql = connection.prepareStatement(
+					"INSERT INTO FainedTable( name, LastName, age, gender, description, cityzenship, payment) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			
+			Statement stmtForId= connection.createStatement();
+			
+			//insertSql.setLong(1, fained.getIdentificative());
+			insertSql.setString(1, fained.getName());
+			insertSql.setString(2, fained.getLastName());
+			insertSql.setLong(3,fained.getAge());
+			insertSql.setString(4, fained.getGender());
+			insertSql.setString(5, fained.getDescription());
+			insertSql.setString(6, fained.getCitizenship().toString());
+			insertSql.setInt(7, (int) fained.getPayment());
 
 			insertSql.executeUpdate();
+			
+			ResultSet rs= stmtForId.executeQuery("SELECT LAST_INSERT_ROWID() AS code FROM  FainedTable" );
+			if (rs.next()) {
+				int newIdentificative= rs.getInt("identificative");
+				fained.setIdentificative(newIdentificative);
+			}else {
+				log(Level.SEVERE, "Error generando el id autoincremental", null);
+			}
+			
 			log(Level.SEVERE, "Completed", null);
 
 		} catch (SQLException e) {
-			log(Level.SEVERE, "ERROR EN SENTENCIA SQL: " + "INSERT INTO FainedTable VALUES (?,?,?,?,?,?,?,?)", e);
+			log(Level.SEVERE, "ERROR EN SENTENCIA SQL: " + "INSERT INTO FainedTable VALUES (?,?,?,?,?,?,?)", e);
 		}
 	}
 

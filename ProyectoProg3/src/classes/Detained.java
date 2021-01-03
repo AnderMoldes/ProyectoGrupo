@@ -45,6 +45,10 @@ public class Detained {
 	public int getIdentificative() {
 		return identificative;
 	}
+	
+	public void setIdentificative(int identificative) {
+		this.identificative = identificative;
+	}
 
 	public String getName() {
 		return name;
@@ -81,7 +85,7 @@ public class Detained {
 
 	@Override
 	public String toString() {
-		return "Detained " + identificative + " = " + name + ", " + lastName + ", "
+		return "Detained = " + name + ", " + lastName + ", "
 				+ age + ", " + gender + "";
 	}
 

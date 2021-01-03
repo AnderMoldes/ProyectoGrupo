@@ -50,7 +50,7 @@ public class Fined extends Detained {
 	@Override
 	public String toString() {
 		return " Description: " + description + ". Citizenship: " + citizenship
-				+ ". Payment: " + payment + ". Identificative: " + identificative + ". Name: " + name + " " 
+				+ ". Payment: " + payment + ". Name: " + name + " " 
 				+ lastName + ". Age: " + age + ". Gender: " + gender ;
 	}
 	
