@@ -3,6 +3,7 @@ package windows;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+
 import java.awt.*;
 
 import javax.swing.text.BadLocationException;
@@ -34,7 +35,14 @@ public class VehicleWindow extends JFrame{
 	JComboBox<Brand> comboBrand;
 	
 	
-	
+	public class MiModelo extends DefaultTableModel {
+		   public boolean isCellEditable (int row, int column) {
+		       // Aquí devolvemos true o false según queramos que una celda
+		       // identificada por fila,columna (row,column), sea o no editable
+			   
+		       return false;
+		   }
+		}
 	
 	
 	public VehicleWindow(){
@@ -68,30 +76,14 @@ public class VehicleWindow extends JFrame{
 		comboBrand.addItem(Brand.SEAT);
 		
 		this.setLayout(new FlowLayout());
+				
+		MiModelo modelVehicles = new MiModelo();
+		modelVehicles.addColumn("license plate");
+		modelVehicles.addColumn("brand");
+		modelVehicles.addColumn("colour");
 		
-		//public class MiModelo extends DefaultTableModel {
-			 //  public boolean isCellEditable (int row, int column) {
-			       // Aquí devolvemos true o false según queramos que una celda
-			       // identificada por fila,columna (row,column), sea o no editable
-				   
-			      // return false;
-			  // }
-			//}
-		
-		JTable table = new JTable();
+		JTable table = new JTable(modelVehicles);
 		JScrollPane scrollVehicles= new JScrollPane(table);
-		
-		//MiModelo modelDetained= new MiModelo();
-		//modelDetained.addColumn("identificative");
-		//modelDetained.addColumn("name");
-		//modelDetained.addColumn("LastName");
-		//modelDetained.addColumn("age");
-		//modelDetained.addColumn("gender");
-		//modelDetained.addColumn("numberOfArrest");
-		//modelDetained.addColumn("description");
-		//modelDetained.addColumn("jailRelease");
-		//modelDetained.addColumn("citizenship");
-		//modelDetained.addColumn("payment");
 		
 		add(panel2);
 		add(panel1);
