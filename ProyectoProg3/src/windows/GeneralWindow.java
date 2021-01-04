@@ -86,10 +86,11 @@ public class GeneralWindow extends JFrame {
 			// Aquí devolvemos true o false según queramos que una celda
 			// identificada por fila,columna (row,column), sea o no editable
 
-			return false;
+			return true;
 		}
 
 	}
+	
 
 	public GeneralWindow() {
 
@@ -177,17 +178,18 @@ public class GeneralWindow extends JFrame {
 
 		createWorkers = new JButton("Create Normal Worker");
 		createBoss = new JButton("Create a Boss");
-		consultWorkers = new JButton("Consult Workers");
+		consultWorkers = new JButton("Update Workers");
 
 		ButtonPanel.add(createWorkers);
-		ButtonPanel.add(consultWorkers);
 		ButtonPanel.add(createBoss);
+		ButtonPanel.add(consultWorkers);
+		
 
 		JPanel ButtonPanel2 = new JPanel();
 
 		createArrested = new JButton("Create Arrested");
 		createFined = new JButton("Create Fined");
-		consultDetained = new JButton("Consult Detained");
+		consultDetained = new JButton("Update Detained");
 
 		ButtonPanel2.add(createArrested);
 		ButtonPanel2.add(createFined);
@@ -326,16 +328,17 @@ public class GeneralWindow extends JFrame {
 		 * modelWorkers); } } } });
 		 */
 		
-		tableWorkers.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				int fila = tableWorkers.rowAtPoint(e.getPoint());
-				int columna = tableWorkers.columnAtPoint(e.getPoint());
-				if ((fila > -1) && (columna > -1)) {
-					// System.out.println(modelWorkers.getValueAt(fila,columna));
-					new WorkersWindow((Workers2) workers, policeStation, modelWorkers);
-				}
-			}
-		});
+//		tableWorkers.addMouseListener(new MouseAdapter() {
+//			public void mouseClicked(MouseEvent e) {
+//				int fila = tableWorkers.rowAtPoint(e.getPoint());
+//				int columna = tableWorkers.columnAtPoint(e.getPoint());
+//			if ((fila > -1) && (columna > -1) || e.getClickCount() == 2 ) {
+//				if (e.getClickCount() == 2) {
+//					Workers2 workers2=  (Workers2) tableWorkers.getSelectionModel(); 
+//					new WorkersWindow((Workers2) workers, policeStation, modelWorkers);
+//				}
+//			}
+//		});
 
 		MiModelo modelDetained = new MiModelo();
 		modelDetained.addColumn("identificative");
@@ -354,6 +357,7 @@ public class GeneralWindow extends JFrame {
 
 		center.add(scrollDetained);
 		center.add(ButtonPanel2, BorderLayout.NORTH);
+		
 
 		createArrested.addActionListener(new ActionListener() {
 
@@ -437,8 +441,20 @@ public class GeneralWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int fila = Integer.parseInt(getTitle());
-				int columna = Integer.parseInt(getName());
+				
+				for (Workers workers : policeStation.getWorkers()) {
+					if (workers instanceof Workers2) {
+						BDWorkers.update((Workers2) workers);
+					}
+				}
+				
+				for (Workers workers : policeStation.getWorkers()) {
+					if (workers instanceof Boss) {
+						BDWorkers.updateBoss((Boss) workers);
+					}
+				}
+				
+				
 
 			}
 		});
@@ -687,6 +703,9 @@ public class GeneralWindow extends JFrame {
 				}
 			}
 		});
+		
+		
+		
 		
 		//Parte recursivo
 		ArrayList list = new ArrayList();

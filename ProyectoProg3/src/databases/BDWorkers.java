@@ -2,6 +2,7 @@ package databases;
 
 import java.awt.Component;
 import java.awt.List;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 
 import java.sql.Date;
@@ -13,6 +14,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.w3c.dom.events.EventTarget;
 
 import classes.Boss;
 import classes.Workers2;
@@ -165,6 +168,26 @@ public class BDWorkers{
 		}
 		return datos;
 	}
+	
+
+	public static void update(Workers2 workers) {
+		try (PreparedStatement stmt = connection.prepareStatement("UPDATE WorkersTable SET grade=?, name=?, surname=?, gender=?, Specialty=?, startWorkingIn=?, Assessment=?   WHERE code=?")) {
+			stmt.setInt(1, workers.getGrade());
+			stmt.setString(2, workers.getName());
+			stmt.setString(3, workers.getSurname());
+			stmt.setString(4, workers.getGender());
+			stmt.setString(5, workers.getSpecialty().toString());
+			stmt.setString(6, workers.getStartWorkingIn().toString());
+			stmt.setString(7, workers.getAssesment());
+			
+			stmt.executeUpdate();
+			
+			log(Level.SEVERE, "Completed", null);
+			
+		} catch (SQLException e) {
+			log(Level.SEVERE, "No se pudo guardar el usuario en la BD", e);
+		}
+	}
 
 	public static void insertIntoPrepStatBoss(Boss boss) {
 		try {
@@ -238,7 +261,30 @@ public class BDWorkers{
 		}
 		return datos;
 	}
+	
+	
+	public static void updateBoss(Boss boss) {
+		try (PreparedStatement stmt = connection.prepareStatement("UPDATE WorkersTableBoss SET grade=?, name=?, surname=?, gender=?, Specialty=?, startWorkingIn=?, Assessment=?, function=?  WHERE code=?")) {
+			stmt.setInt(1, boss.getGrade());
+			stmt.setString(2, boss.getName());
+			stmt.setString(3, boss.getSurname());
+			stmt.setString(4, boss.getGender());
+			stmt.setString(5, boss.getSpecialty().toString());
+			stmt.setString(6, boss.getStartWorkingIn().toString());
+			stmt.setString(7, boss.getAssesment());
+			stmt.setString(8, boss.getFunction());
+			
+			stmt.executeUpdate();
+			
+			log(Level.SEVERE, "Completed", null);
+			
+		} catch (SQLException e) {
+			log(Level.SEVERE, "No se pudo guardar el usuario en la BD", e);
+		}
+	}
 
+	
+	
 	// Cerrar conexion
 	public static void cerrarBD(Connection con, Statement st) {
 		try {
