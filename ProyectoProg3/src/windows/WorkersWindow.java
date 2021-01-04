@@ -1,12 +1,13 @@
 package windows;
 
 import javax.swing.*;
+
 import javax.swing.table.DefaultTableModel;
 
-import classes.Counter;
 import classes.PoliceStation;
 import classes.Specialty;
 import classes.Workers;
+import classes.Workers2;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -14,7 +15,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class WorkersWindow extends JFrame {
-	
 
 	JLabel lgrade;
 	JSpinner tgrade;
@@ -34,7 +34,7 @@ public class WorkersWindow extends JFrame {
 	JButton cancel;
 	JPanel panel;
 
-	public WorkersWindow(Workers workers, PoliceStation policeStation, DefaultTableModel modelWorkers) {
+	public WorkersWindow(Workers2 workers, PoliceStation policeStation, DefaultTableModel modelWorkers) {
 
 		setLayout(new GridLayout(8, 2));
 
@@ -103,7 +103,7 @@ public class WorkersWindow extends JFrame {
 		create.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Workers creation;
+				Workers2 creation;
 				Object[] object;
 
 				if (workers != null) {
@@ -111,11 +111,10 @@ public class WorkersWindow extends JFrame {
 					object = null;
 				} else {
 					object = new Object[8];
-					creation = new Workers();
+					creation = new Workers2();
 				}
-				
-				
-			    object[0] = null;
+
+				object[0] = null;
 				object[1] = tgrade.getValue();
 				object[2] = tname.getText();
 				object[3] = tsurname.getText();
@@ -134,10 +133,9 @@ public class WorkersWindow extends JFrame {
 
 				if (workers == null) {
 					policeStation.getWorkers().add(creation);
-					
-						modelWorkers.addRow(object);
-						System.out.println(creation.toString());
-				
+					modelWorkers.addRow(object);
+					System.out.println(creation.toString());
+
 				}
 				dispose();
 

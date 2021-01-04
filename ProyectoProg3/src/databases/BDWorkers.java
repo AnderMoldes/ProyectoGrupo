@@ -15,8 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import classes.Boss;
-import classes.Specialty;
-import classes.Workers;
+import classes.Workers2;
 
 public class BDWorkers{
 	
@@ -100,7 +99,7 @@ public class BDWorkers{
 
 
 	// InsertarDatos con preparedStatement
-	public static void insertIntoPrepStat(Workers workers) {
+	public static void insertIntoPrepStat(Workers2 workers) {
 		try {
 			PreparedStatement insertSql = connection.prepareStatement(
 					"INSERT INTO WorkersTable( grade, name, surname, gender, Specialty, startWorkingIn, Assessment)  VALUES (?, ?, ?, ?, ?, ?, ?)");

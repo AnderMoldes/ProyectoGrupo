@@ -17,6 +17,7 @@ import classes.Detained;
 import classes.Fined;
 import classes.PoliceStation;
 import classes.Workers;
+import classes.Workers2;
 import databases.BDWorkers;
 import databases.BDetained;
 
@@ -273,7 +274,7 @@ public class GeneralWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new WorkersWindow(workers, policeStation, modelWorkers);
+				new WorkersWindow(null, policeStation, modelWorkers);
 			}
 		});
 
@@ -304,13 +305,14 @@ public class GeneralWindow extends JFrame {
 		 * modelWorkers); } else { new WorkersWindow(workers, policeStation,
 		 * modelWorkers); } } } });
 		 */
+		
 		tableWorkers.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				int fila = tableWorkers.rowAtPoint(e.getPoint());
 				int columna = tableWorkers.columnAtPoint(e.getPoint());
 				if ((fila > -1) && (columna > -1)) {
 					// System.out.println(modelWorkers.getValueAt(fila,columna));
-					new WorkersWindow(workers, policeStation, modelWorkers);
+					new WorkersWindow((Workers2) workers, policeStation, modelWorkers);
 				}
 			}
 		});
@@ -461,10 +463,10 @@ public class GeneralWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for (Workers workers : policeStation.getWorkers()) {
-					BDWorkers.insertIntoPrepStat(workers);
-
+					if (workers instanceof Workers2) {
+					BDWorkers.insertIntoPrepStat((Workers2) workers);
+					}
 				}
-
 			}
 		});
 
