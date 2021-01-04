@@ -51,11 +51,17 @@ public class GeneralWindow extends JFrame {
 	JMenuItem saveDataDetained;
 	JMenuItem saveDataFained;
 	JMenuItem ShowData;
+	JMenuItem ShowDataWorkers;
+	JMenuItem ShowDataBoss;
+	JMenuItem ShowDataArrested;
+	JMenuItem ShowDataFained;
 
 	JMenuItem workersI;
 	JMenuItem vehicle;
 	JMenuItem detained;
 	JMenuItem createBD;
+	JMenuItem createTables;
+	JMenuItem dropTables;
 	JMenuItem initBD;
 	JMenuItem dropBD;
 	JMenuItem sortTable;
@@ -107,24 +113,40 @@ public class GeneralWindow extends JFrame {
 		workersMenu = new JMenu("Database Workers");
 		DetainedMenu = new JMenu("Database Detained");
 
-		createBD = new JMenuItem("Create Database");
+		createBD = new JMenuItem("Create/activate Database");
 		dropBD = new JMenuItem("Delete Database");
 		sortTable = new JMenuItem("Sort table");
+		ShowData = new JMenuItem("Show All Data");
+		createTables= new JMenuItem("Create/activate tables");
+		dropTables= new JMenuItem("Delete tables");
+		
 		saveDataWorkers = new JMenuItem("Save data Workers");
+		ShowDataWorkers= new JMenuItem("Show Data Workers");
 		saveDataBoss = new JMenuItem("Save data Boss");
+		ShowDataBoss= new JMenuItem("Show Data Boss");
 		saveDataDetained = new JMenuItem("Save data Arrested");
+		ShowDataArrested= new JMenuItem("Show Data Arrested");
 		saveDataFained = new JMenuItem("Save data Fained");
-		ShowData = new JMenuItem("Show Data");
+		ShowDataFained= new JMenuItem("Show Data Fained");
+		
 
 		file.add(createBD);
 		file.add(dropBD);
+		file.add(createTables);
+		file.add(dropTables);
 		file.add(ShowData);
 		file.add(sortTable);
+		
 
 		workersMenu.add(saveDataWorkers);
+		workersMenu.add(ShowDataWorkers);
 		workersMenu.add(saveDataBoss);
+		workersMenu.add(ShowDataBoss);
 		DetainedMenu.add(saveDataDetained);
+		DetainedMenu.add(ShowDataArrested);
 		DetainedMenu.add(saveDataFained);
+		DetainedMenu.add(ShowDataFained);
+
 
 		end = new JMenu("Menu");
 
@@ -440,21 +462,38 @@ public class GeneralWindow extends JFrame {
 				BDWorkers.initBD("Workers.db");
 				BDetained.initBD("Detained.db");
 
-				BDWorkers.conection("WorkersTable");
-				BDWorkers.conectionBoss("WorkersTableBoss");
-
-				BDetained.conection("DetainedTable");
-				BDetained.conectionFained("FainedTable");
 			}
 		});
 
 		dropBD.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		createTables.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				BDWorkers.conection("WorkersTable");
+				BDWorkers.conectionBoss("WorkersTableBoss");
+
+				BDetained.conection("DetainedTable");
+				BDetained.conectionFained("FainedTable");
+				
+			}
+		});
+		
+		dropTables.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
 				BDWorkers.dropTable("WorkersTable");
 				BDWorkers.dropTable("WorkersTableBoss");
 				BDetained.dropTable("DetainedTable");
 				BDetained.dropTable("FainedTable");
+				
 			}
 		});
 
@@ -467,6 +506,27 @@ public class GeneralWindow extends JFrame {
 					BDWorkers.insertIntoPrepStat((Workers2) workers);
 					}
 				}
+			}
+		});
+		
+		ShowDataWorkers.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ArrayList<Object[]> datos = new ArrayList<Object[]>();
+					datos = BDWorkers.consultarDatos("WorkersTable");
+
+					for (int i = 0; i < datos.size(); i++) {
+						modelWorkers.addRow(datos.get(i));
+					}
+					tableWorkers.setModel(modelWorkers);
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			}
 		});
 
@@ -544,6 +604,27 @@ public class GeneralWindow extends JFrame {
 				}
 			}
 		});
+		
+		ShowDataBoss.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ArrayList<Object[]> datosBoss = new ArrayList<Object[]>();
+					datosBoss = BDWorkers.consultarDatosBoss("WorkersTableBoss");
+
+					for (int i = 0; i < datosBoss.size(); i++) {
+						modelWorkers.addRow(datosBoss.get(i));
+					}
+					tableWorkers.setModel(modelWorkers);
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 
 		saveDataDetained.addActionListener(new ActionListener() {
 
@@ -555,6 +636,27 @@ public class GeneralWindow extends JFrame {
 					}
 				}
 
+			}
+		});
+		
+		ShowDataArrested.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ArrayList<Object[]> datosArrested = new ArrayList<Object[]>();
+					datosArrested = BDetained.consultarDatosArrested("DetainedTable");
+
+					for (int i = 0; i < datosArrested.size(); i++) {
+						modelDetained.addRow(datosArrested.get(i));
+					}
+					tableDetained.setModel(modelDetained);
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			}
 		});
 
@@ -569,7 +671,31 @@ public class GeneralWindow extends JFrame {
 				}
 
 			}
-		});//Parte recursivo
+		});
+		
+		
+		ShowDataFained.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					ArrayList<Object[]> datosFained = new ArrayList<Object[]>();
+					datosFained = BDetained.consultarDatosFained("FainedTable");
+
+					for (int i = 0; i < datosFained.size(); i++) {
+						modelDetained.addRow(datosFained.get(i));
+					}
+					tableDetained.setModel(modelDetained);
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		//Parte recursivo
 		ArrayList list = new ArrayList();
 
 		for (int i = 0; i < tableWorkers.getRowCount(); i++) {
