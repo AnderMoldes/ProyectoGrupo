@@ -81,9 +81,10 @@ public class WorkersWindow extends JFrame {
 			tname.setText(workers.getName());
 			tsurname.setText(workers.getSurname());
 			tgender.setText(workers.getGender());
-			tassesstment.setText(String.valueOf(workers.getAssesment()));
-			spinYears.setValue(workers.getStartWorkingIn());
 			comboSpecialty.setSelectedItem(workers.getSpecialty());
+			spinYears.setValue(workers.getStartWorkingIn());
+			tassesstment.setText(String.valueOf(workers.getAssesment()));
+			
 
 		}
 
@@ -119,17 +120,17 @@ public class WorkersWindow extends JFrame {
 				object[2] = tname.getText();
 				object[3] = tsurname.getText();
 				object[4] = tgender.getText();
-				object[5] = tassesstment.getText();
+				object[5] = comboSpecialty.getSelectedItem();
 				object[6] = spinYears.getValue();
-				object[7] = comboSpecialty.getSelectedItem();
-
+				object[7] = tassesstment.getText();
+				
 				creation.setGrade((int) tgrade.getValue());
 				creation.setName(tname.getText());
 				creation.setSurname(tsurname.getText());
 				creation.setGender(tgender.getText());
-				creation.setAssesment(tassesstment.getText());
-				creation.setStartWorkingIn((Date) spinYears.getValue());
 				creation.setSpecialty((Specialty) comboSpecialty.getSelectedItem());
+				creation.setStartWorkingIn((Date) spinYears.getValue());
+				creation.setAssesment(tassesstment.getText());
 
 				if (workers == null) {
 					policeStation.getWorkers().add(creation);

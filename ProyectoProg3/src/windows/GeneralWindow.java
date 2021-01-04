@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
 public class GeneralWindow extends JFrame {
@@ -63,7 +64,6 @@ public class GeneralWindow extends JFrame {
 	JMenuItem createTables;
 	JMenuItem dropTables;
 	JMenuItem initBD;
-	JMenuItem dropBD;
 	JMenuItem sortTable;
 
 	JButton createWorkers;
@@ -114,7 +114,6 @@ public class GeneralWindow extends JFrame {
 		DetainedMenu = new JMenu("Database Detained");
 
 		createBD = new JMenuItem("Create/activate Database");
-		dropBD = new JMenuItem("Delete Database");
 		sortTable = new JMenuItem("Sort table");
 		ShowData = new JMenuItem("Show All Data");
 		createTables= new JMenuItem("Create/activate tables");
@@ -131,7 +130,6 @@ public class GeneralWindow extends JFrame {
 		
 
 		file.add(createBD);
-		file.add(dropBD);
 		file.add(createTables);
 		file.add(dropTables);
 		file.add(ShowData);
@@ -465,12 +463,7 @@ public class GeneralWindow extends JFrame {
 			}
 		});
 
-		dropBD.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
+		
 		
 		createTables.addActionListener(new ActionListener() {
 			

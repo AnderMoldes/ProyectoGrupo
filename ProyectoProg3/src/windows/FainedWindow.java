@@ -142,8 +142,8 @@ public class FainedWindow extends JFrame {
 					creation.setGender(radioMale.getActionCommand());
 				}
 
-				creation.setCitizenship((Country) comboCountry.getSelectedItem());
 				creation.setDescription(tdescription.getText());
+				creation.setCitizenship((Country) comboCountry.getSelectedItem());
 				creation.setPayment((int)spinPayment.getValue());
 				
 

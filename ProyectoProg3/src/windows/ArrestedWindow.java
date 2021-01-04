@@ -140,7 +140,6 @@ public class ArrestedWindow extends JFrame {
 				creation.setName(tName.getText());
 				creation.setLastName(tLastName.getText());
 				creation.setAge((int) age.getValue());
-				creation.setNumberOfArrest((int) pnumberOfArrest.getValue());
 
 				if (radioFamale.isSelected()) {
 					creation.setGender(radioFamale.getActionCommand());
@@ -148,9 +147,10 @@ public class ArrestedWindow extends JFrame {
 					creation.setGender(radioMale.getActionCommand());
 				}
 
-				creation.setCitizenship((Country) comboCountry.getSelectedItem());
+				creation.setNumberOfArrest((int) pnumberOfArrest.getValue());
 				creation.setDescription(tdescription.getText());
 				creation.setJailRelease(tjailrelease.getText());
+				creation.setCitizenship((Country) comboCountry.getSelectedItem());
 
 				if (arrested == null) {
 					policeStation.getDetained().add(creation);

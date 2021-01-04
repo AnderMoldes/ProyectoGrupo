@@ -89,9 +89,9 @@ public class BossWindow extends JFrame{
 			tname.setText(boss.getName());
 			tsurname.setText(boss.getSurname());
 			tgender.setText(boss.getGender());
-			tassesstment.setText(String.valueOf(boss.getAssesment()));
-			spinYears.setValue(boss.getStartWorkingIn());
 			comboSpecialty.setSelectedItem(boss.getSpecialty());
+			spinYears.setValue(boss.getStartWorkingIn());
+			tassesstment.setText(String.valueOf(boss.getAssesment()));
 			tfunction.setText(boss.getFunction());
 		}
 
@@ -128,9 +128,9 @@ public class BossWindow extends JFrame{
 				object[2] = tname.getText();
 				object[3] = tsurname.getText();
 				object[4] = tgender.getText();
-				object[5] = tassesstment.getText();
+				object[5] = comboSpecialty.getSelectedItem();
 				object[6] = spinYears.getValue();
-				object[7] = comboSpecialty.getSelectedItem();
+				object[7] = tassesstment.getText();
 				object[8] = tfunction.getText();
 
 				
@@ -138,9 +138,9 @@ public class BossWindow extends JFrame{
 				creation.setName(tname.getText());
 				creation.setSurname(tsurname.getText());
 				creation.setGender(tgender.getText());
+				creation.setSpecialty((Specialty) comboSpecialty.getSelectedItem());
+				creation.setStartWorkingIn((Date) spinYears.getValue());	
 				creation.setAssesment(tassesstment.getText());
-				creation.setStartWorkingIn((Date) spinYears.getValue());
-				creation.setSpecialty((Specialty) comboSpecialty.getSelectedItem());		
 				creation.setFunction(tfunction.getText());
 
 				if (boss == null) {
