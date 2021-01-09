@@ -3,6 +3,8 @@ package windows;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -28,9 +30,11 @@ import classes.PoliceStation;
 import classes.Specialty;
 import classes.Workers;
 import classes.Workers2;
+import databases.BDWorkers;
 
 public class WindowWorkers {
 
+	
 	PoliceStation policeS;
 	Workers2 workers2;
 	Boss boss;
@@ -40,7 +44,6 @@ public class WindowWorkers {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTable table;
-	private JTextField textField_4;
 
 	public WindowWorkers(Workers workers, PoliceStation policeStation) {
 
@@ -58,15 +61,15 @@ public class WindowWorkers {
 		btnNewButton.setBounds(739, 56, 111, 23);
 		frame.getContentPane().add(btnNewButton);
 
-		JButton btnNewButton_1 = new JButton("Update");
+		JButton btnNewButton_1 = new JButton("Save");
 		btnNewButton_1.setBounds(739, 107, 111, 23);
 		frame.getContentPane().add(btnNewButton_1);
 
-		JButton btnNewButton_2 = new JButton("Delete");
+		JButton btnNewButton_2 = new JButton("Update");
 		btnNewButton_2.setBounds(739, 157, 111, 23);
 		frame.getContentPane().add(btnNewButton_2);
 
-		JButton btnNewButton_3 = new JButton("Read");
+		JButton btnNewButton_3 = new JButton("Delete");
 		btnNewButton_3.setBounds(739, 209, 111, 23);
 		frame.getContentPane().add(btnNewButton_3);
 
@@ -301,6 +304,85 @@ public class WindowWorkers {
 					}
 
 				}
+			}
+		});
+		
+		btnNewButton_1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (Workers workers : policeS.getWorkers()) {
+					if (workers instanceof Workers2) {
+					BDWorkers.insertIntoPrepStat((Workers2) workers);
+					}
+				}
+				
+				for (Workers workers : policeS.getWorkers()) {
+					if (workers instanceof Boss) {
+						BDWorkers.insertIntoPrepStatBoss((Boss) workers);
+					}
+				}
+				
+			}
+		});
+		
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (Workers workers : policeS.getWorkers()) {
+					if (workers instanceof Workers2) {
+					BDWorkers.insertIntoPrepStat((Workers2) workers);
+					}
+				}
+			}
+		});
+		
+		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (Workers workers : policeS.getWorkers()) {
+					if (workers instanceof Boss) {
+						BDWorkers.insertIntoPrepStatBoss((Boss) workers);
+					}
+				}
+				
+			}
+		});
+		
+		btnNewButton_4.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ArrayList<Object[]> datos = new ArrayList<Object[]>();
+					datos = BDWorkers.consultarDatos("WorkersTable");
+
+					for (int i = 0; i < datos.size(); i++) {
+						modelWorkers.addRow(datos.get(i));
+					}
+					table.setModel(modelWorkers);
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				try {
+					ArrayList<Object[]> datosBoss = new ArrayList<Object[]>();
+					datosBoss = BDWorkers.consultarDatosBoss("WorkersTableBoss");
+
+					for (int i = 0; i < datosBoss.size(); i++) {
+						modelWorkers.addRow(datosBoss.get(i));
+					}
+					table.setModel(modelWorkers);
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			}
 		});
 		

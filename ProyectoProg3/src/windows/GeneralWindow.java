@@ -162,6 +162,7 @@ public class GeneralWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new WindowWorkers(null, police);
+				frame.dispose();
 			}
 		});
 
@@ -169,6 +170,7 @@ public class GeneralWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new WindowDetained((Arrested) detained, police, null);
+				frame.dispose();
 			}
 		});
 
@@ -380,17 +382,7 @@ public class GeneralWindow {
 //		
 
 //
-//		saveDataWorkers.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				for (Workers workers : policeStation.getWorkers()) {
-//					if (workers instanceof Workers2) {
-//					BDWorkers.insertIntoPrepStat((Workers2) workers);
-//					}
-//				}
-//			}
-//		});
+
 //		
 //		ShowDataWorkers.addActionListener(new ActionListener() {
 //			
@@ -417,33 +409,7 @@ public class GeneralWindow {
 //
 //			@Override
 //			public void actionPerformed(ActionEvent e) {
-//				try {
-//					ArrayList<Object[]> datos = new ArrayList<Object[]>();
-//					datos = BDWorkers.consultarDatos("WorkersTable");
-//
-//					for (int i = 0; i < datos.size(); i++) {
-//						modelWorkers.addRow(datos.get(i));
-//					}
-//					tableWorkers.setModel(modelWorkers);
-//
-//				} catch (SQLException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
 //				
-//				try {
-//					ArrayList<Object[]> datosBoss = new ArrayList<Object[]>();
-//					datosBoss = BDWorkers.consultarDatosBoss("WorkersTableBoss");
-//
-//					for (int i = 0; i < datosBoss.size(); i++) {
-//						modelWorkers.addRow(datosBoss.get(i));
-//					}
-//					tableWorkers.setModel(modelWorkers);
-//
-//				} catch (SQLException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
 //				
 //				try {
 //					ArrayList<Object[]> datosArrested = new ArrayList<Object[]>();
@@ -480,11 +446,7 @@ public class GeneralWindow {
 //
 //			@Override
 //			public void actionPerformed(ActionEvent e) {
-//				for (Workers workers : policeStation.getWorkers()) {
-//					if (workers instanceof Boss) {
-//						BDWorkers.insertIntoPrepStatBoss((Boss) workers);
-//					}
-//				}
+//				
 //			}
 //		});
 //		
