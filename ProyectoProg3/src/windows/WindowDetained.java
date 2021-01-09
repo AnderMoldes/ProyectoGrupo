@@ -17,109 +17,116 @@ import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import classes.Arrested;
+import classes.Country;
+import classes.PoliceStation;
+
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 
 public class WindowDetained {
+	PoliceStation policeS;
 	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField tname;
+	private JTextField tsurname;
+	private JTextField tdescription;
 	private JTable table;
-	private JTextField textField_4;
+	private JTextField treleased;
 
 	
-	public WindowDetained() {
+	public WindowDetained(Arrested arrested, PoliceStation police, DefaultTableModel model) {
+		policeS = new PoliceStation();
 		frame = new JFrame();
 		frame.getContentPane().setForeground(Color.RED);
 		frame.setBounds(100, 100, 911, 697);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JButton btnNewButton = new JButton("Create");
-		btnNewButton.setBounds(739, 56, 111, 23);
-		frame.getContentPane().add(btnNewButton);
+		JButton bcreate = new JButton("Create");
+		bcreate.setBounds(739, 56, 111, 23);
+		frame.getContentPane().add(bcreate);
 		
-		JButton btnNewButton_1 = new JButton("Update");
-		btnNewButton_1.setBounds(739, 107, 111, 23);
-		frame.getContentPane().add(btnNewButton_1);
+		JButton bupdate = new JButton("Update");
+		bupdate.setBounds(739, 107, 111, 23);
+		frame.getContentPane().add(bupdate);
 		
-		JButton btnNewButton_2 = new JButton("Delete");
-		btnNewButton_2.setBounds(739, 157, 111, 23);
-		frame.getContentPane().add(btnNewButton_2);
+		JButton bdelete = new JButton("Delete");
+		bdelete.setBounds(739, 157, 111, 23);
+		frame.getContentPane().add(bdelete);
 		
-		JButton btnNewButton_3 = new JButton("Read");
-		btnNewButton_3.setBounds(739, 209, 111, 23);
-		frame.getContentPane().add(btnNewButton_3);
+		JButton bread = new JButton("Read");
+		bread.setBounds(739, 209, 111, 23);
+		frame.getContentPane().add(bread);
 		
-		JButton btnNewButton_4 = new JButton("Show");
-		btnNewButton_4.setBounds(739, 258, 111, 23);
-		frame.getContentPane().add(btnNewButton_4);
+		JButton bshow = new JButton("Show");
+		bshow.setBounds(739, 258, 111, 23);
+		frame.getContentPane().add(bshow);
 		
-		JLabel lblNewLabel = new JLabel("Age:");
-		lblNewLabel.setBounds(46, 162, 129, 23);
-		frame.getContentPane().add(lblNewLabel);
+		JLabel lage = new JLabel("Age:");
+		lage.setBounds(46, 162, 129, 23);
+		frame.getContentPane().add(lage);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setBounds(46, 191, 78, 20);
-		frame.getContentPane().add(spinner);
+		JSpinner spinAge = new JSpinner();
+		spinAge.setBounds(46, 191, 78, 20);
+		frame.getContentPane().add(spinAge);
 		
-		JLabel lblNewLabel_1 = new JLabel("Name:");
-		lblNewLabel_1.setBounds(46, 60, 154, 14);
-		frame.getContentPane().add(lblNewLabel_1);
+		JLabel lname = new JLabel("Name:");
+		lname.setBounds(46, 60, 154, 14);
+		frame.getContentPane().add(lname);
 		
-		textField = new JTextField();
-		textField.setBounds(46, 82, 111, 20);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		tname = new JTextField();
+		tname.setBounds(46, 82, 111, 20);
+		frame.getContentPane().add(tname);
+		tname.setColumns(10);
 		
-		JLabel lblNewLabel_2 = new JLabel("Surname:");
-		lblNewLabel_2.setBounds(46, 111, 111, 14);
-		frame.getContentPane().add(lblNewLabel_2);
+		JLabel lsurname = new JLabel("Surname:");
+		lsurname.setBounds(46, 111, 111, 14);
+		frame.getContentPane().add(lsurname);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(46, 136, 111, 20);
-		frame.getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+		tsurname = new JTextField();
+		tsurname.setBounds(46, 136, 111, 20);
+		frame.getContentPane().add(tsurname);
+		tsurname.setColumns(10);
 		
-		JLabel lblNewLabel_3 = new JLabel("Gender");
-		lblNewLabel_3.setBounds(45, 222, 111, 14);
-		frame.getContentPane().add(lblNewLabel_3);
+		JLabel lgender = new JLabel("Gender");
+		lgender.setBounds(45, 222, 111, 14);
+		frame.getContentPane().add(lgender);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Male");
-		rdbtnNewRadioButton.setBounds(45, 243, 111, 23);
-		frame.getContentPane().add(rdbtnNewRadioButton);
+		JRadioButton radioMale = new JRadioButton("Male");
+		radioMale.setBounds(45, 243, 111, 23);
+		frame.getContentPane().add(radioMale);
 		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Female");
-		rdbtnNewRadioButton_1.setBounds(173, 243, 111, 23);
-		frame.getContentPane().add(rdbtnNewRadioButton_1);
+		JRadioButton radioFemale = new JRadioButton("Female");
+		radioFemale.setBounds(173, 243, 111, 23);
+		frame.getContentPane().add(radioFemale);
 		
-		JLabel lblNewLabel_4 = new JLabel("Nacionality:");
-		lblNewLabel_4.setBounds(45, 283, 111, 14);
-		frame.getContentPane().add(lblNewLabel_4);
+		JLabel lnacionality = new JLabel("Nacionality:");
+		lnacionality.setBounds(45, 283, 111, 14);
+		frame.getContentPane().add(lnacionality);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(45, 308, 111, 22);
-		frame.getContentPane().add(comboBox);
+		JComboBox comboNationality = new JComboBox();
+		comboNationality.setBounds(45, 308, 111, 22);
+		frame.getContentPane().add(comboNationality);
 		
-		JLabel lblNewLabel_5 = new JLabel("Number of arrest: ");
-		lblNewLabel_5.setBounds(316, 60, 168, 14);
-		frame.getContentPane().add(lblNewLabel_5);
+		JLabel lnumberArr = new JLabel("Number of arrest: ");
+		lnumberArr.setBounds(316, 60, 168, 14);
+		frame.getContentPane().add(lnumberArr);
 		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setBounds(316, 85, 111, 20);
-		frame.getContentPane().add(spinner_1);
+		JSpinner spinNumberArr = new JSpinner();
+		spinNumberArr.setBounds(316, 85, 111, 20);
+		frame.getContentPane().add(spinNumberArr);
 		
-		JLabel lblNewLabel_6 = new JLabel("Description:");
-		lblNewLabel_6.setBounds(45, 351, 98, 14);
-		frame.getContentPane().add(lblNewLabel_6);
+		JLabel ldescription = new JLabel("Description:");
+		ldescription.setBounds(45, 351, 98, 14);
+		frame.getContentPane().add(ldescription);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(45, 376, 109, 20);
-		frame.getContentPane().add(textField_2);
-		textField_2.setColumns(10);
+		tdescription = new JTextField();
+		tdescription.setBounds(45, 376, 109, 20);
+		frame.getContentPane().add(tdescription);
+		tdescription.setColumns(10);
 		
 		JLabel lblNewLabel_7 = new JLabel("If is arrested, fill this section:");
 		lblNewLabel_7.setForeground(Color.RED);
@@ -147,27 +154,27 @@ public class WindowDetained {
 		
 		frame.getContentPane().add(scrollWorkers);
 		
-		JLabel lblNewLabel_9 = new JLabel("Jail Release:");
-		lblNewLabel_9.setBounds(316, 116, 184, 14);
-		frame.getContentPane().add(lblNewLabel_9);
+		JLabel lreleased = new JLabel("Jail Release:");
+		lreleased.setBounds(316, 116, 184, 14);
+		frame.getContentPane().add(lreleased);
 		
-		textField_4 = new JTextField();
-		textField_4.setBounds(316, 136, 111, 20);
-		frame.getContentPane().add(textField_4);
-		textField_4.setColumns(10);
+		treleased = new JTextField();
+		treleased.setBounds(316, 136, 111, 20);
+		frame.getContentPane().add(treleased);
+		treleased.setColumns(10);
 		
 		JLabel lblNewLabel_7_1 = new JLabel("If is fined, fill this section:");
 		lblNewLabel_7_1.setForeground(Color.RED);
 		lblNewLabel_7_1.setBounds(316, 171, 359, 14);
 		frame.getContentPane().add(lblNewLabel_7_1);
 		
-		JLabel lblNewLabel_8 = new JLabel("Payment:");
-		lblNewLabel_8.setBounds(316, 194, 214, 14);
-		frame.getContentPane().add(lblNewLabel_8);
+		JLabel lpayment = new JLabel("Payment:");
+		lpayment.setBounds(316, 194, 214, 14);
+		frame.getContentPane().add(lpayment);
 		
-		JSpinner spinner_2 = new JSpinner();
-		spinner_2.setBounds(316, 219, 111, 20);
-		frame.getContentPane().add(spinner_2);
+		JSpinner spinPayment = new JSpinner();
+		spinPayment.setBounds(316, 219, 111, 20);
+		frame.getContentPane().add(spinPayment);
 		
 		JLabel lblNewLabel_7_2 = new JLabel("Obligatory Fields:");
 		lblNewLabel_7_2.setForeground(Color.RED);
@@ -176,28 +183,93 @@ public class WindowDetained {
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		
-		JMenu mnNewMenu = new JMenu("Database Detained");
-		menuBar.add(mnNewMenu);
+		JMenu menu = new JMenu("Database Detained");
+		menuBar.add(menu);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Save Data Arrested");
-		mnNewMenu.add(mntmNewMenuItem);
+		JMenuItem saveArrItem = new JMenuItem("Save Data Arrested");
+		menu.add(saveArrItem);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Show Data Arrested");
-		mnNewMenu.add(mntmNewMenuItem_1);
+		JMenuItem showArrItem = new JMenuItem("Show Data Arrested");
+		menu.add(showArrItem);
 		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Save Data Fined");
-		mnNewMenu.add(mntmNewMenuItem_2);
+		JMenuItem saveFinedItem = new JMenuItem("Save Data Fined");
+		menu.add(saveFinedItem);
 		
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Show Data Fined");
-		mnNewMenu.add(mntmNewMenuItem_3);
+		JMenuItem showFinedItem = new JMenuItem("Show Data Fined");
+		menu.add(showFinedItem);
 		
-		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Show All");
-		mnNewMenu.add(mntmNewMenuItem_4);
+		JMenuItem showAll = new JMenuItem("Show All");
+		menu.add(showAll);
+		
+		bcreate.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Object[] object;
+				Arrested creation;
+
+				if (arrested != null) {
+					object= null;
+					creation= null;
+				} else {
+					object = new Object[9];
+					creation= new Arrested();    
+				}
+				
+				object[0] =null;
+				object[1] = tname.getText();
+				object[2] = tsurname.getText();
+				object[3] = spinAge.getValue();
+				
+				if (radioFemale.isSelected()) {
+					object[4] = radioFemale.getActionCommand();
+				} else if (radioMale.isSelected()){
+					object[4] = radioMale.getActionCommand();
+				}
+				
+				object[5] = spinNumberArr.getValue();
+				object[6] = tdescription.getText();
+				object[7] = treleased.getText();
+				object[8] = comboNationality.getSelectedItem();
+				
+				
+				creation.setName(tname.getText());
+				creation.setLastName(tsurname.getText());
+				creation.setAge((int) spinAge.getValue());
+
+				if (radioFemale.isSelected()) {
+					creation.setGender(radioMale.getActionCommand());
+				} else if(radioMale.isSelected()) {
+					creation.setGender(radioMale.getActionCommand());
+				}
+
+				creation.setNumberOfArrest((int) spinNumberArr.getValue());
+				creation.setDescription(tdescription.getText());
+				creation.setJailRelease(treleased.getText());
+				creation.setCitizenship((Country) comboNationality.getSelectedItem());
+
+				if (arrested == null) {
+					policeS.getDetained().add(creation);
+					modelDetained.addRow(object);
+					System.out.println(creation.toString());
+				}
+
+	
+			}
+		});
+		
+			
+		
+		
 		
 		frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
 		frame.setTitle("POLICE MANAGEMENT");
 		frame.setResizable(true);
 		frame.setVisible(true);
+		
+		
+		
+		
 		
 	}
 	

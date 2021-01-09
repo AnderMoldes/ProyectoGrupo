@@ -41,6 +41,8 @@ public class GeneralWindow {
 	JButton bClose;
 	JLabel lbar;
 	JProgressBar progress;
+	PoliceStation police;
+	Detained detained;
 	private JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -163,7 +165,7 @@ public class GeneralWindow {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new WindowDetained();
+				new WindowDetained((Arrested) detained, police, null);
 			}
 		});
 		
