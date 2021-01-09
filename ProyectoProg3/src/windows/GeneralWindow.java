@@ -35,214 +35,92 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
-public class GeneralWindow extends JFrame {
-	Workers workers;
-	PoliceStation policeStation;
-	MiModelo modelWorkers;
-	BDWorkers bDWorkers;
-
-	JMenuBar bar;
-	JMenu file;
-	JMenu end;
-	JMenu workersMenu;
-	JMenu DetainedMenu;
-
-	JMenuItem saveDataWorkers;
-	JMenuItem saveDataBoss;
-	JMenuItem saveDataDetained;
-	JMenuItem saveDataFained;
-	JMenuItem ShowData;
-	JMenuItem ShowDataWorkers;
-	JMenuItem ShowDataBoss;
-	JMenuItem ShowDataArrested;
-	JMenuItem ShowDataFained;
-
-	JMenuItem workersI;
+public class GeneralWindow {
 	JMenuItem vehicle;
-	JMenuItem detained;
-	JMenuItem createBD;
-	JMenuItem createTables;
-	JMenuItem dropTables;
-	JMenuItem initBD;
-	JMenuItem sortTable;
-
-	JButton createWorkers;
-	JButton consultWorkers;
-	JButton consultDetained;
+	
 	JButton bClose;
-	JButton bManageRelations;
-	JButton bManageDetained;
-	JButton bManageWorkers;
-	JButton createBoss;
-	JButton createArrested;
-	JButton createFined;
-	JButton delete;
-
 	JLabel lbar;
 	JProgressBar progress;
-
-	public class MiModelo extends DefaultTableModel {
-		public boolean isCellEditable(int row, int column) {
-			// Aquí devolvemos true o false según queramos que una celda
-			// identificada por fila,columna (row,column), sea o no editable
-
-			return true;
-		}
-
-	}
+	private JFrame frame;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTable table;
+	private JTextField textField_4;
 	
 
 	public GeneralWindow() {
-
 		BDWorkers cc = new BDWorkers();
 		Connection cn = cc.getConection();
-
-		setLayout(new GridLayout(3, 1));
-
-		JPanel up = new JPanel();
-		JPanel center = new JPanel();
-		JPanel down = new JPanel();
-
-		up.setLayout(new BorderLayout());
-		center.setLayout(new BorderLayout());
-		down.setLayout(new BorderLayout());
-
-		policeStation = new PoliceStation();
-		bar = new JMenuBar();
-
-		file = new JMenu("File");
-		workersMenu = new JMenu("Database Workers");
-		DetainedMenu = new JMenu("Database Detained");
-
-		createBD = new JMenuItem("Create/activate Database");
-		sortTable = new JMenuItem("Sort table");
-		ShowData = new JMenuItem("Show All Data");
-		createTables= new JMenuItem("Create/activate tables");
-		dropTables= new JMenuItem("Delete tables");
+        
+		frame = new JFrame();
+		frame.setBounds(100, 100, 801, 462);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		saveDataWorkers = new JMenuItem("Save data Workers");
-		ShowDataWorkers= new JMenuItem("Show Data Workers");
-		saveDataBoss = new JMenuItem("Save data Boss");
-		ShowDataBoss= new JMenuItem("Show Data Boss");
-		saveDataDetained = new JMenuItem("Save data Arrested");
-		ShowDataArrested= new JMenuItem("Show Data Arrested");
-		saveDataFained = new JMenuItem("Save data Fained");
-		ShowDataFained= new JMenuItem("Show Data Fained");
+		       
 		
-
-		file.add(createBD);
-		file.add(createTables);
-		file.add(dropTables);
-		file.add(ShowData);
-		file.add(sortTable);
+		JMenuBar menuBar = new JMenuBar();
+		frame.setJMenuBar(menuBar);
 		
+		JMenu mnNewMenu = new JMenu("File");
+		menuBar.add(mnNewMenu);
+		
+		JMenuItem mntmNewMenuItem = new JMenuItem("Create/Activate Database");
+		mnNewMenu.add(mntmNewMenuItem);
+		frame.getContentPane().setLayout(null);
+		
+		JMenuItem vehicle = new JMenuItem("Vehicles");
+		mnNewMenu.add(vehicle);
+		frame.getContentPane().setLayout(null);
+		
+		JButton btnNewButton = new JButton(new ImageIcon("POLICIAS_Y_LADRONES_35.gif"));
+		btnNewButton.setBounds(500, 65, 97, 130);
+		frame.getContentPane().add(btnNewButton);
+		
+		JButton btnNewButton_2 = new JButton("Manage Relations");
+		btnNewButton_2.setBounds(65, 239, 170, 23);
+		frame.getContentPane().add(btnNewButton_2);
+		
+		JButton bClose = new JButton("Close Window");
+		bClose.setForeground(Color.RED);
+		bClose.setBounds(334, 301, 121, 23);
+		frame.getContentPane().add(bClose);
+		
+		JButton btnNewButton_2_1 = new JButton("Manage Workers");
+		btnNewButton_2_1.setBounds(312, 239, 163, 23);
+		frame.getContentPane().add(btnNewButton_2_1);
+		
+		JButton btnNewButton_2_2 = new JButton("Manage Detained");
+		btnNewButton_2_2.setBounds(559, 239, 155, 23);
+		frame.getContentPane().add(btnNewButton_2_2);
+		
+		JLabel lblNewLabel = new JLabel("Closing the window...");
+		lblNewLabel.setBounds(278, 360, 279, 14);
+		frame.getContentPane().add(lblNewLabel);
+		lblNewLabel.setVisible(false);
+		
+		JProgressBar progressBar = new JProgressBar(0, 100);
+		progressBar.setBounds(415, 360, 146, 14);
+		frame.getContentPane().add(progressBar);
+		
+		JButton btnNewButton_1 = new JButton(new ImageIcon("criminal-preso.gif"));
+		btnNewButton_1.setBounds(181, 65, 97, 130);
+		frame.getContentPane().add(btnNewButton_1);
+		progressBar.setVisible(false);
 
-		workersMenu.add(saveDataWorkers);
-		workersMenu.add(ShowDataWorkers);
-		workersMenu.add(saveDataBoss);
-		workersMenu.add(ShowDataBoss);
-		DetainedMenu.add(saveDataDetained);
-		DetainedMenu.add(ShowDataArrested);
-		DetainedMenu.add(saveDataFained);
-		DetainedMenu.add(ShowDataFained);
-
-
-		end = new JMenu("Menu");
-
-		workersI = new JMenuItem("Workers");
-		vehicle = new JMenuItem("Vehicles");
-		detained = new JMenuItem("Detained");
-
-		end.add(workersI);
-		end.add(detained);
-		end.add(vehicle);
-
-		bar.add(file);
-		bar.add(workersMenu);
-		bar.add(DetainedMenu);
-		bar.add(end);
+		
 
 		vehicle.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new VehicleWindow();
-				dispose();
+				frame.dispose();
 
 			}
 		});
 
-		setJMenuBar(bar);
-
-		JPanel ButtonPanel = new JPanel();
-
-		createWorkers = new JButton("Create Normal Worker");
-		createBoss = new JButton("Create a Boss");
-		consultWorkers = new JButton("Update Workers");
-
-		ButtonPanel.add(createWorkers);
-		ButtonPanel.add(createBoss);
-		ButtonPanel.add(consultWorkers);
 		
-
-		JPanel ButtonPanel2 = new JPanel();
-
-		createArrested = new JButton("Create Arrested");
-		createFined = new JButton("Create Fined");
-		consultDetained = new JButton("Update Detained");
-
-		ButtonPanel2.add(createArrested);
-		ButtonPanel2.add(createFined);
-		ButtonPanel2.add(consultDetained);
-
-		JPanel UP = new JPanel();
-		UP.setLayout(new BorderLayout());
-		UP.add(up, BorderLayout.WEST);
-		UP.add(center, BorderLayout.EAST);
-		// UP.add(down);
-
-		JPanel DOWN = new JPanel();
-
-		bClose = new JButton("Close Window");
-
-		delete = new JButton("Delete");
-		bManageRelations = new JButton("Manage Relations");
-		bManageWorkers = new JButton("Manage Workers");
-		bManageDetained = new JButton("Manage Detained");
-
-		DOWN.add(bManageRelations, BorderLayout.CENTER);
-		DOWN.add(bManageWorkers, BorderLayout.CENTER);
-		DOWN.add(bManageDetained, BorderLayout.CENTER);
-		DOWN.add(delete, BorderLayout.CENTER);
-
-		JPanel MOREDOWN = new JPanel();
-		MOREDOWN.setLayout(new GridLayout(3, 1));
-		lbar = new JLabel("Closing the window...");
-		lbar.setVisible(false);
-		progress = new JProgressBar(0, 100);
-		progress.setVisible(false);
-
-		bClose.setMinimumSize(new Dimension(20, 20));
-		bClose.setMaximumSize(new Dimension(150, 60));
-		bClose.setPreferredSize(new Dimension(120, 30));
-		bClose.setForeground(Color.RED);
-
-		MOREDOWN.add(bClose);
-		MOREDOWN.add(lbar);
-		MOREDOWN.add(progress);
-
-		this.setLayout(new BorderLayout());
-
-		JPanel panelDD = new JPanel();
-		panelDD.setLayout(new BorderLayout());
-		panelDD.add(DOWN, BorderLayout.NORTH);
-		panelDD.add(MOREDOWN, BorderLayout.SOUTH);
-
-		add(UP, BorderLayout.CENTER);
-		// add(DOWN, BorderLayout.SOUTH);
-		add(panelDD, BorderLayout.SOUTH);
-		MOREDOWN.setLayout(new FlowLayout());
-
 		bClose.addActionListener(new ActionListener() {
 
 			@Override
@@ -252,11 +130,11 @@ public class GeneralWindow extends JFrame {
 					@Override
 					public void run() {
 
-						lbar.setVisible(true);
-						progress.setVisible(true);
+						lblNewLabel.setVisible(true);
+						progressBar.setVisible(true);
 
 						for (int i = 0; i <= 100; i++) {
-							progress.setValue(i);
+							progressBar.setValue(i);
 							try {
 								Thread.sleep(7);
 							} catch (InterruptedException el) {
@@ -264,9 +142,9 @@ public class GeneralWindow extends JFrame {
 							}
 						}
 
-						lbar.setVisible(false);
-						progress.setVisible(false);
-						dispose();
+						lblNewLabel.setVisible(false);
+						progressBar.setVisible(false);
+						frame.dispose();
 					}
 				});
 
@@ -274,462 +152,445 @@ public class GeneralWindow extends JFrame {
 
 			}
 		});
-
-		MiModelo modelWorkers = new MiModelo();
-		modelWorkers.addColumn("code");
-		modelWorkers.addColumn("grade");
-		modelWorkers.addColumn("name");
-		modelWorkers.addColumn("surname");
-		modelWorkers.addColumn("gender");
-		modelWorkers.addColumn("Specialty");
-		modelWorkers.addColumn("startWorkingIn");
-		modelWorkers.addColumn("Assesment");
-		modelWorkers.addColumn("boss function");
-
-		JTable tableWorkers = new JTable(modelWorkers);
-		JScrollPane scrollWorkers = new JScrollPane(tableWorkers);
-
-		up.add(scrollWorkers);
-		up.add(ButtonPanel, BorderLayout.NORTH);
-
-		createWorkers.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new WorkersWindow(null, policeStation, modelWorkers);
-			}
-		});
-
-		createBoss.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new BossWindow(null, policeStation, modelWorkers);
-			}
-		});
-
-		/*
-		 * consultWorkers.addActionListener(new ActionListener() {
-		 * 
-		 * @Override public void actionPerformed(ActionEvent e) { Workers workers =
-		 * (Workers) modelWorkers.getValueAt(1, 1 );
-		 * 
-		 * if (workers instanceof Boss) { new BossWindow((Boss) workers, policeStation,
-		 * modelWorkers); } else { new WorkersWindow(workers, policeStation,
-		 * modelWorkers); } } });
-		 * 
-		 * table.addMouseListener(new MouseAdapter() { public void
-		 * mouseClicked(MouseEvent evt) { JList list = (JList) evt.getSource(); if
-		 * (evt.getClickCount() == 2) { Workers workers = (Workers)
-		 * table.getSelectionModel();
-		 * 
-		 * if (workers instanceof Boss) { new BossWindow((Boss) workers, policeStation,
-		 * modelWorkers); } else { new WorkersWindow(workers, policeStation,
-		 * modelWorkers); } } } });
-		 */
 		
-//		tableWorkers.addMouseListener(new MouseAdapter() {
-//			public void mouseClicked(MouseEvent e) {
-//				int fila = tableWorkers.rowAtPoint(e.getPoint());
-//				int columna = tableWorkers.columnAtPoint(e.getPoint());
-//			if ((fila > -1) && (columna > -1) || e.getClickCount() == 2 ) {
-//				if (e.getClickCount() == 2) {
-//					Workers2 workers2=  (Workers2) tableWorkers.getSelectionModel(); 
-//					new WorkersWindow((Workers2) workers, policeStation, modelWorkers);
+		btnNewButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new WindowWorkers();
+			}
+		});
+		
+		btnNewButton_1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new WindowDetained();
+			}
+		});
+		
+		
+		
+
+		frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
+		frame.setTitle("POLICE MANAGEMENT");
+		frame.setResizable(true);
+		frame.setVisible(true);
+
+
+//		createWorkers.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				new WorkersWindow(null, policeStation, modelWorkers);
+//			}
+//		});
+//
+//		createBoss.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				new BossWindow(null, policeStation, modelWorkers);
+//			}
+//		});
+//
+//		/*
+//		 * consultWorkers.addActionListener(new ActionListener() {
+//		 * 
+//		 * @Override public void actionPerformed(ActionEvent e) { Workers workers =
+//		 * (Workers) modelWorkers.getValueAt(1, 1 );
+//		 * 
+//		 * if (workers instanceof Boss) { new BossWindow((Boss) workers, policeStation,
+//		 * modelWorkers); } else { new WorkersWindow(workers, policeStation,
+//		 * modelWorkers); } } });
+//		 * 
+//		 * table.addMouseListener(new MouseAdapter() { public void
+//		 * mouseClicked(MouseEvent evt) { JList list = (JList) evt.getSource(); if
+//		 * (evt.getClickCount() == 2) { Workers workers = (Workers)
+//		 * table.getSelectionModel();
+//		 * 
+//		 * if (workers instanceof Boss) { new BossWindow((Boss) workers, policeStation,
+//		 * modelWorkers); } else { new WorkersWindow(workers, policeStation,
+//		 * modelWorkers); } } } });
+//		 */
+//		
+////		tableWorkers.addMouseListener(new MouseAdapter() {
+////			public void mouseClicked(MouseEvent e) {
+////				int fila = tableWorkers.rowAtPoint(e.getPoint());
+////				int columna = tableWorkers.columnAtPoint(e.getPoint());
+////			if ((fila > -1) && (columna > -1) || e.getClickCount() == 2 ) {
+////				if (e.getClickCount() == 2) {
+////					Workers2 workers2=  (Workers2) tableWorkers.getSelectionModel(); 
+////					new WorkersWindow((Workers2) workers, policeStation, modelWorkers);
+////				}
+////			}
+////		});
+//
+//
+//		createArrested.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				new ArrestedWindow(null, policeStation, modelDetained);
+//			}
+//		});
+//
+//		createFined.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				new FainedWindow(null, policeStation, modelDetained);
+//			}
+//		});
+//
+//		/*
+//		 * consultDetained.addActionListener(new ActionListener() {
+//		 * 
+//		 * @Override public void actionPerformed(ActionEvent e) { Detained detained =
+//		 * (Detained) listDetained.getSelectedValue();
+//		 * 
+//		 * if (detained instanceof Arrested) { new ArrestedWindow((Arrested) detained,
+//		 * policeStation, modelDetained); } else if (detained instanceof Fined){ new
+//		 * FainedWindow((Fined)detained, policeStation, modelDetained); }
+//		 * 
+//		 * } });
+//		 * 
+//		 * listDetained.addMouseListener(new MouseAdapter() { public void
+//		 * mouseClicked(MouseEvent evt) { JList list = (JList) evt.getSource(); if
+//		 * (evt.getClickCount() == 2) { Detained detained = (Detained)
+//		 * listDetained.getSelectedValue();
+//		 * 
+//		 * if (detained instanceof Arrested) { new ArrestedWindow((Arrested) detained,
+//		 * policeStation, modelDetained); } else if (detained instanceof Fined){ new
+//		 * FainedWindow((Fined)detained, policeStation, modelDetained); } } } });
+//		 * 
+//		 * 
+//		 * 
+//		 * delete.addActionListener(new ActionListener() {
+//		 * 
+//		 * @Override public void actionPerformed(ActionEvent e) { int question =
+//		 * JOptionPane.showConfirmDialog(null,
+//		 * "Are you sure that you want to delete this?"); if (question == 0) { Workers
+//		 * worker = (Workers) listWorkers.getSelectedValue(); Workers boss = (Boss)
+//		 * listWorkers.getSelectedValue(); Detained arrested = (Arrested)
+//		 * listDetained.getSelectedValue(); Detained fined = (Fined)
+//		 * listDetained.getSelectedValue();
+//		 * 
+//		 * policeStation.getWorkers().remove(worker);
+//		 * policeStation.getWorkers().remove(boss);
+//		 * policeStation.getDetained().remove(arrested);
+//		 * policeStation.getDetained().remove(fined);
+//		 * 
+//		 * modelWorkers.removeElement(worker); modelWorkers.removeElement(boss);
+//		 * modelDetained.removeElement(arrested); modelDetained.removeElement(fined);
+//		 * 
+//		 * }
+//		 * 
+//		 * } });
+//		 */
+//		delete.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				int fila = tableWorkers.getSelectedRow();
+//				int fila2 = tableDetained.getSelectedColumn();
+//				if (fila >= 0 && tableWorkers.isColumnSelected(fila)) {
+//					modelWorkers.removeRow(fila);
+//				} else if (fila2 >= 0 && tableDetained.isColumnSelected(fila)) {
+//					modelDetained.removeRow(fila);
+//				} else {
+//					JOptionPane.showMessageDialog(null, "Select Row");
+//				}
+//			}
+//
+//		});
+//
+//		consultWorkers.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				
+//				for (Workers workers : policeStation.getWorkers()) {
+//					if (workers instanceof Workers2) {
+//						BDWorkers.update((Workers2) workers);
+//					}
+//				}
+//				
+//				for (Workers workers : policeStation.getWorkers()) {
+//					if (workers instanceof Boss) {
+//						BDWorkers.updateBoss((Boss) workers);
+//					}
+//				}
+//				
+//				
+//
+//			}
+//		});
+//
+//		consultDetained.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				int fila = Integer.parseInt(getName());
+//				int columna = Integer.parseInt(getTitle());
+//
+//			}
+//		});
+//
+//		createBD.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				BDWorkers.initBD("Workers.db");
+//				BDetained.initBD("Detained.db");
+//
+//			}
+//		});
+//
+//		
+//		
+//		createTables.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				BDWorkers.conection("WorkersTable");
+//				BDWorkers.conectionBoss("WorkersTableBoss");
+//
+//				BDetained.conection("DetainedTable");
+//				BDetained.conectionFained("FainedTable");
+//				
+//			}
+//		});
+//		
+//		dropTables.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				BDWorkers.dropTable("WorkersTable");
+//				BDWorkers.dropTable("WorkersTableBoss");
+//				BDetained.dropTable("DetainedTable");
+//				BDetained.dropTable("FainedTable");
+//				
+//			}
+//		});
+//
+//		saveDataWorkers.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				for (Workers workers : policeStation.getWorkers()) {
+//					if (workers instanceof Workers2) {
+//					BDWorkers.insertIntoPrepStat((Workers2) workers);
+//					}
 //				}
 //			}
 //		});
+//		
+//		ShowDataWorkers.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				try {
+//					ArrayList<Object[]> datos = new ArrayList<Object[]>();
+//					datos = BDWorkers.consultarDatos("WorkersTable");
+//
+//					for (int i = 0; i < datos.size(); i++) {
+//						modelWorkers.addRow(datos.get(i));
+//					}
+//					tableWorkers.setModel(modelWorkers);
+//
+//				} catch (SQLException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//				
+//			}
+//		});
+//
+//		ShowData.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				try {
+//					ArrayList<Object[]> datos = new ArrayList<Object[]>();
+//					datos = BDWorkers.consultarDatos("WorkersTable");
+//
+//					for (int i = 0; i < datos.size(); i++) {
+//						modelWorkers.addRow(datos.get(i));
+//					}
+//					tableWorkers.setModel(modelWorkers);
+//
+//				} catch (SQLException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//				
+//				try {
+//					ArrayList<Object[]> datosBoss = new ArrayList<Object[]>();
+//					datosBoss = BDWorkers.consultarDatosBoss("WorkersTableBoss");
+//
+//					for (int i = 0; i < datosBoss.size(); i++) {
+//						modelWorkers.addRow(datosBoss.get(i));
+//					}
+//					tableWorkers.setModel(modelWorkers);
+//
+//				} catch (SQLException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//				
+//				try {
+//					ArrayList<Object[]> datosArrested = new ArrayList<Object[]>();
+//					datosArrested = BDetained.consultarDatosArrested("DetainedTable");
+//
+//					for (int i = 0; i < datosArrested.size(); i++) {
+//						modelDetained.addRow(datosArrested.get(i));
+//					}
+//					tableDetained.setModel(modelDetained);
+//
+//				} catch (SQLException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//				
+//				try {
+//					ArrayList<Object[]> datosFained = new ArrayList<Object[]>();
+//					datosFained = BDetained.consultarDatosFained("FainedTable");
+//
+//					for (int i = 0; i < datosFained.size(); i++) {
+//						modelDetained.addRow(datosFained.get(i));
+//					}
+//					tableDetained.setModel(modelDetained);
+//
+//				} catch (SQLException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//				
+//			}
+//		});
+//
+//		saveDataBoss.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				for (Workers workers : policeStation.getWorkers()) {
+//					if (workers instanceof Boss) {
+//						BDWorkers.insertIntoPrepStatBoss((Boss) workers);
+//					}
+//				}
+//			}
+//		});
+//		
+//		ShowDataBoss.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				try {
+//					ArrayList<Object[]> datosBoss = new ArrayList<Object[]>();
+//					datosBoss = BDWorkers.consultarDatosBoss("WorkersTableBoss");
+//
+//					for (int i = 0; i < datosBoss.size(); i++) {
+//						modelWorkers.addRow(datosBoss.get(i));
+//					}
+//					tableWorkers.setModel(modelWorkers);
+//
+//				} catch (SQLException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//				
+//			}
+//		});
+//
+//		saveDataDetained.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				for (Detained detained : policeStation.getDetained()) {
+//					if (detained instanceof Arrested) {
+//						BDetained.insertIntoPrepStat((Arrested) detained);
+//					}
+//				}
+//
+//			}
+//		});
+//		
+//		ShowDataArrested.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				try {
+//					ArrayList<Object[]> datosArrested = new ArrayList<Object[]>();
+//					datosArrested = BDetained.consultarDatosArrested("DetainedTable");
+//
+//					for (int i = 0; i < datosArrested.size(); i++) {
+//						modelDetained.addRow(datosArrested.get(i));
+//					}
+//					tableDetained.setModel(modelDetained);
+//
+//				} catch (SQLException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//				
+//			}
+//		});
+//
+//		saveDataFained.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				for (Detained detained : policeStation.getDetained()) {
+//					if (detained instanceof Fined) {
+//						BDetained.insertIntoPrepStatFained((Fined) detained);
+//					}
+//				}
+//
+//			}
+//		});
+//		
+//		
+//		ShowDataFained.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				
+//				try {
+//					ArrayList<Object[]> datosFained = new ArrayList<Object[]>();
+//					datosFained = BDetained.consultarDatosFained("FainedTable");
+//
+//					for (int i = 0; i < datosFained.size(); i++) {
+//						modelDetained.addRow(datosFained.get(i));
+//					}
+//					tableDetained.setModel(modelDetained);
+//
+//				} catch (SQLException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//			}
+//		});
+//		
+//		
+//		
+//		
+//		//Parte recursivo
+//		ArrayList list = new ArrayList();
+//
+//		for (int i = 0; i < tableWorkers.getRowCount(); i++) {
+//			list.add(tableWorkers.getName());
+//		}
+//		
+//		
+//		sortTable.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				Collections.sort(list);
+//				
+//			}
+//		});
+//		TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(modelWorkers);
+//		tableWorkers.setRowSorter(sorter);
 
-		MiModelo modelDetained = new MiModelo();
-		modelDetained.addColumn("identificative");
-		modelDetained.addColumn("name");
-		modelDetained.addColumn("LastName");
-		modelDetained.addColumn("age");
-		modelDetained.addColumn("gender");
-		modelDetained.addColumn("numberOfArrest");
-		modelDetained.addColumn("description");
-		modelDetained.addColumn("jailRelease");
-		modelDetained.addColumn("citizenship");
-		modelDetained.addColumn("payment");
-
-		JTable tableDetained = new JTable(modelDetained);
-		JScrollPane scrollDetained = new JScrollPane(tableDetained);
-
-		center.add(scrollDetained);
-		center.add(ButtonPanel2, BorderLayout.NORTH);
-		
-
-		createArrested.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new ArrestedWindow(null, policeStation, modelDetained);
-			}
-		});
-
-		createFined.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new FainedWindow(null, policeStation, modelDetained);
-			}
-		});
-
-		/*
-		 * consultDetained.addActionListener(new ActionListener() {
-		 * 
-		 * @Override public void actionPerformed(ActionEvent e) { Detained detained =
-		 * (Detained) listDetained.getSelectedValue();
-		 * 
-		 * if (detained instanceof Arrested) { new ArrestedWindow((Arrested) detained,
-		 * policeStation, modelDetained); } else if (detained instanceof Fined){ new
-		 * FainedWindow((Fined)detained, policeStation, modelDetained); }
-		 * 
-		 * } });
-		 * 
-		 * listDetained.addMouseListener(new MouseAdapter() { public void
-		 * mouseClicked(MouseEvent evt) { JList list = (JList) evt.getSource(); if
-		 * (evt.getClickCount() == 2) { Detained detained = (Detained)
-		 * listDetained.getSelectedValue();
-		 * 
-		 * if (detained instanceof Arrested) { new ArrestedWindow((Arrested) detained,
-		 * policeStation, modelDetained); } else if (detained instanceof Fined){ new
-		 * FainedWindow((Fined)detained, policeStation, modelDetained); } } } });
-		 * 
-		 * 
-		 * 
-		 * delete.addActionListener(new ActionListener() {
-		 * 
-		 * @Override public void actionPerformed(ActionEvent e) { int question =
-		 * JOptionPane.showConfirmDialog(null,
-		 * "Are you sure that you want to delete this?"); if (question == 0) { Workers
-		 * worker = (Workers) listWorkers.getSelectedValue(); Workers boss = (Boss)
-		 * listWorkers.getSelectedValue(); Detained arrested = (Arrested)
-		 * listDetained.getSelectedValue(); Detained fined = (Fined)
-		 * listDetained.getSelectedValue();
-		 * 
-		 * policeStation.getWorkers().remove(worker);
-		 * policeStation.getWorkers().remove(boss);
-		 * policeStation.getDetained().remove(arrested);
-		 * policeStation.getDetained().remove(fined);
-		 * 
-		 * modelWorkers.removeElement(worker); modelWorkers.removeElement(boss);
-		 * modelDetained.removeElement(arrested); modelDetained.removeElement(fined);
-		 * 
-		 * }
-		 * 
-		 * } });
-		 */
-		delete.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int fila = tableWorkers.getSelectedRow();
-				int fila2 = tableDetained.getSelectedColumn();
-				if (fila >= 0 && tableWorkers.isColumnSelected(fila)) {
-					modelWorkers.removeRow(fila);
-				} else if (fila2 >= 0 && tableDetained.isColumnSelected(fila)) {
-					modelDetained.removeRow(fila);
-				} else {
-					JOptionPane.showMessageDialog(null, "Select Row");
-				}
-			}
-
-		});
-
-		consultWorkers.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				for (Workers workers : policeStation.getWorkers()) {
-					if (workers instanceof Workers2) {
-						BDWorkers.update((Workers2) workers);
-					}
-				}
-				
-				for (Workers workers : policeStation.getWorkers()) {
-					if (workers instanceof Boss) {
-						BDWorkers.updateBoss((Boss) workers);
-					}
-				}
-				
-				
-
-			}
-		});
-
-		consultDetained.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int fila = Integer.parseInt(getName());
-				int columna = Integer.parseInt(getTitle());
-
-			}
-		});
-
-		createBD.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				BDWorkers.initBD("Workers.db");
-				BDetained.initBD("Detained.db");
-
-			}
-		});
-
-		
-		
-		createTables.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				BDWorkers.conection("WorkersTable");
-				BDWorkers.conectionBoss("WorkersTableBoss");
-
-				BDetained.conection("DetainedTable");
-				BDetained.conectionFained("FainedTable");
-				
-			}
-		});
-		
-		dropTables.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				BDWorkers.dropTable("WorkersTable");
-				BDWorkers.dropTable("WorkersTableBoss");
-				BDetained.dropTable("DetainedTable");
-				BDetained.dropTable("FainedTable");
-				
-			}
-		});
-
-		saveDataWorkers.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				for (Workers workers : policeStation.getWorkers()) {
-					if (workers instanceof Workers2) {
-					BDWorkers.insertIntoPrepStat((Workers2) workers);
-					}
-				}
-			}
-		});
-		
-		ShowDataWorkers.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					ArrayList<Object[]> datos = new ArrayList<Object[]>();
-					datos = BDWorkers.consultarDatos("WorkersTable");
-
-					for (int i = 0; i < datos.size(); i++) {
-						modelWorkers.addRow(datos.get(i));
-					}
-					tableWorkers.setModel(modelWorkers);
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-			}
-		});
-
-		ShowData.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					ArrayList<Object[]> datos = new ArrayList<Object[]>();
-					datos = BDWorkers.consultarDatos("WorkersTable");
-
-					for (int i = 0; i < datos.size(); i++) {
-						modelWorkers.addRow(datos.get(i));
-					}
-					tableWorkers.setModel(modelWorkers);
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-				try {
-					ArrayList<Object[]> datosBoss = new ArrayList<Object[]>();
-					datosBoss = BDWorkers.consultarDatosBoss("WorkersTableBoss");
-
-					for (int i = 0; i < datosBoss.size(); i++) {
-						modelWorkers.addRow(datosBoss.get(i));
-					}
-					tableWorkers.setModel(modelWorkers);
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-				try {
-					ArrayList<Object[]> datosArrested = new ArrayList<Object[]>();
-					datosArrested = BDetained.consultarDatosArrested("DetainedTable");
-
-					for (int i = 0; i < datosArrested.size(); i++) {
-						modelDetained.addRow(datosArrested.get(i));
-					}
-					tableDetained.setModel(modelDetained);
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-				try {
-					ArrayList<Object[]> datosFained = new ArrayList<Object[]>();
-					datosFained = BDetained.consultarDatosFained("FainedTable");
-
-					for (int i = 0; i < datosFained.size(); i++) {
-						modelDetained.addRow(datosFained.get(i));
-					}
-					tableDetained.setModel(modelDetained);
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-			}
-		});
-
-		saveDataBoss.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				for (Workers workers : policeStation.getWorkers()) {
-					if (workers instanceof Boss) {
-						BDWorkers.insertIntoPrepStatBoss((Boss) workers);
-					}
-				}
-			}
-		});
-		
-		ShowDataBoss.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					ArrayList<Object[]> datosBoss = new ArrayList<Object[]>();
-					datosBoss = BDWorkers.consultarDatosBoss("WorkersTableBoss");
-
-					for (int i = 0; i < datosBoss.size(); i++) {
-						modelWorkers.addRow(datosBoss.get(i));
-					}
-					tableWorkers.setModel(modelWorkers);
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-			}
-		});
-
-		saveDataDetained.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				for (Detained detained : policeStation.getDetained()) {
-					if (detained instanceof Arrested) {
-						BDetained.insertIntoPrepStat((Arrested) detained);
-					}
-				}
-
-			}
-		});
-		
-		ShowDataArrested.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					ArrayList<Object[]> datosArrested = new ArrayList<Object[]>();
-					datosArrested = BDetained.consultarDatosArrested("DetainedTable");
-
-					for (int i = 0; i < datosArrested.size(); i++) {
-						modelDetained.addRow(datosArrested.get(i));
-					}
-					tableDetained.setModel(modelDetained);
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-			}
-		});
-
-		saveDataFained.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				for (Detained detained : policeStation.getDetained()) {
-					if (detained instanceof Fined) {
-						BDetained.insertIntoPrepStatFained((Fined) detained);
-					}
-				}
-
-			}
-		});
-		
-		
-		ShowDataFained.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					ArrayList<Object[]> datosFained = new ArrayList<Object[]>();
-					datosFained = BDetained.consultarDatosFained("FainedTable");
-
-					for (int i = 0; i < datosFained.size(); i++) {
-						modelDetained.addRow(datosFained.get(i));
-					}
-					tableDetained.setModel(modelDetained);
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
-		
-		
-		
-		
-		//Parte recursivo
-		ArrayList list = new ArrayList();
-
-		for (int i = 0; i < tableWorkers.getRowCount(); i++) {
-			list.add(tableWorkers.getName());
-		}
-		
-		
-		sortTable.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Collections.sort(list);
-				
-			}
-		});
-		TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(modelWorkers);
-		tableWorkers.setRowSorter(sorter);
-
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setTitle("POLICE MANAGEMENT");
-		pack();
-		setResizable(true);
-		setVisible(true);
 
 	}
 }
