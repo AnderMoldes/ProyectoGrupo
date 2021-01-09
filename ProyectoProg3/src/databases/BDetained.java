@@ -20,7 +20,7 @@ public class BDetained {
 	private static Connection connection;
 	private static Statement statement;
 
-	// Loggin
+	// Loggin local
 	private static void log(Level level, String msg, Throwable excepcion) {
 		if (!LOGGING)
 			return;
