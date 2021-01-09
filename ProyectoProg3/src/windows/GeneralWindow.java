@@ -67,10 +67,19 @@ public class GeneralWindow {
 		JMenuItem mntmNewMenuItem = new JMenuItem("Create/Activate Database");
 		mnNewMenu.add(mntmNewMenuItem);
 		frame.getContentPane().setLayout(null);
+		
+		JMenuItem table = new JMenuItem("Create/Activate Tables");
+		mnNewMenu.add(table);
+		frame.getContentPane().setLayout(null);
+		
+		JMenuItem dropTables = new JMenuItem("Drop Tables");
+		mnNewMenu.add(dropTables);
+		frame.getContentPane().setLayout(null);
 
 		JMenuItem vehicle = new JMenuItem("Vehicles");
 		mnNewMenu.add(vehicle);
 		frame.getContentPane().setLayout(null);
+		
 
 		JButton btnNewButton = new JButton(new ImageIcon("POLICIAS_Y_LADRONES_35.gif"));
 		btnNewButton.setBounds(500, 65, 97, 130);
@@ -173,7 +182,32 @@ public class GeneralWindow {
 
 			}
 		});
+		
+		table.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				BDWorkers.conection("WorkersTable");
+				BDWorkers.conectionBoss("WorkersTableBoss");
 
+				BDetained.conection("DetainedTable");
+				BDetained.conectionFained("FainedTable");
+				
+			}
+		});
+
+		dropTables.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				BDWorkers.dropTable("WorkersTable");
+				BDWorkers.dropTable("WorkersTableBoss");
+				BDetained.dropTable("DetainedTable");
+				BDetained.dropTable("FainedTable");
+				
+			}
+		});
+		
 		frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
 		frame.setTitle("POLICE MANAGEMENT");
 		frame.setResizable(true);
@@ -342,30 +376,9 @@ public class GeneralWindow {
 //
 //		
 //		
-//		createTables.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				BDWorkers.conection("WorkersTable");
-//				BDWorkers.conectionBoss("WorkersTableBoss");
-//
-//				BDetained.conection("DetainedTable");
-//				BDetained.conectionFained("FainedTable");
-//				
-//			}
-//		});
 //		
-//		dropTables.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				BDWorkers.dropTable("WorkersTable");
-//				BDWorkers.dropTable("WorkersTableBoss");
-//				BDetained.dropTable("DetainedTable");
-//				BDetained.dropTable("FainedTable");
-//				
-//			}
-//		});
+//		
+
 //
 //		saveDataWorkers.addActionListener(new ActionListener() {
 //
