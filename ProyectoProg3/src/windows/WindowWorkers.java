@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -262,6 +263,14 @@ public class WindowWorkers {
 						System.out.println(creation.toString());
 
 					}
+					
+					spinner.setValue(0);
+					textField.setText("");
+					textField_1.setText("");
+					//
+					comboBox.setSelectedIndex(0);
+					textField_2.setText("");
+					
 
 				} else {
 
@@ -302,6 +311,13 @@ public class WindowWorkers {
 						System.out.println(creationB.toString());
 
 					}
+					
+					spinner.setValue(0);
+					textField.setText("");
+					textField_1.setText("");
+					comboBox.setSelectedItem(0);
+					textField_2.setText("");
+					textField_3.setText("");
 
 				}
 			}
