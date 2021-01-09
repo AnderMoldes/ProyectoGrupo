@@ -46,23 +46,23 @@ public class WindowDetained {
 		frame.getContentPane().setLayout(null);
 		
 		JButton bcreate = new JButton("Create");
-		bcreate.setBounds(739, 56, 111, 23);
+		bcreate.setBounds(739, 50, 111, 23);
 		frame.getContentPane().add(bcreate);
 		
 		JButton bupdate = new JButton("Update");
-		bupdate.setBounds(739, 107, 111, 23);
+		bupdate.setBounds(739, 90, 111, 23);
 		frame.getContentPane().add(bupdate);
 		
 		JButton bdelete = new JButton("Delete");
-		bdelete.setBounds(739, 157, 111, 23);
+		bdelete.setBounds(739, 130, 111, 23);
 		frame.getContentPane().add(bdelete);
 		
 		JButton bread = new JButton("Read");
-		bread.setBounds(739, 209, 111, 23);
+		bread.setBounds(739, 170, 111, 23);
 		frame.getContentPane().add(bread);
 		
 		JButton bshow = new JButton("Show");
-		bshow.setBounds(739, 258, 111, 23);
+		bshow.setBounds(739, 210, 111, 23);
 		frame.getContentPane().add(bshow);
 		
 		JLabel lage = new JLabel("Age:");
@@ -78,7 +78,7 @@ public class WindowDetained {
 		frame.getContentPane().add(lname);
 		
 		tname = new JTextField();
-		tname.setBounds(46, 82, 111, 20);
+		tname.setBounds(46, 82, 111, 20); 
 		frame.getContentPane().add(tname);
 		tname.setColumns(10);
 		
@@ -253,6 +253,14 @@ public class WindowDetained {
 					modelDetained.addRow(object);
 					System.out.println(creation.toString());
 				}
+				tname.setText("");
+				tsurname.setText("");
+				spinAge.setValue(0);
+				
+				spinNumberArr.setValue(0);
+				tdescription.setText("");
+				treleased.setText("");
+				spinPayment.setValue(0);
 
 	
 			}
