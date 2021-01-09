@@ -2,6 +2,7 @@ package windows;
 
 import javax.swing.*;
 
+
 import javax.swing.table.DefaultTableModel;
 
 import classes.PoliceStation;
@@ -33,6 +34,8 @@ public class WorkersWindow extends JFrame {
 	JButton create;
 	JButton cancel;
 	JPanel panel;
+	
+	
 
 	public WorkersWindow(Workers2 workers, PoliceStation policeStation, DefaultTableModel modelWorkers) {
 
@@ -76,6 +79,8 @@ public class WorkersWindow extends JFrame {
 //			object[5] = tassesstment.getText();
 //			object[6] = spinYears.getValue();
 //			object[7] = comboSpecialty.getSelectedItem();
+			
+		
 
 			tgrade.setValue(workers.getGrade());
 			tname.setText(workers.getName());

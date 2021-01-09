@@ -37,7 +37,7 @@ import java.sql.PreparedStatement;
 
 public class GeneralWindow {
 	JMenuItem vehicle;
-	
+	Workers workers;
 	JButton bClose;
 	JLabel lbar;
 	JProgressBar progress;
@@ -49,68 +49,63 @@ public class GeneralWindow {
 	private JTextField textField_2;
 	private JTable table;
 	private JTextField textField_4;
-	
 
 	public GeneralWindow() {
 		BDWorkers cc = new BDWorkers();
 		Connection cn = cc.getConection();
-        
+
 		frame = new JFrame();
 		frame.setBounds(100, 100, 801, 462);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		       
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
-		
+
 		JMenu mnNewMenu = new JMenu("File");
 		menuBar.add(mnNewMenu);
-		
+
 		JMenuItem mntmNewMenuItem = new JMenuItem("Create/Activate Database");
 		mnNewMenu.add(mntmNewMenuItem);
 		frame.getContentPane().setLayout(null);
-		
+
 		JMenuItem vehicle = new JMenuItem("Vehicles");
 		mnNewMenu.add(vehicle);
 		frame.getContentPane().setLayout(null);
-		
+
 		JButton btnNewButton = new JButton(new ImageIcon("POLICIAS_Y_LADRONES_35.gif"));
 		btnNewButton.setBounds(500, 65, 97, 130);
 		frame.getContentPane().add(btnNewButton);
-		
+
 		JButton btnNewButton_2 = new JButton("Manage Relations");
 		btnNewButton_2.setBounds(65, 239, 170, 23);
 		frame.getContentPane().add(btnNewButton_2);
-		
+
 		JButton bClose = new JButton("Close Window");
 		bClose.setForeground(Color.RED);
 		bClose.setBounds(334, 301, 121, 23);
 		frame.getContentPane().add(bClose);
-		
+
 		JButton btnNewButton_2_1 = new JButton("Manage Workers");
 		btnNewButton_2_1.setBounds(312, 239, 163, 23);
 		frame.getContentPane().add(btnNewButton_2_1);
-		
+
 		JButton btnNewButton_2_2 = new JButton("Manage Detained");
 		btnNewButton_2_2.setBounds(559, 239, 155, 23);
 		frame.getContentPane().add(btnNewButton_2_2);
-		
+
 		JLabel lblNewLabel = new JLabel("Closing the window...");
 		lblNewLabel.setBounds(278, 360, 279, 14);
 		frame.getContentPane().add(lblNewLabel);
 		lblNewLabel.setVisible(false);
-		
+
 		JProgressBar progressBar = new JProgressBar(0, 100);
 		progressBar.setBounds(415, 360, 146, 14);
 		frame.getContentPane().add(progressBar);
-		
+
 		JButton btnNewButton_1 = new JButton(new ImageIcon("criminal-preso.gif"));
 		btnNewButton_1.setBounds(181, 65, 97, 130);
 		frame.getContentPane().add(btnNewButton_1);
 		progressBar.setVisible(false);
-
-		
 
 		vehicle.addActionListener(new ActionListener() {
 
@@ -122,7 +117,6 @@ public class GeneralWindow {
 			}
 		});
 
-		
 		bClose.addActionListener(new ActionListener() {
 
 			@Override
@@ -154,29 +148,36 @@ public class GeneralWindow {
 
 			}
 		});
-		
+
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new WindowWorkers();
+				new WindowWorkers(null, police);
 			}
 		});
-		
+
 		btnNewButton_1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new WindowDetained((Arrested) detained, police, null);
 			}
 		});
-		
-		
-		
+
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				BDWorkers.initBD("Workers.db");
+				BDetained.initBD("Detained.db");
+
+			}
+		});
 
 		frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
 		frame.setTitle("POLICE MANAGEMENT");
 		frame.setResizable(true);
 		frame.setVisible(true);
-
 
 //		createWorkers.addActionListener(new ActionListener() {
 //
@@ -337,15 +338,7 @@ public class GeneralWindow {
 //			}
 //		});
 //
-//		createBD.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				BDWorkers.initBD("Workers.db");
-//				BDetained.initBD("Detained.db");
-//
-//			}
-//		});
+//		
 //
 //		
 //		
@@ -592,7 +585,6 @@ public class GeneralWindow {
 //		});
 //		TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(modelWorkers);
 //		tableWorkers.setRowSorter(sorter);
-
 
 	}
 }

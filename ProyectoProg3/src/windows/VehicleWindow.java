@@ -1,6 +1,7 @@
 package windows;
 
 import javax.swing.*;
+
 import javax.swing.table.DefaultTableModel;
 
 
@@ -12,7 +13,7 @@ import javax.swing.text.StyleConstants;
 
 import classes.Brand;
 import classes.VehicleTypes;
-import windows.GeneralWindow.MiModelo;
+
 
 import java.awt.event.*;
 
