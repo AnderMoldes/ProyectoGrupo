@@ -14,7 +14,7 @@ public class WorkersTest {
 	@Test
 	public void testGetCode() {
 		Workers w = new Workers(2, 0, "Pablo", "Moldes", "male", Specialty.DOCTOR, null , "Good");
-		assertEquals(2, w.getCode(),w.getCounter());
+		assertEquals(2, w.getCode());
 	}
 	
 	@Test

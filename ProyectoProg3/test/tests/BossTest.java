@@ -13,7 +13,7 @@ public class BossTest {
 	@Test
 	public void testGetCode() {
 		Boss b = new Boss(1, 0, "Xabat", "Plaza", "male", Specialty.DOCTOR, null , "Good", "organization and control");
-		assertEquals(1, b.getCode(),b.getCounter());
+		assertEquals(1, b.getCode());
 	}
 	
 	@Test

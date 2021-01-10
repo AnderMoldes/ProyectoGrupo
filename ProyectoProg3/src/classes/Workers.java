@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Workers implements Serializable, Comparable<Workers>{
-    public static int counter = 1;
+
 
     protected int code;
     protected int grade;
@@ -13,15 +13,15 @@ public class Workers implements Serializable, Comparable<Workers>{
     protected String surname;
     protected String gender;
     protected Specialty Specialty;
-    protected Date startWorkingIn;
+    protected String startWorkingIn;
     protected String Assesment;
     
 	
 	
 	public Workers(int code, int grade, String name, String surname, String gender, Specialty specialty,
-			Date startWorkingIn, String assesment) {
+			String startWorkingIn, String assesment) {
 		super();
-		this.code = counter++;
+		this.code = code;
 		this.grade = grade;
 		this.name = name;
 		this.surname = surname;
@@ -33,30 +33,28 @@ public class Workers implements Serializable, Comparable<Workers>{
 	
 	public Workers() {
 		super();
-		this.code= counter++;
+		this.code= code;
 		this.grade = 0;
 		this.name = "";
 		this.surname = "";
 		this.gender = "";
 		this.Specialty = null;
-		this.startWorkingIn = new Date();
+		this.startWorkingIn = "";
 		this.Assesment = "";
 	}
 
 	
 
-	public static int getCounter() {
-		return counter++;
-	}
+	
 
 	public int getCode() {
 		return code;
 	}
-
-	public void setCode(int code) {
-		this.code= code;
+	
+	public void setCode(int grade) {
+		this.code = code;
 	}
-
+	
 	public int getGrade() {
 		return grade;
 	}
@@ -97,11 +95,11 @@ public class Workers implements Serializable, Comparable<Workers>{
 		Specialty = specialty;
 	}
 
-	public Date getStartWorkingIn() {
+	public String getStartWorkingIn() {
 		return startWorkingIn;
 	}
 
-	public void setStartWorkingIn(Date startWorkingIn) {
+	public void setStartWorkingIn(String startWorkingIn) {
 		this.startWorkingIn = startWorkingIn;
 	}
 
@@ -115,7 +113,7 @@ public class Workers implements Serializable, Comparable<Workers>{
 
 	@Override
 	public String toString() {
-		return " worker: Function: Worker. Grade: " + grade + ". Name: " + name + ", " + surname + "Gender: "
+		return " worker " +code+ ": Function: Worker. Grade: " + grade + ". Name: " + name + ", " + surname + "Gender: "
 				+ gender + ". Specialty: " + Specialty + ". He/She start workin in " + startWorkingIn + ". Assesment: "
 				+ Assesment;
 	}

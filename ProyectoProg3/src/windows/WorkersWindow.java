@@ -134,7 +134,7 @@ public class WorkersWindow extends JFrame {
 				creation.setSurname(tsurname.getText());
 				creation.setGender(tgender.getText());
 				creation.setSpecialty((Specialty) comboSpecialty.getSelectedItem());
-				creation.setStartWorkingIn((Date) spinYears.getValue());
+//				creation.setStartWorkingIn((Date) spinYears.getValue());
 				creation.setAssesment(tassesstment.getText());
 
 				if (workers == null) {

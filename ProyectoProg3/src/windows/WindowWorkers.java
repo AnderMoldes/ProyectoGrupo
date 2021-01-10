@@ -2,16 +2,15 @@ package windows;
 
 import java.awt.Color;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -25,7 +24,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ListSelectionEvent;
@@ -49,8 +47,20 @@ public class WindowWorkers {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
+	private JTextField textField_4;
 	private JTable table;
+	BDWorkers conexion;
+	public String code;
 	
+	public class MiModelo extends DefaultTableModel {
+		public boolean isCellEditable(int row, int column) {
+			// Aquí devolvemos true o false según queramos que una celda
+			// identificada por fila,columna (row,column), sea o no editable
+
+			return false;
+		}
+
+	}
 
 	public WindowWorkers(Workers workers, PoliceStation policeStation) {
 
@@ -124,7 +134,6 @@ public class WindowWorkers {
 		rdbtnNewRadioButton_1.setBounds(173, 243, 111, 23);
 		frame.getContentPane().add(rdbtnNewRadioButton_1);
 
-		
 		group.add(rdbtnNewRadioButton);
 		group.add(rdbtnNewRadioButton_1);
 
@@ -142,10 +151,13 @@ public class WindowWorkers {
 		lblNewLabel_5.setBounds(45, 355, 144, 14);
 		frame.getContentPane().add(lblNewLabel_5);
 
-//		JSpinner spinner_1 = new JSpinner(new SpinnerDateModel(new Date(), null, null, Calendar.SHORT_FORMAT));
-//		JSpinner spinner_1 = new JSpinner((SpinnerModel) new SimpleDateFormat("dd/M/yyyy"));
-//		spinner_1.setBounds(45, 380, 111, 20);
-//		frame.getContentPane().add(spinner_1);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		String fechaComoCadena = sdf.format(new Date());
+		textField_4= new JTextField(fechaComoCadena);
+		textField_4.setBounds(45, 380, 111, 20);
+		frame.getContentPane().add(textField_4);
+		textField_4.setColumns(10);
 
 		JLabel lblNewLabel_6 = new JLabel("Assessment:");
 		lblNewLabel_6.setBounds(45, 424, 98, 14);
@@ -170,7 +182,7 @@ public class WindowWorkers {
 		frame.getContentPane().add(textField_3);
 		textField_3.setColumns(10);
 
-		DefaultTableModel modelWorkers = new DefaultTableModel();
+		MiModelo modelWorkers = new MiModelo();
 		modelWorkers.addColumn("code");
 		modelWorkers.addColumn("grade");
 		modelWorkers.addColumn("name");
@@ -188,7 +200,9 @@ public class WindowWorkers {
 		scrollWorkers.setBounds(243, 311, 567, 296);
 
 		frame.getContentPane().add(scrollWorkers);
+		
 
+		
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -199,6 +213,8 @@ public class WindowWorkers {
 					spinner.setValue(table.getValueAt(fila, 1));
 					textField.setText(table.getValueAt(fila, 2).toString());
 					textField_1.setText(table.getValueAt(fila, 3).toString());
+					
+				
 
 					String texto = table.getValueAt(fila, 4).toString();
 
@@ -209,18 +225,20 @@ public class WindowWorkers {
 						rdbtnNewRadioButton_1.setSelected(true);
 
 					}
-					
-					String textoCombo= table.getValueAt(fila, 5).toString();
+
+					String textoCombo = table.getValueAt(fila, 5).toString();
 					if (textoCombo.equals("DRIVER")) {
 						comboBox.setSelectedIndex(0);
-					}else if (textoCombo.equals("DOCTOR")) {
+					} else if (textoCombo.equals("DOCTOR")) {
 						comboBox.setSelectedIndex(1);
 					}
-						
-//					spinner_1.setValue( table.getValueAt(fila, 6).toString());
-					textField_2.setText(table.getValueAt(fila, 7).toString());
 
+					textField_4.setText(table.getValueAt(fila, 6).toString());
+					textField_2.setText(table.getValueAt(fila, 7).toString());
 //					textField_3.setText(table.getValueAt(fila, 8).toString());
+
+					
+					
 
 				}
 
@@ -287,7 +305,7 @@ public class WindowWorkers {
 						}
 
 						object[5] = comboBox.getSelectedItem();
-//						object[6] = spinner_1.getValue().toString();
+						object[6] = textField_4.getText().toString();
 						object[7] = textField_2.getText();
 						object[8] = null;
 
@@ -302,7 +320,7 @@ public class WindowWorkers {
 						}
 
 						creation.setSpecialty((Specialty) comboBox.getSelectedItem());
-//						creation.setStartWorkingIn((Date) spinner_1.getValue());
+						creation.setStartWorkingIn((String) textField_4.getText());
 						creation.setAssesment(textField_2.getText());
 
 						if (workers == null) {
@@ -333,7 +351,7 @@ public class WindowWorkers {
 						}
 
 						object[5] = comboBox.getSelectedItem();
-//						object[6] = spinner_1.getValue();
+						object[6] = textField_4.getText().toString();
 						object[7] = textField_2.getText();
 						object[8] = textField_3.getText();
 
@@ -348,7 +366,7 @@ public class WindowWorkers {
 						}
 
 						creationB.setSpecialty((Specialty) comboBox.getSelectedItem());
-//						creationB.setStartWorkingIn((Date) spinner_1.getValue());
+						creationB.setStartWorkingIn((String) textField_4.getText());
 						creationB.setAssesment(textField_2.getText());
 						creationB.setFunction(textField_3.getText());
 
@@ -430,6 +448,7 @@ public class WindowWorkers {
 						modelWorkers.addRow(datos.get(i));
 					}
 					table.setModel(modelWorkers);
+					 
 
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -444,6 +463,7 @@ public class WindowWorkers {
 						modelWorkers.addRow(datosBoss.get(i));
 					}
 					table.setModel(modelWorkers);
+					
 
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -453,6 +473,7 @@ public class WindowWorkers {
 			}
 		});
 
+		
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 
 			@Override
@@ -534,16 +555,19 @@ public class WindowWorkers {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for (Workers workers : policeStation.getWorkers()) {
-					if (workers instanceof Workers2) {
-						BDWorkers.update((Workers2) workers);
-					}
-				}
+				int fila = table.getSelectedRow();
 
-				for (Workers workers : policeStation.getWorkers()) {
-					if (workers instanceof Boss) {
-						BDWorkers.updateBoss((Boss) workers);
-					}
+				if (BDWorkers.update(workers2)==1) {
+//					table.getValueAt(fila, 1);
+					table.getValueAt(fila, 2).toString();
+//					table.getValueAt(fila, 3).toString();
+//					table.getValueAt(fila, 4).toString();
+//					table.getValueAt(fila, 5).toString();
+//					table.getValueAt(fila, 6).toString();
+//					table.getValueAt(fila, 7).toString();
+//					table.getValueAt(fila, 8).toString();
+				}else {
+					JOptionPane.showMessageDialog(null, "CODE does't Exists in Database");
 				}
 			}
 		});

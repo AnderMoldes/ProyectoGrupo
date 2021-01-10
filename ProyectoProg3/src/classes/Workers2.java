@@ -6,7 +6,7 @@ public class Workers2 extends Workers {
 	
 
 	public Workers2(int code, int grade, String name, String surname, String gender, classes.Specialty specialty,
-			Date startWorkingIn, String assesment) {
+			String startWorkingIn, String assesment) {
 		super(code, grade, name, surname, gender, specialty, startWorkingIn, assesment);
 		
 	}
@@ -19,7 +19,7 @@ public class Workers2 extends Workers {
 
 	@Override
 	public String toString() {
-		return " worker: Function: Worker. Grade: " + grade + ". Name: " + name + ", " + surname + ". Gender: "
+		return " worker" +code+ ": Function: Worker. Grade: " + grade + ". Name: " + name + ", " + surname + ". Gender: "
 				+ gender + ". Specialty: " + Specialty + ". He/She start workin in " + startWorkingIn + ". Assesment: "
 				+ Assesment;
 	}

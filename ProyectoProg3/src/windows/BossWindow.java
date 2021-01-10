@@ -139,7 +139,7 @@ public class BossWindow extends JFrame{
 				creation.setSurname(tsurname.getText());
 				creation.setGender(tgender.getText());
 				creation.setSpecialty((Specialty) comboSpecialty.getSelectedItem());
-				creation.setStartWorkingIn((Date) spinYears.getValue());	
+//				creation.setStartWorkingIn((Date) spinYears.getValue());	
 				creation.setAssesment(tassesstment.getText());
 				creation.setFunction(tfunction.getText());
 

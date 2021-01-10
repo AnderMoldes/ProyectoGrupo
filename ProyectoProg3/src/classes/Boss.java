@@ -7,7 +7,7 @@ public class Boss extends Workers{
 	
 
 	public Boss(int code, int grade, String name, String surname, String gender, classes.Specialty specialty,
-			Date startWorkingIn, String assesment, String function) {
+			String startWorkingIn, String assesment, String function) {
 		super(code, grade, name, surname, gender, specialty, startWorkingIn, assesment);
 		this.function = function;
 	}
@@ -28,7 +28,7 @@ public class Boss extends Workers{
 
 	@Override
 	public String toString() {
-		return "  Boss: . Function:" +function+ ". Name: " + name + " " 
+		return "  Boss " +code+ ": . Function:" +function+ ". Name: " + name + " " 
 				+ surname + "Gender: " + gender + " Specialty: " + Specialty
 				+ "Start Working: " + startWorkingIn + ". Assessment: " + Assesment;
 	}	

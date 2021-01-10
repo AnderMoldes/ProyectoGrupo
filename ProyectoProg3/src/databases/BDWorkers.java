@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -114,7 +115,7 @@ public class BDWorkers{
 			insertSql.setString(3, workers.getSurname());
 			insertSql.setString(4, workers.getGender());
 			insertSql.setString(5, workers.getSpecialty().toString());
-			insertSql.setString(6, (String) workers.getStartWorkingIn().toString());
+			insertSql.setString(6, (String) workers.getStartWorkingIn());
 			insertSql.setString(7, workers.getAssesment());
 			
 			
@@ -131,6 +132,7 @@ public class BDWorkers{
 			}
 
 			log(Level.SEVERE, "Completed", null);
+			
 
 		} catch (SQLException e) {
 			log(Level.SEVERE, "ERROR IN THE SQL SENTENCE: " + "INSERT INTO WorkersTable VALUES (?,?,?,?,?,?,?)", e);
@@ -165,24 +167,29 @@ public class BDWorkers{
 			
 //			}
 			rs.close();
+			
 		} catch (Exception e) {
 			log(Level.SEVERE, "ERROR AL RECUPERAR DATOS", e);
 		}
 		return datos;
+		
 	}
 	
 
-	public static void update(Workers2 workers) {
-		try (PreparedStatement stmt = connection.prepareStatement("UPDATE WorkersTable SET grade=?, name=?, surname=?, gender=?, Specialty=?, startWorkingIn=?, Assessment=?   WHERE code=?")) {
-			stmt.setInt(1, workers.getGrade());
+	public static int update(Workers2 workers) {
+		int i=0;
+//		"UPDATE WorkersTable SET grade=?, name=?, surname=?, gender=?, Specialty=?, startWorkingIn=?, Assessment=?   WHERE code=?"
+		try (PreparedStatement stmt = connection.prepareStatement("UPDATE WorkersTable SET name=? ")) {
+//			stmt.setInt(1, workers.getGrade());
 			stmt.setString(2, workers.getName());
-			stmt.setString(3, workers.getSurname());
-			stmt.setString(4, workers.getGender());
-			stmt.setString(5, workers.getSpecialty().toString());
-			stmt.setString(6, workers.getStartWorkingIn().toString());
-			stmt.setString(7, workers.getAssesment());
+//			stmt.setString(3, workers.getSurname());
+//			stmt.setString(4, workers.getGender());
+//			stmt.setString(5, workers.getSpecialty().toString());
+//			stmt.setString(6, workers.getStartWorkingIn().toString());
+//			stmt.setString(7, workers.getAssesment());
 			
-			stmt.executeUpdate();
+			i =stmt.executeUpdate();
+	
 			
 			log(Level.SEVERE, "Completed", null);
 			
@@ -190,7 +197,33 @@ public class BDWorkers{
 			log(Level.SEVERE, "No se pudo guardar el usuario en la BD", e);
 		}
 		
+		return i;
 	}
+	
+//	public static int update(ArrayList<String> datos) {
+//		
+//		int rsu=0;
+//		String sql= "UPDATE WorkersTable SET grade= '"+datos.get(1)+"', "
+//				+ "name= '" +datos.get(2)+ "', "
+//				+ " surname= '"+datos.get(3)+"', "
+//				+ "gender= '"+datos.get(4)+"', "
+//				+ "Specialty= '"+datos.get(5)+"', "
+//				+ "startWorkingIn= '"+datos.get(6)+"', "
+//				+ "Assessment= '"+datos.get(7)+ "', " 
+//				+ "WHERE code= '"+datos.get(0)+ "";
+//		
+//		try {
+//			statement= connection.createStatement();
+//			rsu=statement.executeUpdate(sql);
+//			
+//			log(Level.SEVERE, "Completed", null);
+//			
+//		} catch (SQLException e) {
+//			log(Level.SEVERE, "No se pudo guardar el usuario en la BD", e);
+//		}
+//		return rsu;
+//		
+//	}
 
 	public static void delete(Workers2 workers) {
 		try (PreparedStatement stmt = connection.prepareStatement("DELETE FROM user WHERE code=?")) {
@@ -201,6 +234,7 @@ public class BDWorkers{
 		} catch (SQLException e) {
 			log(Level.SEVERE, "No se pudo borrar el usuario en la BD", e);
 		}
+		
 	}
 	
 	public static void insertIntoPrepStatBoss(Boss boss) {
