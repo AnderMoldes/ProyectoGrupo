@@ -124,6 +124,7 @@ public class WindowWorkers {
 		rdbtnNewRadioButton_1.setBounds(173, 243, 111, 23);
 		frame.getContentPane().add(rdbtnNewRadioButton_1);
 
+		
 		group.add(rdbtnNewRadioButton);
 		group.add(rdbtnNewRadioButton_1);
 
