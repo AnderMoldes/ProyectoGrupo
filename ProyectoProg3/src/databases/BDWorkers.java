@@ -82,7 +82,7 @@ public class BDWorkers{
 			try {
 				statement.executeUpdate("create table " + nombreBD
 						+ " (code integer primary key autoincrement, grade integer, name varchar, surname varchar, "
-						+ "gender varchar, Specialty varchar, startWorkingIn varchar,Assessment varchar, function varchar )");
+						+ "gender varchar, Specialty varchar, startWorkingIn varchar, Assessment varchar, function varchar )");
 				
 				log(Level.SEVERE, "The table " + nombreBD + " created", null);
 			} catch (SQLException e) {
@@ -187,8 +187,20 @@ public class BDWorkers{
 		} catch (SQLException e) {
 			log(Level.SEVERE, "No se pudo guardar el usuario en la BD", e);
 		}
+		
 	}
 
+	public static void delete(Workers2 workers) {
+		try (PreparedStatement stmt = connection.prepareStatement("DELETE FROM user WHERE code=?")) {
+			stmt.setInt(1, workers.getCode());
+			stmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			log(Level.SEVERE, "No se pudo borrar el usuario en la BD", e);
+		}
+	}
+	
 	public static void insertIntoPrepStatBoss(Boss boss) {
 		try {
 			PreparedStatement insertSql = connection.prepareStatement(

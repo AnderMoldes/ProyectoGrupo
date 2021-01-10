@@ -24,6 +24,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import classes.Boss;
@@ -35,7 +37,6 @@ import databases.BDWorkers;
 
 public class WindowWorkers {
 
-	
 	PoliceStation policeS;
 	Workers2 workers2;
 	Boss boss;
@@ -181,6 +182,41 @@ public class WindowWorkers {
 
 		frame.getContentPane().add(scrollWorkers);
 
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if (table.getSelectedColumn() != -1) {
+					int fila = table.getSelectedRow();
+
+					spinner.setValue(table.getValueAt(fila, 1));
+					textField.setText(table.getValueAt(fila, 2).toString());
+					textField_1.setText(table.getValueAt(fila, 3).toString());
+					
+					if (table.getValueAt(fila, 4).equals("Male")) {
+						rdbtnNewRadioButton.setSelected(true);
+						rdbtnNewRadioButton_1.setSelected(false);
+					} else {
+						rdbtnNewRadioButton_1.setSelected(true);
+						rdbtnNewRadioButton.setSelected(false);
+					}
+
+					comboBox.setSelectedItem(table.getValueAt(fila, 5));
+//					spinner_1.setValue(table.getValueAt(fila, 6));
+					textField_2.setText(table.getValueAt(fila, 7).toString());
+					
+					
+//					if (table.getValueAt(fila, 8).equals("")) {
+//						textField_3.setText("");
+//					}else {
+//						textField_3.setText(table.getValueAt(fila, 8).toString());
+//					}
+					
+				}
+
+			}
+		});
+
 		JLabel lblNewLabel_7_1 = new JLabel("Obligatory:");
 		lblNewLabel_7_1.setForeground(Color.RED);
 		lblNewLabel_7_1.setBounds(47, 31, 359, 14);
@@ -224,8 +260,8 @@ public class WindowWorkers {
 					creation = new Workers2();
 					creationB = new Boss();
 				}
-				
-				String texto= textField_3.getText();
+
+				String texto = textField_3.getText();
 				if ("".equals(texto)) {
 					object[0] = null;
 					object[1] = spinner.getValue();
@@ -241,7 +277,7 @@ public class WindowWorkers {
 					object[5] = comboBox.getSelectedItem();
 					object[6] = spinner_1.getValue();
 					object[7] = textField_2.getText();
-					object[8]= null;
+					object[8] = null;
 
 					creation.setGrade((int) spinner.getValue());
 					creation.setName(textField.getText());
@@ -263,14 +299,13 @@ public class WindowWorkers {
 						System.out.println(creation.toString());
 
 					}
-					
+
 					spinner.setValue(0);
 					textField.setText("");
 					textField_1.setText("");
-					//
+					group.clearSelection();
 					comboBox.setSelectedIndex(0);
 					textField_2.setText("");
-					
 
 				} else {
 
@@ -311,51 +346,52 @@ public class WindowWorkers {
 						System.out.println(creationB.toString());
 
 					}
-					
+
 					spinner.setValue(0);
 					textField.setText("");
 					textField_1.setText("");
-					comboBox.setSelectedItem(0);
+					group.clearSelection();
+					comboBox.setSelectedIndex(0);
 					textField_2.setText("");
 					textField_3.setText("");
 
 				}
 			}
 		});
-		
+
 		btnNewButton_1.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for (Workers workers : policeS.getWorkers()) {
 					if (workers instanceof Workers2) {
-					BDWorkers.insertIntoPrepStat((Workers2) workers);
+						BDWorkers.insertIntoPrepStat((Workers2) workers);
 					}
 				}
-				
+
 				for (Workers workers : policeS.getWorkers()) {
 					if (workers instanceof Boss) {
 						BDWorkers.insertIntoPrepStatBoss((Boss) workers);
 					}
 				}
-				
+
 			}
 		});
-		
+
 		mntmNewMenuItem.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for (Workers workers : policeS.getWorkers()) {
 					if (workers instanceof Workers2) {
-					BDWorkers.insertIntoPrepStat((Workers2) workers);
+						BDWorkers.insertIntoPrepStat((Workers2) workers);
 					}
 				}
 			}
 		});
-		
+
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for (Workers workers : policeS.getWorkers()) {
@@ -363,12 +399,12 @@ public class WindowWorkers {
 						BDWorkers.insertIntoPrepStatBoss((Boss) workers);
 					}
 				}
-				
+
 			}
 		});
-		
+
 		btnNewButton_4.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -384,7 +420,7 @@ public class WindowWorkers {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
+
 				try {
 					ArrayList<Object[]> datosBoss = new ArrayList<Object[]>();
 					datosBoss = BDWorkers.consultarDatosBoss("WorkersTableBoss");
@@ -398,12 +434,112 @@ public class WindowWorkers {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+
+			}
+		});
+
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ArrayList<Object[]> datos = new ArrayList<Object[]>();
+					datos = BDWorkers.consultarDatos("WorkersTable");
+
+					for (int i = 0; i < datos.size(); i++) {
+						modelWorkers.addRow(datos.get(i));
+					}
+					table.setModel(modelWorkers);
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+		});
+
+		mntmNewMenuItem_3.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ArrayList<Object[]> datosBoss = new ArrayList<Object[]>();
+					datosBoss = BDWorkers.consultarDatosBoss("WorkersTableBoss");
+
+					for (int i = 0; i < datosBoss.size(); i++) {
+						modelWorkers.addRow(datosBoss.get(i));
+					}
+					table.setModel(modelWorkers);
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+		});
+
+		mntmNewMenuItem_4.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ArrayList<Object[]> datos = new ArrayList<Object[]>();
+					datos = BDWorkers.consultarDatos("WorkersTable");
+
+					for (int i = 0; i < datos.size(); i++) {
+						modelWorkers.addRow(datos.get(i));
+					}
+					table.setModel(modelWorkers);
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				try {
+					ArrayList<Object[]> datosBoss = new ArrayList<Object[]>();
+					datosBoss = BDWorkers.consultarDatosBoss("WorkersTableBoss");
+
+					for (int i = 0; i < datosBoss.size(); i++) {
+						modelWorkers.addRow(datosBoss.get(i));
+					}
+					table.setModel(modelWorkers);
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+		});
+
+		btnNewButton_2.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (Workers workers : policeStation.getWorkers()) {
+					if (workers instanceof Workers2) {
+						BDWorkers.update((Workers2) workers);
+					}
+				}
+				
+				for (Workers workers : policeStation.getWorkers()) {
+					if (workers instanceof Boss) {
+						BDWorkers.updateBoss((Boss) workers);
+					}
+				}
+			}
+		});
+
+		btnNewButton_3.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
 				
 			}
 		});
-		
-		
-		
 
 		frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
 		frame.setTitle("POLICE MANAGEMENT");
