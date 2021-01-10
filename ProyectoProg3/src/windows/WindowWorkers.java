@@ -1,6 +1,7 @@
 package windows;
 
 import java.awt.Color;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -192,26 +194,29 @@ public class WindowWorkers {
 					spinner.setValue(table.getValueAt(fila, 1));
 					textField.setText(table.getValueAt(fila, 2).toString());
 					textField_1.setText(table.getValueAt(fila, 3).toString());
-					
-					if (table.getValueAt(fila, 4).equals("Male")) {
-						rdbtnNewRadioButton.setSelected(true);
-						rdbtnNewRadioButton_1.setSelected(false);
-					} else {
-						rdbtnNewRadioButton_1.setSelected(true);
-						rdbtnNewRadioButton.setSelected(false);
-					}
 
-					comboBox.setSelectedItem(table.getValueAt(fila, 5));
-//					spinner_1.setValue(table.getValueAt(fila, 6));
+					String texto = table.getValueAt(fila, 4).toString();
+
+					if (texto.equals("Male")) {
+						rdbtnNewRadioButton.setSelected(true);
+
+					} else if (texto.equals("Female")) {
+						rdbtnNewRadioButton_1.setSelected(true);
+
+					}
+					
+					String textoCombo= table.getValueAt(fila, 5).toString();
+					if (textoCombo.equals("DRIVER")) {
+						comboBox.setSelectedIndex(0);
+					}else if (textoCombo.equals("DOCTOR")) {
+						comboBox.setSelectedIndex(1);
+					}
+						
+					spinner_1.setValue(table.getValueAt(fila, 6).toString());
 					textField_2.setText(table.getValueAt(fila, 7).toString());
-					
-					
-//					if (table.getValueAt(fila, 8).equals("")) {
-//						textField_3.setText("");
-//					}else {
-//						textField_3.setText(table.getValueAt(fila, 8).toString());
-//					}
-					
+
+//					textField_3.setText(table.getValueAt(fila, 8).toString());
+
 				}
 
 			}
@@ -261,100 +266,105 @@ public class WindowWorkers {
 					creationB = new Boss();
 				}
 
-				String texto = textField_3.getText();
-				if ("".equals(texto)) {
-					object[0] = null;
-					object[1] = spinner.getValue();
-					object[2] = textField.getText();
-					object[3] = textField_1.getText();
+				if (rdbtnNewRadioButton_1.isSelected() || rdbtnNewRadioButton.isSelected()) {
 
-					if (rdbtnNewRadioButton_1.isSelected()) {
-						object[4] = rdbtnNewRadioButton_1.getActionCommand();
-					} else if (rdbtnNewRadioButton.isSelected()) {
-						object[4] = rdbtnNewRadioButton.getActionCommand();
+					String texto = textField_3.getText();
+					if ("".equals(texto)) {
+						object[0] = null;
+						object[1] = spinner.getValue();
+						object[2] = textField.getText();
+						object[3] = textField_1.getText();
+
+						if (rdbtnNewRadioButton_1.isSelected()) {
+							object[4] = rdbtnNewRadioButton_1.getActionCommand();
+						} else if (rdbtnNewRadioButton.isSelected()) {
+							object[4] = rdbtnNewRadioButton.getActionCommand();
+						}
+
+						object[5] = comboBox.getSelectedItem();
+						object[6] = spinner_1.getValue();
+						object[7] = textField_2.getText();
+						object[8] = null;
+
+						creation.setGrade((int) spinner.getValue());
+						creation.setName(textField.getText());
+						creation.setSurname(textField_1.getText());
+
+						if (rdbtnNewRadioButton_1.isSelected()) {
+							creation.setGender(rdbtnNewRadioButton_1.getActionCommand());
+						} else if (rdbtnNewRadioButton.isSelected()) {
+							creation.setGender(rdbtnNewRadioButton.getActionCommand());
+						}
+
+						creation.setSpecialty((Specialty) comboBox.getSelectedItem());
+						creation.setStartWorkingIn((Date) spinner_1.getValue());
+						creation.setAssesment(textField_2.getText());
+
+						if (workers == null) {
+							policeS.getWorkers().add(creation);
+							modelWorkers.addRow(object);
+							System.out.println(creation.toString());
+
+						}
+
+						spinner.setValue(0);
+						textField.setText("");
+						textField_1.setText("");
+						group.clearSelection();
+						comboBox.setSelectedIndex(0);
+						textField_2.setText("");
+
+					} else {
+
+						object[0] = null;
+						object[1] = spinner.getValue();
+						object[2] = textField.getText();
+						object[3] = textField_1.getText();
+
+						if (rdbtnNewRadioButton_1.isSelected()) {
+							object[4] = rdbtnNewRadioButton_1.getActionCommand();
+						} else if (rdbtnNewRadioButton.isSelected()) {
+							object[4] = rdbtnNewRadioButton.getActionCommand();
+						}
+
+						object[5] = comboBox.getSelectedItem();
+						object[6] = spinner_1.getValue();
+						object[7] = textField_2.getText();
+						object[8] = textField_3.getText();
+
+						creationB.setGrade((int) spinner.getValue());
+						creationB.setName(textField.getText());
+						creationB.setSurname(textField_1.getText());
+
+						if (rdbtnNewRadioButton_1.isSelected()) {
+							creationB.setGender(rdbtnNewRadioButton_1.getActionCommand());
+						} else if (rdbtnNewRadioButton.isSelected()) {
+							creationB.setGender(rdbtnNewRadioButton.getActionCommand());
+						}
+
+						creationB.setSpecialty((Specialty) comboBox.getSelectedItem());
+						creationB.setStartWorkingIn((Date) spinner_1.getValue());
+						creationB.setAssesment(textField_2.getText());
+						creationB.setFunction(textField_3.getText());
+
+						if (workers == null) {
+							policeS.getWorkers().add(creationB);
+							modelWorkers.addRow(object);
+							System.out.println(creationB.toString());
+
+						}
+
+						spinner.setValue(0);
+						textField.setText("");
+						textField_1.setText("");
+						group.clearSelection();
+						comboBox.setSelectedIndex(0);
+						textField_2.setText("");
+						textField_3.setText("");
+
 					}
-
-					object[5] = comboBox.getSelectedItem();
-					object[6] = spinner_1.getValue();
-					object[7] = textField_2.getText();
-					object[8] = null;
-
-					creation.setGrade((int) spinner.getValue());
-					creation.setName(textField.getText());
-					creation.setSurname(textField_1.getText());
-
-					if (rdbtnNewRadioButton_1.isSelected()) {
-						creation.setGender(rdbtnNewRadioButton_1.getActionCommand());
-					} else if (rdbtnNewRadioButton.isSelected()) {
-						creation.setGender(rdbtnNewRadioButton.getActionCommand());
-					}
-
-					creation.setSpecialty((Specialty) comboBox.getSelectedItem());
-					creation.setStartWorkingIn((Date) spinner_1.getValue());
-					creation.setAssesment(textField_2.getText());
-
-					if (workers == null) {
-						policeS.getWorkers().add(creation);
-						modelWorkers.addRow(object);
-						System.out.println(creation.toString());
-
-					}
-
-					spinner.setValue(0);
-					textField.setText("");
-					textField_1.setText("");
-					group.clearSelection();
-					comboBox.setSelectedIndex(0);
-					textField_2.setText("");
-
 				} else {
-
-					object[0] = null;
-					object[1] = spinner.getValue();
-					object[2] = textField.getText();
-					object[3] = textField_1.getText();
-
-					if (rdbtnNewRadioButton_1.isSelected()) {
-						object[4] = rdbtnNewRadioButton_1.getActionCommand();
-					} else if (rdbtnNewRadioButton.isSelected()) {
-						object[4] = rdbtnNewRadioButton.getActionCommand();
-					}
-
-					object[5] = comboBox.getSelectedItem();
-					object[6] = spinner_1.getValue();
-					object[7] = textField_2.getText();
-					object[8] = textField_3.getText();
-
-					creationB.setGrade((int) spinner.getValue());
-					creationB.setName(textField.getText());
-					creationB.setSurname(textField_1.getText());
-
-					if (rdbtnNewRadioButton_1.isSelected()) {
-						creationB.setGender(rdbtnNewRadioButton_1.getActionCommand());
-					} else if (rdbtnNewRadioButton.isSelected()) {
-						creationB.setGender(rdbtnNewRadioButton.getActionCommand());
-					}
-
-					creationB.setSpecialty((Specialty) comboBox.getSelectedItem());
-					creationB.setStartWorkingIn((Date) spinner_1.getValue());
-					creationB.setAssesment(textField_2.getText());
-					creationB.setFunction(textField_3.getText());
-
-					if (workers == null) {
-						policeS.getWorkers().add(creationB);
-						modelWorkers.addRow(object);
-						System.out.println(creationB.toString());
-
-					}
-
-					spinner.setValue(0);
-					textField.setText("");
-					textField_1.setText("");
-					group.clearSelection();
-					comboBox.setSelectedIndex(0);
-					textField_2.setText("");
-					textField_3.setText("");
-
+					JOptionPane.showMessageDialog(null, "Gender required field");
 				}
 			}
 		});
@@ -524,7 +534,7 @@ public class WindowWorkers {
 						BDWorkers.update((Workers2) workers);
 					}
 				}
-				
+
 				for (Workers workers : policeStation.getWorkers()) {
 					if (workers instanceof Boss) {
 						BDWorkers.updateBoss((Boss) workers);
@@ -537,7 +547,7 @@ public class WindowWorkers {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 			}
 		});
 
