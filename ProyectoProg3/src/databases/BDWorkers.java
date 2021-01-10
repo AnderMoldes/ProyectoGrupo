@@ -114,8 +114,10 @@ public class BDWorkers{
 			insertSql.setString(3, workers.getSurname());
 			insertSql.setString(4, workers.getGender());
 			insertSql.setString(5, workers.getSpecialty().toString());
-			insertSql.setString(6, workers.getStartWorkingIn().toString());
+			insertSql.setString(6, (String) workers.getStartWorkingIn().toString());
 			insertSql.setString(7, workers.getAssesment());
+			
+			
 
 			insertSql.executeUpdate();
 			

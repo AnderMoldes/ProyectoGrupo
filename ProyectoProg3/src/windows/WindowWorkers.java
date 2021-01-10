@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,6 +26,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
+import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -48,6 +50,7 @@ public class WindowWorkers {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTable table;
+	
 
 	public WindowWorkers(Workers workers, PoliceStation policeStation) {
 
@@ -138,9 +141,10 @@ public class WindowWorkers {
 		lblNewLabel_5.setBounds(45, 355, 144, 14);
 		frame.getContentPane().add(lblNewLabel_5);
 
-		JSpinner spinner_1 = new JSpinner(new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH));
-		spinner_1.setBounds(45, 380, 111, 20);
-		frame.getContentPane().add(spinner_1);
+//		JSpinner spinner_1 = new JSpinner(new SpinnerDateModel(new Date(), null, null, Calendar.SHORT_FORMAT));
+		JSpinner spinner_1 = new JSpinner((SpinnerModel) new SimpleDateFormat("dd/M/yyyy"));
+//		spinner_1.setBounds(45, 380, 111, 20);
+//		frame.getContentPane().add(spinner_1);
 
 		JLabel lblNewLabel_6 = new JLabel("Assessment:");
 		lblNewLabel_6.setBounds(45, 424, 98, 14);
@@ -212,7 +216,7 @@ public class WindowWorkers {
 						comboBox.setSelectedIndex(1);
 					}
 						
-					spinner_1.setValue(table.getValueAt(fila, 6).toString());
+//					spinner_1.setValue( table.getValueAt(fila, 6).toString());
 					textField_2.setText(table.getValueAt(fila, 7).toString());
 
 //					textField_3.setText(table.getValueAt(fila, 8).toString());
@@ -282,7 +286,7 @@ public class WindowWorkers {
 						}
 
 						object[5] = comboBox.getSelectedItem();
-						object[6] = spinner_1.getValue();
+						object[6] = spinner_1.getValue().toString();
 						object[7] = textField_2.getText();
 						object[8] = null;
 
