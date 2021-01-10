@@ -14,6 +14,7 @@ import classes.Arrested;
 import classes.Country;
 import classes.Detained;
 import classes.Fined;
+import classes.Workers2;
 
 public class BDetained {
 	private static Logger logger = null;
@@ -132,30 +133,6 @@ public class BDetained {
 	}
 
 	public static ArrayList<Object[]> consultarDatosArrested(String nombreBD) throws SQLException {
-		
-//		String consultaSQL = "SELECT * FROM " + nombreBD + ";";
-//		try {
-//			ResultSet rs = connection.createStatement().executeQuery(consultaSQL);
-//			while (rs.next()) {
-//				int identificative = rs.getInt("identificative");
-//				String name = rs.getString("name");
-//				String lastname = rs.getString("lastname");
-//				int age = rs.getInt("age");
-//				String gender = rs.getString("gender");
-//				int NumberOfArrest = rs.getInt("NumberOfArrest");
-//				String JailRelease = rs.getString("JailRelease");
-//				String Citizenship = rs.getString("Citizenship");
-//				String Description = rs.getString("Description");
-//				System.out.println("Identificative of the Arrested: " + identificative + ". Name: " + name
-//						+ ". Lastname: " + lastname + ". Age: " + age + ". Gender: " + gender + ". NumberOfArrest: "
-//						+ NumberOfArrest + ". JailRelease: " + JailRelease + ". Citizenship: " + Citizenship
-//						+ ". Description: " + Description);
-//			}
-//			rs.close();
-//		} catch (Exception e) {
-//			log(Level.SEVERE, "ERROR AL RECUPERAR DATOS", e);
-//		}
-//	}
 	
 		ArrayList<Object[]> datos = new ArrayList<Object[]>();
 		String consultaSQL = "SELECT * FROM " + nombreBD + ";";
@@ -178,6 +155,39 @@ public class BDetained {
 		}
 		return datos;
 	}
+	public static void update(Arrested arrested) {
+		try (PreparedStatement stmt = connection.prepareStatement("UPDATE DetainedTable SET name=?, LastName=?, age=?, gender=?, numberOfArrest=?, description=?, jailRelease=?, cityzenship=?   WHERE identificative=?")) {
+			stmt.setInt(1, arrested.getIdentificative());
+			stmt.setString(2, arrested.getName());
+			stmt.setString(3, arrested.getLastName());
+			stmt.setInt(4, arrested.getAge());
+			stmt.setString(5, arrested.getGender().toString());
+			stmt.setInt(6, arrested.getNumberOfArrest());
+			stmt.setString(7, arrested.getDescription());
+			stmt.setString(8, arrested.getJailRelease());
+			stmt.setString(9, arrested.getCitizenship().toString());
+			
+			stmt.executeUpdate();
+			
+			log(Level.SEVERE, "Completed", null);
+			
+		} catch (SQLException e) {
+			log(Level.SEVERE, "No se pudo guardar el usuario en la BD", e);
+		}
+		
+	}
+
+	public static void delete(Arrested arrested) {
+		try (PreparedStatement stmt = connection.prepareStatement("DELETE FROM user WHERE identificative=?")) {
+			stmt.setInt(1, arrested.getIdentificative());
+			stmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			log(Level.SEVERE, "No se pudo borrar el usuario en la BD", e);
+		}
+	}
+	
 		
 		
 
@@ -257,6 +267,27 @@ public class BDetained {
 			log(Level.SEVERE, "ERROR AL RECUPERAR DATOS", e);
 		}
 		return datos;
+	}
+	
+	public static void updateFined(Fined fined) {
+		try (PreparedStatement stmt = connection.prepareStatement("UPDATE DetainedTable SET name=?, LastName=?, age=?, gender=?, numberOfArrest=?, description=?, jailRelease=?, cityzenship=?   WHERE identificative=?")) {
+			
+			stmt.setString(1, fined.getName());
+			stmt.setString(2, fined.getLastName());
+			stmt.setInt(3, fined.getAge());
+			stmt.setString(4, fined.getGender().toString());
+			stmt.setString(5, fined.getDescription());
+			stmt.setString(6, fined.getCitizenship().toString());
+			stmt.setInt(7, (int) fined.getPayment());
+			
+			stmt.executeUpdate();
+			
+			log(Level.SEVERE, "Completed", null);
+			
+		} catch (SQLException e) {
+			log(Level.SEVERE, "No se pudo guardar el usuario en la BD", e);
+		}
+		
 	}
 		
 	

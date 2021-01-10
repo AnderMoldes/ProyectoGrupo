@@ -11,16 +11,27 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import classes.Arrested;
+import classes.Boss;
 import classes.Country;
+import classes.Detained;
+import classes.Fined;
 import classes.PoliceStation;
+import classes.Workers;
+import classes.Workers2;
+import databases.BDWorkers;
+import databases.BDetained;
 
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -37,7 +48,7 @@ public class WindowDetained {
 	private JTextField treleased;
 
 	
-	public WindowDetained(Arrested arrested, PoliceStation police, DefaultTableModel model) {
+	public WindowDetained(Detained detained, PoliceStation policeStation, DefaultTableModel model) {
 		policeS = new PoliceStation();
 		frame = new JFrame();
 		frame.getContentPane().setForeground(Color.RED);
@@ -57,9 +68,13 @@ public class WindowDetained {
 		bdelete.setBounds(739, 130, 111, 23);
 		frame.getContentPane().add(bdelete);
 		
-		JButton bread = new JButton("Read");
-		bread.setBounds(739, 170, 111, 23);
-		frame.getContentPane().add(bread);
+		JButton bsave = new JButton("Save");
+		bsave.setBounds(739, 170, 111, 23);
+		frame.getContentPane().add(bsave);
+		
+		JButton bback = new JButton("Back");
+		bback.setBounds(45, 533, 89, 23);
+		frame.getContentPane().add(bback);
 		
 		JButton bshow = new JButton("Show");
 		bshow.setBounds(739, 210, 111, 23);
@@ -154,6 +169,41 @@ public class WindowDetained {
 		
 		frame.getContentPane().add(scrollWorkers);
 		
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if (table.getSelectedColumn() != -1) {
+					int fila = table.getSelectedRow();
+
+					spinAge.setValue(table.getValueAt(fila, 1));
+					tname.setText(table.getValueAt(fila, 2).toString());
+					tsurname.setText(table.getValueAt(fila, 3).toString());
+					
+					if (table.getValueAt(fila, 4).equals("Male")) {
+						radioMale.setSelected(true);
+						radioFemale.setSelected(false);
+					} else {
+						radioFemale.setSelected(true);
+						radioMale.setSelected(false);
+					}
+
+					//comboBox.setSelectedItem(table.getValueAt(fila, 5));
+//					spinner_1.setValue(table.getValueAt(fila, 6));
+					//textField_2.setText(table.getValueAt(fila, 7).toString());
+					
+					
+//					if (table.getValueAt(fila, 8).equals("")) {
+//						textField_3.setText("");
+//					}else {
+//						textField_3.setText(table.getValueAt(fila, 8).toString());
+//					}
+					
+				}
+
+			}
+		});
+		
 		JLabel lreleased = new JLabel("Jail Release:");
 		lreleased.setBounds(316, 116, 184, 14);
 		frame.getContentPane().add(lreleased);
@@ -207,76 +257,308 @@ public class WindowDetained {
 			public void actionPerformed(ActionEvent e) {
 				Object[] object;
 				Arrested creation;
+				Fined creation2;
 
-				if (arrested != null) {
+				if (detained != null) {
 					object= null;
 					creation= null;
+					creation2= null;
 				} else {
 					object = new Object[9];
 					creation= new Arrested();    
+					creation2= new Fined();  
 				}
+				if(spinPayment.getValue().equals(null)) {
+					object[0] =null;
+					object[1] = tname.getText();
+					object[2] = tsurname.getText();
+					object[3] = spinAge.getValue();
 				
-				object[0] =null;
-				object[1] = tname.getText();
-				object[2] = tsurname.getText();
-				object[3] = spinAge.getValue();
+								
+					if (radioFemale.isSelected()) {
+						object[4] = radioFemale.getActionCommand();
+					} else if (radioMale.isSelected()){
+						object[4] = radioMale.getActionCommand();
+					}
 				
-				if (radioFemale.isSelected()) {
-					object[4] = radioFemale.getActionCommand();
-				} else if (radioMale.isSelected()){
-					object[4] = radioMale.getActionCommand();
-				}
-				
-				object[5] = spinNumberArr.getValue();
-				object[6] = tdescription.getText();
-				object[7] = treleased.getText();
-				object[8] = comboNationality.getSelectedItem();
+					object[5] = spinNumberArr.getValue();
+					object[6] = tdescription.getText();
+					object[7] = treleased.getText();
+					object[8] = comboNationality.getSelectedItem();
 				
 				
-				creation.setName(tname.getText());
-				creation.setLastName(tsurname.getText());
-				creation.setAge((int) spinAge.getValue());
+					creation.setName(tname.getText());
+					creation.setLastName(tsurname.getText());
+					creation.setAge((int) spinAge.getValue());
 
-				if (radioFemale.isSelected()) {
-					creation.setGender(radioMale.getActionCommand());
-				} else if(radioMale.isSelected()) {
-					creation.setGender(radioMale.getActionCommand());
-				}
+					if (radioFemale.isSelected()) {
+						creation.setGender(radioMale.getActionCommand());
+					} else if(radioMale.isSelected()) {
+						creation.setGender(radioMale.getActionCommand());
+					}
 
-				creation.setNumberOfArrest((int) spinNumberArr.getValue());
-				creation.setDescription(tdescription.getText());
-				creation.setJailRelease(treleased.getText());
-				creation.setCitizenship((Country) comboNationality.getSelectedItem());
+					creation.setNumberOfArrest((int) spinNumberArr.getValue());
+					creation.setDescription(tdescription.getText());
+					creation.setJailRelease(treleased.getText());
+					creation.setCitizenship((Country) comboNationality.getSelectedItem());
 
-				if (arrested == null) {
-					policeS.getDetained().add(creation);
-					modelDetained.addRow(object);
-					System.out.println(creation.toString());
-				}
-				tname.setText("");
-				tsurname.setText("");
-				spinAge.setValue(0);
+					if (detained == null) {
+						policeS.getDetained().add(creation);
+						modelDetained.addRow(object);
+						System.out.println(creation.toString());
+					}
+					tname.setText("");
+					tsurname.setText("");
+					spinAge.setValue(0);
 				
-				spinNumberArr.setValue(0);
-				tdescription.setText("");
-				treleased.setText("");
-				spinPayment.setValue(0);
+					spinNumberArr.setValue(0);
+					tdescription.setText("");
+					treleased.setText("");
+					spinPayment.setValue(0);
+				}else {
+					object[0] =null;
+					object[1] = tname.getText();
+					object[2] = tsurname.getText();
+					object[3] = spinAge.getValue();
+				
+								
+					if (radioFemale.isSelected()) {
+						object[4] = radioFemale.getActionCommand();
+					} else if (radioMale.isSelected()){
+						object[4] = radioMale.getActionCommand();
+					}
+					object[5] = tdescription.getText();
+					object[6] = comboNationality.getSelectedItem();
+					object[7] = spinPayment.getValue();
+					
+					creation2.setName(tname.getText());
+					creation2.setLastName(tsurname.getText());
+					creation2.setAge((int) spinAge.getValue());
 
+					if (radioFemale.isSelected()) {
+						creation2.setGender(radioMale.getActionCommand());
+					} else if(radioMale.isSelected()) {
+						creation2.setGender(radioMale.getActionCommand());
+					}
+
+					creation2.setDescription(tdescription.getText());
+					creation2.setCitizenship((Country) comboNationality.getSelectedItem());
+					creation2.setPayment((int) spinPayment.getValue());
+					
+					if (detained == null) {
+						policeS.getDetained().add(creation2);
+						modelDetained.addRow(object);
+						System.out.println(creation2.toString());
+					}
+					tname.setText("");
+					tsurname.setText("");
+					spinAge.setValue(0);
+				
+					spinNumberArr.setValue(0);
+					tdescription.setText("");
+					treleased.setText("");
+					spinPayment.setValue(0);
 	
+				} 
+			
+				}
+			});
+		bsave.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (Detained detained : policeS.getDetained()) {
+					if (detained instanceof Arrested) {
+						BDetained.insertIntoPrepStat((Arrested) detained);
+					}
+				}
+
+				for (Detained fined : policeS.getDetained()) {
+					if (fined instanceof Fined) {
+						BDetained.insertIntoPrepStatFained((Fined) fined);
+					}
+				}
+
 			}
 		});
-		
+
+		saveArrItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (Detained arrested : policeS.getDetained()) {
+					if (arrested instanceof Detained) {
+						BDetained.insertIntoPrepStat((Arrested) arrested);
+					}
+				}
+			}
+		});
+
+		saveFinedItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (Detained fined : policeS.getDetained()) {
+					if (fined instanceof Fined) {
+						BDetained.insertIntoPrepStatFained((Fined) fined);
+					}
+				}
+
+			}
+		});
+
+		bshow.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ArrayList<Object[]> datos = new ArrayList<Object[]>();
+					datos = BDetained.consultarDatosArrested("DetainedTable");
+
+					for (int i = 0; i < datos.size(); i++) {
+						modelDetained.addRow(datos.get(i));
+					}
+					table.setModel(modelDetained);
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				try {
+					ArrayList<Object[]> datosFined = new ArrayList<Object[]>();
+					datosFined = BDetained.consultarDatosFained("FainedTable");
+
+					for (int i = 0; i < datosFined.size(); i++) {
+						modelDetained.addRow(datosFined.get(i));
+					}
+					table.setModel(modelDetained);
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+		});
+
+		showArrItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ArrayList<Object[]> datos = new ArrayList<Object[]>();
+					datos = BDetained.consultarDatosArrested("DetainedTable");
+
+					for (int i = 0; i < datos.size(); i++) {
+						modelDetained.addRow(datos.get(i));
+					}
+					table.setModel(modelDetained);
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+		});
+
+		showFinedItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ArrayList<Object[]> datosFined = new ArrayList<Object[]>();
+					datosFined = BDetained.consultarDatosFained("FainedTable");
+
+					for (int i = 0; i < datosFined.size(); i++) {
+						modelDetained.addRow(datosFined.get(i));
+					}
+					table.setModel(modelDetained);
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+		});
+
+		showAll.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ArrayList<Object[]> datos = new ArrayList<Object[]>();
+					datos = BDetained.consultarDatosArrested("DetainedTable");
+
+					for (int i = 0; i < datos.size(); i++) {
+						modelDetained.addRow(datos.get(i));
+					}
+					table.setModel(modelDetained);
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				try {
+					ArrayList<Object[]> datosFined = new ArrayList<Object[]>();
+					datosFined = BDetained.consultarDatosFained("FainedTable");
+
+					for (int i = 0; i < datosFined.size(); i++) {
+						modelDetained.addRow(datosFined.get(i));
+					}
+					table.setModel(modelDetained);
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+		});
+
+		bupdate.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (Detained arrested : policeStation.getDetained()) {
+					if (arrested instanceof Arrested) {
+						BDetained.update((Arrested) arrested);
+					}
+				}
+				
+				for (Detained fined : policeStation.getDetained()) {
+					if (fined instanceof Fined) {
+						BDetained.updateFined((Fined) fined);
+					}
+				}
+			}
+		});
+
+		showFinedItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		bback.addActionListener(new ActionListener() {
 			
-		
-		
-		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+				new GeneralWindow();
+				
+			}
+		});
+
 		frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
 		frame.setTitle("POLICE MANAGEMENT");
 		frame.setResizable(true);
 		frame.setVisible(true);
-		
-		
-		
+				
 		
 		
 	}
