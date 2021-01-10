@@ -179,7 +179,7 @@ public class BDWorkers{
 	public static int update(Workers2 workers) {
 		int i=0;
 //		"UPDATE WorkersTable SET grade=?, name=?, surname=?, gender=?, Specialty=?, startWorkingIn=?, Assessment=?   WHERE code=?"
-		try (PreparedStatement stmt = connection.prepareStatement("UPDATE WorkersTable SET name=? ")) {
+		try (PreparedStatement stmt = connection.prepareStatement("UPDATE WorkersTable SET name=? where code=?")) {
 //			stmt.setInt(1, workers.getGrade());
 			stmt.setString(2, workers.getName());
 //			stmt.setString(3, workers.getSurname());
