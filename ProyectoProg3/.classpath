@@ -9,6 +9,5 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="lib" path="sqlite-jdbc-3.32.3.2.jar"/>
-	<classpathentry kind="lib" path="jcalendar-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

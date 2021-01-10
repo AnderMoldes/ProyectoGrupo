@@ -2,12 +2,12 @@ package windows;
 
 import java.awt.Color;
 
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.ButtonGroup;
@@ -142,7 +142,7 @@ public class WindowWorkers {
 		frame.getContentPane().add(lblNewLabel_5);
 
 //		JSpinner spinner_1 = new JSpinner(new SpinnerDateModel(new Date(), null, null, Calendar.SHORT_FORMAT));
-		JSpinner spinner_1 = new JSpinner((SpinnerModel) new SimpleDateFormat("dd/M/yyyy"));
+//		JSpinner spinner_1 = new JSpinner((SpinnerModel) new SimpleDateFormat("dd/M/yyyy"));
 //		spinner_1.setBounds(45, 380, 111, 20);
 //		frame.getContentPane().add(spinner_1);
 
@@ -286,7 +286,7 @@ public class WindowWorkers {
 						}
 
 						object[5] = comboBox.getSelectedItem();
-						object[6] = spinner_1.getValue().toString();
+//						object[6] = spinner_1.getValue().toString();
 						object[7] = textField_2.getText();
 						object[8] = null;
 
@@ -301,7 +301,7 @@ public class WindowWorkers {
 						}
 
 						creation.setSpecialty((Specialty) comboBox.getSelectedItem());
-						creation.setStartWorkingIn((Date) spinner_1.getValue());
+//						creation.setStartWorkingIn((Date) spinner_1.getValue());
 						creation.setAssesment(textField_2.getText());
 
 						if (workers == null) {
@@ -332,7 +332,7 @@ public class WindowWorkers {
 						}
 
 						object[5] = comboBox.getSelectedItem();
-						object[6] = spinner_1.getValue();
+//						object[6] = spinner_1.getValue();
 						object[7] = textField_2.getText();
 						object[8] = textField_3.getText();
 
@@ -347,7 +347,7 @@ public class WindowWorkers {
 						}
 
 						creationB.setSpecialty((Specialty) comboBox.getSelectedItem());
-						creationB.setStartWorkingIn((Date) spinner_1.getValue());
+//						creationB.setStartWorkingIn((Date) spinner_1.getValue());
 						creationB.setAssesment(textField_2.getText());
 						creationB.setFunction(textField_3.getText());
 
