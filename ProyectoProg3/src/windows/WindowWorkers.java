@@ -36,6 +36,7 @@ import javax.swing.table.TableCellRenderer;
 import classes.Boss;
 import classes.PoliceStation;
 import classes.Specialty;
+import classes.Specialty.SpecialtyEnum;
 import classes.Workers;
 import classes.Workers2;
 import databases.BDWorkers;
@@ -174,9 +175,10 @@ public class WindowWorkers {
 		lblNewLabel_4.setBounds(45, 283, 111, 14);
 		frame.getContentPane().add(lblNewLabel_4);
 
-		JComboBox<Specialty> comboBox = new JComboBox<Specialty>();
-		comboBox.addItem(Specialty.DRIVER);
-		comboBox.addItem(Specialty.DOCTOR);
+		JComboBox<SpecialtyEnum> comboBox = new JComboBox<SpecialtyEnum>();
+		comboBox.addItem(SpecialtyEnum.DRIVER);
+		comboBox.addItem(SpecialtyEnum.DOCTOR);
+		comboBox.addItem(SpecialtyEnum.SECURITY);
 		comboBox.setBounds(45, 308, 111, 22);
 		frame.getContentPane().add(comboBox);
 
@@ -358,7 +360,7 @@ public class WindowWorkers {
 							creation.setGender(rdbtnNewRadioButton.getActionCommand());
 						}
 
-						creation.setSpecialty((Specialty) comboBox.getSelectedItem());
+						creation.setSpecialty((SpecialtyEnum) comboBox.getSelectedItem());
 						creation.setStartWorkingIn((String) textField_4.getText());
 						creation.setAssesment(textField_2.getText());
 
@@ -404,7 +406,7 @@ public class WindowWorkers {
 							creationB.setGender(rdbtnNewRadioButton.getActionCommand());
 						}
 
-						creationB.setSpecialty((Specialty) comboBox.getSelectedItem());
+						creationB.setSpecialty((SpecialtyEnum) comboBox.getSelectedItem());
 						creationB.setStartWorkingIn((String) textField_4.getText());
 						creationB.setAssesment(textField_2.getText());
 						creationB.setFunction(textField_3.getText());
@@ -634,7 +636,7 @@ public class WindowWorkers {
 					workers.setGender(rdbtnNewRadioButton.getActionCommand());
 				}
 				
-				workers.setSpecialty((Specialty) comboBox.getSelectedItem());
+				workers.setSpecialty((SpecialtyEnum) comboBox.getSelectedItem());
 				workers.setStartWorkingIn(textField_4.getText());
 				workers.setAssesment(textField_2.getText());
 				workers.setCode(Integer.parseInt(textArea_5.getText()));
@@ -654,7 +656,7 @@ public class WindowWorkers {
 					boss.setGender(rdbtnNewRadioButton.getActionCommand());
 				}
 				
-				boss.setSpecialty((Specialty) comboBox.getSelectedItem());
+				boss.setSpecialty((SpecialtyEnum) comboBox.getSelectedItem());
 				boss.setStartWorkingIn(textField_4.getText());
 				boss.setAssesment(textField_2.getText());
 				boss.setFunction(textField_3.getText());

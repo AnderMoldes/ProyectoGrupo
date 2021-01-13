@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 
 import classes.PoliceStation;
 import classes.Specialty;
+import classes.Specialty.SpecialtyEnum;
 import classes.Workers;
 import classes.Boss;
 import classes.Counter;
@@ -41,7 +42,7 @@ public class BossWindow extends JFrame{
 	JTextField tfunction;
 	JTextField tsurname;
 	JTextField tgender;
-	JComboBox<Specialty> comboSpecialty;
+	JComboBox<SpecialtyEnum> comboSpecialty;
 	JSpinner spinYears;
 	JTextField tassesstment;
 	JButton create;
@@ -66,11 +67,12 @@ public class BossWindow extends JFrame{
 		lassessment = new JLabel("Assessment: ");
 		tassesstment = new JTextField(100);
 		
-		//Añadir especialidades especiales
+		//Aï¿½adir especialidades especiales
 		
-		comboSpecialty = new JComboBox<Specialty>();
-		comboSpecialty.addItem(Specialty.DRIVER);
-		comboSpecialty.addItem(Specialty.DOCTOR);
+		comboSpecialty = new JComboBox<SpecialtyEnum>();
+		comboSpecialty.addItem(SpecialtyEnum.DRIVER);
+		comboSpecialty.addItem(SpecialtyEnum.DOCTOR);
+		comboSpecialty.addItem(SpecialtyEnum.SECURITY);
 		
 		spinYears = new JSpinner(new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH));
 		spinYears.setEditor(new JSpinner.DateEditor(spinYears, "dd/MM/yyyy"));
@@ -138,7 +140,7 @@ public class BossWindow extends JFrame{
 				creation.setName(tname.getText());
 				creation.setSurname(tsurname.getText());
 				creation.setGender(tgender.getText());
-				creation.setSpecialty((Specialty) comboSpecialty.getSelectedItem());
+				creation.setSpecialty((SpecialtyEnum) comboSpecialty.getSelectedItem());
 //				creation.setStartWorkingIn((Date) spinYears.getValue());	
 				creation.setAssesment(tassesstment.getText());
 				creation.setFunction(tfunction.getText());

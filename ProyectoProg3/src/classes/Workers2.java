@@ -2,10 +2,12 @@ package classes;
 
 import java.util.Date;
 
+import classes.Specialty.SpecialtyEnum;
+
 public class Workers2 extends Workers {
 	
 
-	public Workers2(int code, int grade, String name, String surname, String gender, classes.Specialty specialty,
+	public Workers2(int code, int grade, String name, String surname, String gender, SpecialtyEnum specialty,
 			String startWorkingIn, String assesment) {
 		super(code, grade, name, surname, gender, specialty, startWorkingIn, assesment);
 		

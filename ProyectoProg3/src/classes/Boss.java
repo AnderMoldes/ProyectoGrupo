@@ -2,11 +2,13 @@ package classes;
 
 import java.util.Date;
 
+import classes.Specialty.SpecialtyEnum;
+
 public class Boss extends Workers{
 	private String function;
 	
 
-	public Boss(int code, int grade, String name, String surname, String gender, classes.Specialty specialty,
+	public Boss(int code, int grade, String name, String surname, String gender, SpecialtyEnum specialty,
 			String startWorkingIn, String assesment, String function) {
 		super(code, grade, name, surname, gender, specialty, startWorkingIn, assesment);
 		this.function = function;

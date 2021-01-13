@@ -4,6 +4,8 @@ import java.awt.Container;
 import java.io.Serializable;
 import java.util.Date;
 
+import classes.Specialty.SpecialtyEnum;
+
 public class Workers implements Serializable, Comparable<Workers>{
 
 
@@ -12,13 +14,13 @@ public class Workers implements Serializable, Comparable<Workers>{
     protected String name;
     protected String surname;
     protected String gender;
-    protected Specialty Specialty;
+    protected SpecialtyEnum Specialty;
     protected String startWorkingIn;
     protected String Assesment;
     
 	
 	
-	public Workers(int code, int grade, String name, String surname, String gender, Specialty specialty,
+	public Workers(int code, int grade, String name, String surname, String gender, SpecialtyEnum specialty,
 			String startWorkingIn, String assesment) {
 		super();
 		this.code = code;
@@ -87,11 +89,11 @@ public class Workers implements Serializable, Comparable<Workers>{
 		this.gender = gender;
 	}
 
-	public Specialty getSpecialty() {
+	public SpecialtyEnum getSpecialty() {
 		return Specialty;
 	}
 
-	public void setSpecialty(Specialty specialty) {
+	public void setSpecialty(SpecialtyEnum specialty) {
 		Specialty = specialty;
 	}
 

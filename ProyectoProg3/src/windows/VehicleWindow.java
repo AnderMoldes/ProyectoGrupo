@@ -12,6 +12,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
 import classes.Brand;
+import classes.Brand.BrandEnum;
 import classes.VehicleTypes;
 
 
@@ -33,12 +34,12 @@ public class VehicleWindow extends JFrame{
 	JLabel type;
 	JComboBox<VehicleTypes> comboTypes;
 	JLabel brand;
-	JComboBox<Brand> comboBrand;
+	JComboBox<BrandEnum> comboBrand;
 	
 	
 	public class MiModelo extends DefaultTableModel {
 		   public boolean isCellEditable (int row, int column) {
-		       // Aquí devolvemos true o false según queramos que una celda
+		       // Aquï¿½ devolvemos true o false segï¿½n queramos que una celda
 		       // identificada por fila,columna (row,column), sea o no editable
 			   
 		       return false;
@@ -69,12 +70,12 @@ public class VehicleWindow extends JFrame{
 		
 		JLabel brand = new JLabel("Brand");
 		
-		JComboBox<Brand> comboBrand = new JComboBox<Brand>();
-		comboBrand.addItem(Brand.MITSUBISHI);
-		comboBrand.addItem(Brand.NISSAN);
-		comboBrand.addItem(Brand.PEUGEOT);
-		comboBrand.addItem(Brand.RENAULT);
-		comboBrand.addItem(Brand.SEAT);
+		JComboBox<BrandEnum> comboBrand = new JComboBox<BrandEnum>();
+		comboBrand.addItem(BrandEnum.MITSUBISHI);
+		comboBrand.addItem(BrandEnum.NISSAN);
+		comboBrand.addItem(BrandEnum.PEUGEOT);
+		comboBrand.addItem(BrandEnum.RENAULT);
+		comboBrand.addItem(BrandEnum.SEAT);
 		
 		this.setLayout(new FlowLayout());
 				

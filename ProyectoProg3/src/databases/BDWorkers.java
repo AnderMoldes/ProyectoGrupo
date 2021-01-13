@@ -23,6 +23,7 @@ import org.w3c.dom.events.EventTarget;
 
 import classes.Boss;
 import classes.Specialty;
+import classes.Specialty.SpecialtyEnum;
 import classes.Workers;
 import classes.Workers2;
 import windows.WindowWorkers;
@@ -159,7 +160,7 @@ public class BDWorkers{
 				workers2.setName(rs.getString(3));
 				workers2.setSurname(rs.getString(4));
 				workers2.setGender(rs.getString(5));
-				Specialty e= Specialty.valueOf(rs.getString(6));
+				SpecialtyEnum e= SpecialtyEnum.valueOf(rs.getString(6));
 				workers2.setSpecialty(e);
 				workers2.setStartWorkingIn(rs.getString(7));
 				workers2.setAssesment(rs.getString(8));
@@ -267,7 +268,7 @@ public class BDWorkers{
 				boss.setName(rs.getString(3));
 				boss.setSurname(rs.getString(4));
 				boss.setGender(rs.getString(5));
-				Specialty e= Specialty.valueOf(rs.getString(6));
+				SpecialtyEnum e= SpecialtyEnum.valueOf(rs.getString(6));
 				boss.setSpecialty(e);
 				boss.setStartWorkingIn(rs.getString(7));
 				boss.setAssesment(rs.getString(8));

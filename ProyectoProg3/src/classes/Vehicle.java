@@ -3,14 +3,17 @@ package classes;
 import java.util.ArrayList;
 import java.util.List;
 
+import classes.Brand.BrandEnum;
+import classes.Colour.ColourEnum;
+
 public class Vehicle {
 	private static int counter = 1;
 	private int licensePlate;
-	private Brand brand;
-	private Colour colour;
+	private BrandEnum brand;
+	private ColourEnum colour;
 	private List<Workers> polices;
 
-	public Vehicle(int licensePlate, Brand brand, Colour colour, ArrayList<Workers> polices) {
+	public Vehicle(int licensePlate, BrandEnum brand, ColourEnum colour, ArrayList<Workers> polices) {
 		super();
 		this.licensePlate = counter++;
 		this.brand = brand;
@@ -20,8 +23,8 @@ public class Vehicle {
 
 	public Vehicle() {
 		super();
-		this.brand = Brand.SEAT;
-		this.colour = Colour.BLACK;
+		this.brand = BrandEnum.SEAT;
+		this.colour = Colour.ColourEnum.BLACK;
 		this.polices = new ArrayList<Workers>();
 	}
 
@@ -29,19 +32,19 @@ public class Vehicle {
 		return licensePlate;
 	}
 
-	public Brand getBrand() {
+	public BrandEnum getBrand() {
 		return brand;
 	}
 
-	public void setBrand(Brand brand) {
+	public void setBrand(BrandEnum brand) {
 		this.brand = brand;
 	}
 
-	public Colour getColour() {
+	public ColourEnum getColour() {
 		return colour;
 	}
 
-	public void setColour(Colour colour) {
+	public void setColour(ColourEnum colour) {
 		this.colour = colour;
 	}
 
