@@ -16,10 +16,16 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+
 import org.w3c.dom.events.EventTarget;
 
 import classes.Boss;
+import classes.Specialty;
+import classes.Workers;
 import classes.Workers2;
+import windows.WindowWorkers;
 
 public class BDWorkers{
 	
@@ -62,12 +68,11 @@ public class BDWorkers{
 			statement = connection.createStatement();
 			try {
 				statement.executeUpdate("create table " + nombreBD
-						+ " (code integer primary key autoincrement, grade integer, name varchar, surname varchar, "
-						+ "gender varchar, Specialty varchar, startWorkingIn varchar, Assessment varchar )");
+						+ " (code integer primary key autoincrement, grade integer, name varchar, surname varchar, gender varchar, Specialty varchar, startWorkingIn varchar, Assessment varchar )");
 				
 				log(Level.SEVERE, "The table " + nombreBD + " created", null);
 			} catch (SQLException e) {
-				if (!e.getMessage().equals("table " + nombreBD + " already exists")) // Este error sí es correcto si la
+				if (!e.getMessage().equals("table " + nombreBD + " already exists")) // Este error sï¿½ es correcto si la
 																						// tabla ya existe
 					log(Level.SEVERE, "The table " + nombreBD + " already exists", e);
 			}
@@ -87,7 +92,7 @@ public class BDWorkers{
 				
 				log(Level.SEVERE, "The table " + nombreBD + " created", null);
 			} catch (SQLException e) {
-				if (!e.getMessage().equals("table " + nombreBD + " already exists")) // Este error sí es correcto si la
+				if (!e.getMessage().equals("table " + nombreBD + " already exists")) // Este error sï¿½ es correcto si la
 																						// tabla ya existe
 					log(Level.SEVERE, "The table " + nombreBD + " already exists", e);
 			}
@@ -106,17 +111,17 @@ public class BDWorkers{
 	public static void insertIntoPrepStat(Workers2 workers) {
 		try {
 			PreparedStatement insertSql = connection.prepareStatement(
-					"INSERT INTO WorkersTable( grade, name, surname, gender, Specialty, startWorkingIn, Assessment)  VALUES (?, ?, ?, ?, ?, ?, ?)");
+					"INSERT INTO WorkersTable(code, grade, name, surname, gender, Specialty, startWorkingIn, Assessment)  VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 			Statement stmtForId= connection.createStatement(); 
 			
 //			insertSql.setLong(1, workers.getCode());
-			insertSql.setLong(1, workers.getGrade());
-			insertSql.setString(2, workers.getName());
-			insertSql.setString(3, workers.getSurname());
-			insertSql.setString(4, workers.getGender());
-			insertSql.setString(5, workers.getSpecialty().toString());
-			insertSql.setString(6, (String) workers.getStartWorkingIn());
-			insertSql.setString(7, workers.getAssesment());
+			insertSql.setLong(2, workers.getGrade());
+			insertSql.setString(3, workers.getName());
+			insertSql.setString(4, workers.getSurname());
+			insertSql.setString(5, workers.getGender());
+			insertSql.setString(6, workers.getSpecialty().toString());
+			insertSql.setString(7, (String) workers.getStartWorkingIn());
+			insertSql.setString(8, workers.getAssesment());
 			
 			
 
@@ -139,33 +144,28 @@ public class BDWorkers{
 		}
 	}
 
-	public static ArrayList<Object[]> consultarDatos(String nombreBD) throws SQLException {
-		ArrayList<Object[]> datos = new ArrayList<Object[]>();
-		String consultaSQL = "SELECT * FROM " + nombreBD + ";";
+	public  ArrayList<Workers2> consultarDatos() {
+		ArrayList<Workers2> datos = new ArrayList<Workers2>();
+		String consultaSQL = "SELECT * FROM WorkersTable;";
+		
 		try {
 			
 			ResultSet rs = connection.createStatement().executeQuery(consultaSQL);
 			
 			while (rs.next()) {
-				Object filas[]= new Object[8];
-				for (int i = 0; i < filas.length; i++) {
-					filas[i]= rs.getObject(i+1);
-				}
-				datos.add(filas);
+				Workers2 workers2= new Workers2();
+				workers2.setCode(rs.getInt(1));
+				workers2.setGrade(rs.getInt(2));
+				workers2.setName(rs.getString(3));
+				workers2.setSurname(rs.getString(4));
+				workers2.setGender(rs.getString(5));
+				Specialty e= Specialty.valueOf(rs.getString(6));
+				workers2.setSpecialty(e);
+				workers2.setStartWorkingIn(rs.getString(7));
+				workers2.setAssesment(rs.getString(8));
+				datos.add(workers2);
 			}
-//				int code = rs.getInt("code");
-//				int grade = rs.getInt("grade");
-//				String name = rs.getString("name");
-//				String surname = rs.getString("surname");
-//				String gender = rs.getString("gender");
-//				String Specialty = rs.getString("Specialty");
-//				String startWorkingIn = rs.getString("startWorkingIn");
-//				String Assessment = rs.getString("Assessment");
-//				System.out.println("Code of the worker: " + code + ". Grade: " + grade + ". Name: " + name
-//						+ ". Surname: " + surname + ". Gender: " + gender + ". Specialty: " + Specialty
-//						+ ". StartWorkingIn: " + startWorkingIn + ". Assesment: " + Assessment);
 			
-//			}
 			rs.close();
 			
 		} catch (Exception e) {
@@ -176,57 +176,36 @@ public class BDWorkers{
 	}
 	
 
-	public static int update(Workers2 workers) {
-		int i=0;
-//		"UPDATE WorkersTable SET grade=?, name=?, surname=?, gender=?, Specialty=?, startWorkingIn=?, Assessment=?   WHERE code=?"
-		try (PreparedStatement stmt = connection.prepareStatement("UPDATE WorkersTable SET name=? where code=?")) {
-//			stmt.setInt(1, workers.getGrade());
+	public void update(Workers2 workers) {
+		
+		String sql= "UPDATE WorkersTable SET grade=?, name=?, surname=?, gender=?, Specialty=?, startWorkingIn=?, Assessment=? where code=?;";
+		PreparedStatement stmt = null;
+		try {
+			stmt=connection.prepareStatement(sql);
+			stmt.setInt(1, workers.getGrade());
 			stmt.setString(2, workers.getName());
-//			stmt.setString(3, workers.getSurname());
-//			stmt.setString(4, workers.getGender());
-//			stmt.setString(5, workers.getSpecialty().toString());
-//			stmt.setString(6, workers.getStartWorkingIn().toString());
-//			stmt.setString(7, workers.getAssesment());
+			stmt.setString(3, workers.getSurname());
+			stmt.setString(4, workers.getGender());
+			stmt.setString(5, workers.getSpecialty().toString());
+			stmt.setString(6, workers.getStartWorkingIn().toString());
+			stmt.setString(7, workers.getAssesment());
+			stmt.setInt(8, workers.getCode());
 			
-			i =stmt.executeUpdate();
+			stmt.executeUpdate();
 	
 			
 			log(Level.SEVERE, "Completed", null);
-			
+			JOptionPane.showMessageDialog(null, "  UPDATE COMPLETED ");
 		} catch (SQLException e) {
 			log(Level.SEVERE, "No se pudo guardar el usuario en la BD", e);
 		}
 		
-		return i;
+		
 	}
-	
-//	public static int update(ArrayList<String> datos) {
-//		
-//		int rsu=0;
-//		String sql= "UPDATE WorkersTable SET grade= '"+datos.get(1)+"', "
-//				+ "name= '" +datos.get(2)+ "', "
-//				+ " surname= '"+datos.get(3)+"', "
-//				+ "gender= '"+datos.get(4)+"', "
-//				+ "Specialty= '"+datos.get(5)+"', "
-//				+ "startWorkingIn= '"+datos.get(6)+"', "
-//				+ "Assessment= '"+datos.get(7)+ "', " 
-//				+ "WHERE code= '"+datos.get(0)+ "";
-//		
-//		try {
-//			statement= connection.createStatement();
-//			rsu=statement.executeUpdate(sql);
-//			
-//			log(Level.SEVERE, "Completed", null);
-//			
-//		} catch (SQLException e) {
-//			log(Level.SEVERE, "No se pudo guardar el usuario en la BD", e);
-//		}
-//		return rsu;
-//		
-//	}
 
-	public static void delete(Workers2 workers) {
-		try (PreparedStatement stmt = connection.prepareStatement("DELETE FROM user WHERE code=?")) {
+
+	public void delete(Workers2 workers) {
+		try (PreparedStatement stmt = connection.prepareStatement("DELETE FROM WorkersTable WHERE code=?")) {
 			stmt.setInt(1, workers.getCode());
 			stmt.executeUpdate();
 			
@@ -237,21 +216,23 @@ public class BDWorkers{
 		
 	}
 	
+	
+	
 	public static void insertIntoPrepStatBoss(Boss boss) {
 		try {
 			PreparedStatement insertSql = connection.prepareStatement(
-					"INSERT INTO WorkersTableBoss(grade, name, surname, gender, Specialty, startWorkingIn, Assessment, function)  VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+					"INSERT INTO WorkersTableBoss(code, grade, name, surname, gender, Specialty, startWorkingIn, Assessment, function)  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			Statement stmtForId= connection.createStatement(); 
 			
 //			insertSql.setLong(1, boss.getCode());
-			insertSql.setLong(1, boss.getGrade());
-			insertSql.setString(2, boss.getName());
-			insertSql.setString(3, boss.getSurname());
-			insertSql.setString(4, boss.getGender());
-			insertSql.setString(5, boss.getSpecialty().toString());
-			insertSql.setString(6, boss.getStartWorkingIn().toString());
-			insertSql.setString(7, boss.getAssesment());
-			insertSql.setString(8, boss.getFunction());
+			insertSql.setLong(2, boss.getGrade());
+			insertSql.setString(3, boss.getName());
+			insertSql.setString(4, boss.getSurname());
+			insertSql.setString(5, boss.getGender());
+			insertSql.setString(6, boss.getSpecialty().toString());
+			insertSql.setString(7, boss.getStartWorkingIn().toString());
+			insertSql.setString(8, boss.getAssesment());
+			insertSql.setString(9, boss.getFunction());
 
 			insertSql.executeUpdate();
 
@@ -271,36 +252,28 @@ public class BDWorkers{
 		}
 	}
 
-	public static ArrayList<Object[]> consultarDatosBoss(String nombreBD) throws SQLException {
+	public  ArrayList<Boss> consultarDatosBoss() {
 		
-		ArrayList<Object[]> datos = new ArrayList<Object[]>();
-		String consultaSQL = "SELECT * FROM " + nombreBD + ";";
+		ArrayList<Boss> datos = new ArrayList<Boss>();
+		String consultaSQL = "SELECT * FROM WorkersTableBoss;";
 		try {
 			
 			ResultSet rs = connection.createStatement().executeQuery(consultaSQL);
 			
 			while (rs.next()) {
-				Object filas[]= new Object[9];
-				for (int i = 0; i < filas.length; i++) {
-					filas[i]= rs.getObject(i+1);
-				}
-				datos.add(filas);
+				Boss boss= new Boss();
+				boss.setCode(rs.getInt(1));
+				boss.setGrade(rs.getInt(2));
+				boss.setName(rs.getString(3));
+				boss.setSurname(rs.getString(4));
+				boss.setGender(rs.getString(5));
+				Specialty e= Specialty.valueOf(rs.getString(6));
+				boss.setSpecialty(e);
+				boss.setStartWorkingIn(rs.getString(7));
+				boss.setAssesment(rs.getString(8));
+				boss.setFunction(rs.getString(9));
+				datos.add(boss);
 			}
-		
-//				int code = rs.getInt("code");
-//				int grade = rs.getInt("grade");
-//				String name = rs.getString("name");
-//				String surname = rs.getString("surname");
-//				String gender = rs.getString("gender");
-//				String Specialty = rs.getString("Specialty");
-//				String startWorkingIn = rs.getString("startWorkingIn");
-//				String Assessment = rs.getString("Assessment");
-//				String function = rs.getString("Function");
-//				System.out
-//						.println("Code of the worker: " + code + ". Grade: " + grade + ". Name: " + name + ". Surname: "
-//								+ surname + ". Gender: " + gender + ". Specialty: " + Specialty + ". StartWorkingIn: "
-//								+ startWorkingIn + ". Assesment: " + Assessment + ". Function: " + function);
-
 			
 			rs.close();
 
@@ -311,7 +284,7 @@ public class BDWorkers{
 	}
 	
 	
-	public static void updateBoss(Boss boss) {
+	public  void updateBoss(Boss boss) {
 		try (PreparedStatement stmt = connection.prepareStatement("UPDATE WorkersTableBoss SET grade=?, name=?, surname=?, gender=?, Specialty=?, startWorkingIn=?, Assessment=?, function=?  WHERE code=?")) {
 			stmt.setInt(1, boss.getGrade());
 			stmt.setString(2, boss.getName());
@@ -321,14 +294,26 @@ public class BDWorkers{
 			stmt.setString(6, boss.getStartWorkingIn().toString());
 			stmt.setString(7, boss.getAssesment());
 			stmt.setString(8, boss.getFunction());
+			stmt.setInt(8, boss.getCode());
 			
 			stmt.executeUpdate();
 			
 			log(Level.SEVERE, "Completed", null);
-			
+			JOptionPane.showMessageDialog(null, "  UPDATE COMPLETED ");
 		} catch (SQLException e) {
 			log(Level.SEVERE, "No se pudo guardar el usuario en la BD", e);
 		}
+	}
+	
+	public void deleteBoss(Boss boss) {
+		try (PreparedStatement stmt = connection.prepareStatement("DELETE FROM WorkersTableBoss WHERE code=?")) {
+			stmt.setInt(1, boss.getCode());
+			stmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			log(Level.SEVERE, "No se pudo borrar el usuario en la BD", e);
+		}
+		
 	}
 
 	

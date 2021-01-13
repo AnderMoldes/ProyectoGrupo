@@ -2,10 +2,9 @@ package windows;
 
 import java.awt.Color;
 
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,12 +22,16 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+
+
 
 import classes.Boss;
 import classes.PoliceStation;
@@ -48,20 +51,50 @@ public class WindowWorkers {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
+	private JTextArea textArea_5;
 	private JTable table;
+	private MiModelo modelWorkers;
 	BDWorkers conexion;
-	public String code;
-	
+	private static String code;
+
 	public class MiModelo extends DefaultTableModel {
 		public boolean isCellEditable(int row, int column) {
-			// Aquí devolvemos true o false según queramos que una celda
+			// Aquï¿½ devolvemos true o false segï¿½n queramos que una celda
 			// identificada por fila,columna (row,column), sea o no editable
 
 			return false;
 		}
 
 	}
+	
+	public void visualizar_datos() {
+		conexion= new BDWorkers();
+		Workers2 workers= new Workers2();
+		ArrayList<Workers2> list= conexion.consultarDatos();
+		
+		
+		if (list.size()>0) {
 
+			for (int i=0; i<list.size(); i++) {
+				Object fila[] = new Object[8];
+				workers2 = list.get(i);
+				fila[0] = workers2.getCode();
+				fila[1] = workers2.getGrade();
+				fila[2] = workers2.getName();
+				fila[3]= workers2.getSurname();
+				fila[4] = workers2.getGender();
+				fila[5]= workers2.getSpecialty();
+				fila[6] = workers2.getStartWorkingIn();
+				fila[7]= workers2.getAssesment();
+				modelWorkers.addRow(fila);
+			}
+		}
+		
+		table.setModel(modelWorkers);
+	
+	}
+
+	
 	public WindowWorkers(Workers workers, PoliceStation policeStation) {
 
 		policeS = new PoliceStation();
@@ -151,10 +184,9 @@ public class WindowWorkers {
 		lblNewLabel_5.setBounds(45, 355, 144, 14);
 		frame.getContentPane().add(lblNewLabel_5);
 
-		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		String fechaComoCadena = sdf.format(new Date());
-		textField_4= new JTextField(fechaComoCadena);
+		textField_4 = new JTextField(fechaComoCadena);
 		textField_4.setBounds(45, 380, 111, 20);
 		frame.getContentPane().add(textField_4);
 		textField_4.setColumns(10);
@@ -167,6 +199,17 @@ public class WindowWorkers {
 		textField_2.setBounds(45, 449, 109, 20);
 		frame.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
+
+		JLabel lblNewLabel_9 = new JLabel("CODE:");
+		lblNewLabel_9.setForeground(Color.RED);
+		lblNewLabel_9.setBounds(45, 491, 78, 14);
+		frame.getContentPane().add(lblNewLabel_9);
+
+		textArea_5 = new JTextArea();
+		textArea_5.setEditable(false);
+		textArea_5.setBounds(45, 516, 86, 20);
+		frame.getContentPane().add(textArea_5);
+		textArea_5.setColumns(10);
 
 		JLabel lblNewLabel_7 = new JLabel("If the Worker is a boss, fill in this section:");
 		lblNewLabel_7.setForeground(Color.RED);
@@ -182,7 +225,7 @@ public class WindowWorkers {
 		frame.getContentPane().add(textField_3);
 		textField_3.setColumns(10);
 
-		MiModelo modelWorkers = new MiModelo();
+	    modelWorkers = new MiModelo();
 		modelWorkers.addColumn("code");
 		modelWorkers.addColumn("grade");
 		modelWorkers.addColumn("name");
@@ -200,21 +243,18 @@ public class WindowWorkers {
 		scrollWorkers.setBounds(243, 311, 567, 296);
 
 		frame.getContentPane().add(scrollWorkers);
-		
 
-		
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if (table.getSelectedColumn() != -1) {
 					int fila = table.getSelectedRow();
-
+					
+					textArea_5.setText(table.getValueAt(fila, 0).toString());
 					spinner.setValue(table.getValueAt(fila, 1));
 					textField.setText(table.getValueAt(fila, 2).toString());
 					textField_1.setText(table.getValueAt(fila, 3).toString());
-					
-				
 
 					String texto = table.getValueAt(fila, 4).toString();
 
@@ -236,7 +276,6 @@ public class WindowWorkers {
 					textField_4.setText(table.getValueAt(fila, 6).toString());
 					textField_2.setText(table.getValueAt(fila, 7).toString());
 //					textField_3.setText(table.getValueAt(fila, 8).toString());
-
 					
 					
 
@@ -435,62 +474,77 @@ public class WindowWorkers {
 
 			}
 		});
+		
+		conexion= new BDWorkers();
+		workers2 = new Workers2();
+		boss= new Boss();
+		ArrayList<Boss> listBoss= conexion.consultarDatosBoss();
+		ArrayList<Workers2> list= conexion.consultarDatos();
 
 		btnNewButton_4.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					ArrayList<Object[]> datos = new ArrayList<Object[]>();
-					datos = BDWorkers.consultarDatos("WorkersTable");
+				if (list.size()>0) {
 
-					for (int i = 0; i < datos.size(); i++) {
-						modelWorkers.addRow(datos.get(i));
+					for (int i=0; i<list.size(); i++) {
+						Object fila[] = new Object[8];
+						workers2 = list.get(i);
+						fila[0] = workers2.getCode();
+						fila[1] = workers2.getGrade();
+						fila[2] = workers2.getName();
+						fila[3]= workers2.getSurname();
+						fila[4] = workers2.getGender();
+						fila[5]= workers2.getSpecialty();
+						fila[6] = workers2.getStartWorkingIn();
+						fila[7]= workers2.getAssesment();
+						modelWorkers.addRow(fila);
 					}
-					table.setModel(modelWorkers);
-					 
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				}
+				table.setModel(modelWorkers);
 
-				try {
-					ArrayList<Object[]> datosBoss = new ArrayList<Object[]>();
-					datosBoss = BDWorkers.consultarDatosBoss("WorkersTableBoss");
+				if (listBoss.size()>0) {
 
-					for (int i = 0; i < datosBoss.size(); i++) {
-						modelWorkers.addRow(datosBoss.get(i));
-					}
-					table.setModel(modelWorkers);
-					
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				for (int i=0; i<listBoss.size(); i++) {
+					Object filaB[] = new Object[9];
+					boss = listBoss.get(i);
+					filaB[0] = boss.getCode();
+					filaB[1] = boss.getGrade();
+					filaB[2] = boss.getName();
+					filaB[3]= boss.getSurname();
+					filaB[4] = boss.getGender();
+					filaB[5]= boss.getSpecialty();
+					filaB[6] = boss.getStartWorkingIn();
+					filaB[7]= boss.getAssesment();
+					modelWorkers.addRow(filaB);
 				}
+			}
+			table.setModel(modelWorkers);
 
 			}
 		});
 
-		
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					ArrayList<Object[]> datos = new ArrayList<Object[]>();
-					datos = BDWorkers.consultarDatos("WorkersTable");
+				if (list.size()>0) {
 
-					for (int i = 0; i < datos.size(); i++) {
-						modelWorkers.addRow(datos.get(i));
+					for (int i=0; i<list.size(); i++) {
+						Object fila[] = new Object[8];
+						workers2 = list.get(i);
+						fila[0] = workers2.getCode();
+						fila[1] = workers2.getGrade();
+						fila[2] = workers2.getName();
+						fila[3]= workers2.getSurname();
+						fila[4] = workers2.getGender();
+						fila[5]= workers2.getSpecialty();
+						fila[6] = workers2.getStartWorkingIn();
+						fila[7]= workers2.getAssesment();
+						modelWorkers.addRow(fila);
 					}
-					table.setModel(modelWorkers);
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				}
+				table.setModel(modelWorkers);
 
 			}
 		});
@@ -499,19 +553,23 @@ public class WindowWorkers {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					ArrayList<Object[]> datosBoss = new ArrayList<Object[]>();
-					datosBoss = BDWorkers.consultarDatosBoss("WorkersTableBoss");
+				if (listBoss.size()>0) {
 
-					for (int i = 0; i < datosBoss.size(); i++) {
-						modelWorkers.addRow(datosBoss.get(i));
+					for (int i=0; i<listBoss.size(); i++) {
+						Object filaB[] = new Object[9];
+						boss = listBoss.get(i);
+						filaB[0] = boss.getCode();
+						filaB[1] = boss.getGrade();
+						filaB[2] = boss.getName();
+						filaB[3]= boss.getSurname();
+						filaB[4] = boss.getGender();
+						filaB[5]= boss.getSpecialty();
+						filaB[6] = boss.getStartWorkingIn();
+						filaB[7]= boss.getAssesment();
+						modelWorkers.addRow(filaB);
 					}
-					table.setModel(modelWorkers);
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				}
+				table.setModel(modelWorkers);
 
 			}
 		});
@@ -520,33 +578,41 @@ public class WindowWorkers {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					ArrayList<Object[]> datos = new ArrayList<Object[]>();
-					datos = BDWorkers.consultarDatos("WorkersTable");
+				if (list.size()>0) {
 
-					for (int i = 0; i < datos.size(); i++) {
-						modelWorkers.addRow(datos.get(i));
+					for (int i=0; i<list.size(); i++) {
+						Object fila[] = new Object[8];
+						workers2 = list.get(i);
+						fila[0] = workers2.getCode();
+						fila[1] = workers2.getGrade();
+						fila[2] = workers2.getName();
+						fila[3]= workers2.getSurname();
+						fila[4] = workers2.getGender();
+						fila[5]= workers2.getSpecialty();
+						fila[6] = workers2.getStartWorkingIn();
+						fila[7]= workers2.getAssesment();
+						modelWorkers.addRow(fila);
 					}
-					table.setModel(modelWorkers);
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				}
+				table.setModel(modelWorkers);
 
-				try {
-					ArrayList<Object[]> datosBoss = new ArrayList<Object[]>();
-					datosBoss = BDWorkers.consultarDatosBoss("WorkersTableBoss");
+				if (listBoss.size()>0) {
 
-					for (int i = 0; i < datosBoss.size(); i++) {
-						modelWorkers.addRow(datosBoss.get(i));
-					}
-					table.setModel(modelWorkers);
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				for (int i=0; i<listBoss.size(); i++) {
+					Object filaB[] = new Object[9];
+					boss = listBoss.get(i);
+					filaB[0] = boss.getCode();
+					filaB[1] = boss.getGrade();
+					filaB[2] = boss.getName();
+					filaB[3]= boss.getSurname();
+					filaB[4] = boss.getGender();
+					filaB[5]= boss.getSpecialty();
+					filaB[6] = boss.getStartWorkingIn();
+					filaB[7]= boss.getAssesment();
+					modelWorkers.addRow(filaB);
 				}
+			}
+			table.setModel(modelWorkers);
 
 			}
 		});
@@ -555,20 +621,48 @@ public class WindowWorkers {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int fila = table.getSelectedRow();
-
-				if (BDWorkers.update(workers2)==1) {
-//					table.getValueAt(fila, 1);
-					table.getValueAt(fila, 2).toString();
-//					table.getValueAt(fila, 3).toString();
-//					table.getValueAt(fila, 4).toString();
-//					table.getValueAt(fila, 5).toString();
-//					table.getValueAt(fila, 6).toString();
-//					table.getValueAt(fila, 7).toString();
-//					table.getValueAt(fila, 8).toString();
-				}else {
-					JOptionPane.showMessageDialog(null, "CODE does't Exists in Database");
+				conexion = new BDWorkers();
+				 Workers2 workers = new Workers2();
+				
+				workers.setGrade((int) spinner.getValue());
+				workers.setName(textField.getText());
+				workers.setSurname(textField_1.getText());
+				
+				if (rdbtnNewRadioButton_1.isSelected()) {
+					workers.setGender(rdbtnNewRadioButton_1.getActionCommand());
+				} else if (rdbtnNewRadioButton.isSelected()) {
+					workers.setGender(rdbtnNewRadioButton.getActionCommand());
 				}
+				
+				workers.setSpecialty((Specialty) comboBox.getSelectedItem());
+				workers.setStartWorkingIn(textField_4.getText());
+				workers.setAssesment(textField_2.getText());
+				workers.setCode(Integer.parseInt(textArea_5.getText()));
+				
+				conexion.update(workers);
+//			-----------------------------------	
+				
+				 Boss boss = new Boss();
+				
+				boss.setGrade((int) spinner.getValue());
+				boss.setName(textField.getText());
+				boss.setSurname(textField_1.getText());
+				
+				if (rdbtnNewRadioButton_1.isSelected()) {
+					boss.setGender(rdbtnNewRadioButton_1.getActionCommand());
+				} else if (rdbtnNewRadioButton.isSelected()) {
+					boss.setGender(rdbtnNewRadioButton.getActionCommand());
+				}
+				
+				boss.setSpecialty((Specialty) comboBox.getSelectedItem());
+				boss.setStartWorkingIn(textField_4.getText());
+				boss.setAssesment(textField_2.getText());
+				boss.setFunction(textField_3.getText());
+				boss.setCode(Integer.parseInt(textArea_5.getText()));
+				
+				conexion.updateBoss(boss);
+				
+				
 			}
 		});
 
@@ -576,9 +670,21 @@ public class WindowWorkers {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				conexion= new BDWorkers();
+				Workers2 workers2= new Workers2();
+				workers2.setCode(Integer.parseInt(textArea_5.getText()));
+				conexion.delete(workers2);
+				
+				Boss boss= new Boss();
+				boss.setCode(Integer.parseInt(textArea_5.getText()));
+				conexion.deleteBoss(boss);
+				
+				visualizar_datos();
 			}
 		});
+		
+		
+		
 
 		frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
 		frame.setTitle("POLICE MANAGEMENT");

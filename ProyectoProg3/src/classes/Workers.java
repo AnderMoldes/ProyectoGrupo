@@ -33,7 +33,7 @@ public class Workers implements Serializable, Comparable<Workers>{
 	
 	public Workers() {
 		super();
-		this.code= code;
+		this.code= 0;
 		this.grade = 0;
 		this.name = "";
 		this.surname = "";
@@ -51,7 +51,7 @@ public class Workers implements Serializable, Comparable<Workers>{
 		return code;
 	}
 	
-	public void setCode(int grade) {
+	public void setCode(int code) {
 		this.code = code;
 	}
 	
