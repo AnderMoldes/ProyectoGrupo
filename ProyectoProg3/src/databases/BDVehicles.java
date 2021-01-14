@@ -54,7 +54,7 @@ public class BDVehicles {
 			statement = connection.createStatement();
 			try {
 				statement.executeUpdate("create table " + nombreBD
-						+ " (ID integer primary key licensePlate, brand varchar, colour varchar, polices varchar)");
+						+ " (ID integer primary key licensePlate, brand varchar, colour varchar, vehicles varchar, polices varchar)");
 				
 				log(Level.SEVERE, "The table " + nombreBD + " created", null);
 			} catch (SQLException e) {
@@ -71,21 +71,22 @@ public class BDVehicles {
 	public static void insertIntoPrepStatVehicle(Vehicle vehicle) {
 		try {
 			PreparedStatement insertSql = connection.prepareStatement(
-					"INSERT INTO VehicleTable( licenseePlate, brand, colour, polices) VALUES (?, ?, ?, ?)");
+					"INSERT INTO VehicleTable( licenseePlate, brand, colour, vehicles, polices) VALUES (?, ?, ?, ?, ?)");
 			
 			Statement stmtForId= connection.createStatement();
 			
 			insertSql.setLong(1, vehicle.getLicensePlate());
 			insertSql.setString(2, String.valueOf(vehicle.getBrand()));
 			insertSql.setString(3,String.valueOf(vehicle.getColour()));
-			insertSql.setString(4, String.valueOf(vehicle.getPolices()));
+			insertSql.setString(4, String.valueOf(vehicle.getVehicleTypes()));
+			insertSql.setString(5, String.valueOf(vehicle.getPolices()));
 
 			insertSql.executeUpdate();
 			
 			log(Level.SEVERE, "Completed", null);
 
 		} catch (SQLException e) {
-			log(Level.SEVERE, " ERROR EN SENTENCIA SQL: " + " INSERT INTO VehicleTable VALUES (?,?,?,?) ", e);
+			log(Level.SEVERE, " ERROR EN SENTENCIA SQL: " + " INSERT INTO VehicleTable VALUES (?,?,?,?,?) ", e);
 		}
 	}
 	
@@ -101,12 +102,13 @@ public class BDVehicles {
 	}
 	
 	public static void update(Vehicle vehicle) {
-		try (PreparedStatement stmt = connection.prepareStatement("UPDATE VehicleTable SET licensePlate=?, brand=?, colour=?, polices=?  WHERE licensePlate=?")) {
+		try (PreparedStatement stmt = connection.prepareStatement("UPDATE VehicleTable SET licensePlate=?, brand=?, colour=?, vehicles=?, polices=?  WHERE licensePlate=?")) {
 			stmt.setInt(1, vehicle.getLicensePlate());
 			stmt.setString(2, String.valueOf(vehicle.getBrand()));
 			stmt.setString(3,String.valueOf(vehicle.getColour()));
-			stmt.setString(4, String.valueOf(vehicle.getPolices()));
-			stmt.setInt(1, vehicle.getLicensePlate());
+			stmt.setString(4, String.valueOf(vehicle.getVehicleTypes()));
+			stmt.setString(5, String.valueOf(vehicle.getPolices()));
+			stmt.setInt(6, vehicle.getLicensePlate());
 					
 			stmt.executeUpdate();
 			
