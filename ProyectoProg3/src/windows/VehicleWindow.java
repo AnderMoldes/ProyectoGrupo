@@ -10,6 +10,8 @@ import java.awt.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
+
+
 import classes.Brand;
 import classes.Brand.BrandEnum;
 import classes.Colour.ColourEnum;
@@ -19,6 +21,14 @@ import classes.VehicleTypes;
 
 import classes.Vehicle;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import classes.*;
 
@@ -40,10 +50,12 @@ public class VehicleWindow extends JFrame{
 	JLabel brand;
 	JComboBox<BrandEnum> comboBrand;
 	JComboBox<ColourEnum> comboColour;
-	
+	DefaultListModel<Object> modelVehicles = new DefaultListModel();
+	JList vehicleJList = new JList(modelVehicles);
 	
 	private JPanel contentPane;
 	
+	ArrayList<Vehicle> al = new ArrayList<>();
 	
 	public VehicleWindow(){
 		
@@ -122,8 +134,7 @@ public class VehicleWindow extends JFrame{
 		menuInfo.add(truck);
 		
 		
-		DefaultListModel<Object> modelVehicles = new DefaultListModel();
-		JList vehicleJList = new JList(modelVehicles);
+		
 		contentPane.add(vehicleJList);
 		vehicleJList.setBounds(72, 234, 503, 143);
 		
@@ -195,12 +206,26 @@ public class VehicleWindow extends JFrame{
 				
 			}
 		});
+		
 		bcreate.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				crearVehiculo(vehicles, policeStation, modelVehicles);
+				VehicleTypes vehicle;
+				BrandEnum brand;
+				ColourEnum colour;
+				
+				vehicle = (VehicleTypes) comboType.getSelectedItem();
+				brand = (BrandEnum) comboBrand.getSelectedItem();
+				colour = (ColourEnum) comboColour.getSelectedItem();
+				
+				Vehicle v = new Vehicle(brand,colour,vehicle);
+				modelVehicles.addElement(v);
+				al.add(v);
+				
+				
+				
 			}
 			
 		});
@@ -213,25 +238,33 @@ public class VehicleWindow extends JFrame{
 				new GeneralWindow();
 			}
 		});
+		bsave.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				doCSV();
+			}
+
+			
+		});
 		
 		
 		
 	}
-	public void crearVehiculo(Vehicle vehicle, PoliceStation policeStation,DefaultListModel model) {
-		Vehicle nuevo;
-		
-		if (vehicle != null) {
-			nuevo = vehicle;
-		} else {
-			nuevo = new Vehicle();
-		}
-		nuevo.setColour((ColourEnum) comboColour.getSelectedItem());
-		nuevo.setBrand((BrandEnum) comboBrand.getSelectedItem());
-		nuevo.setVehicleTypes((VehicleTypes) comboTypes.getSelectedItem());
-		
-		if (vehicle == null) {
-			policeStation.getVehicles().add(nuevo);
-			model.addElement(nuevo);
+	private void doCSV() {
+		// TODO Auto-generated method stub
+		try {
+			PrintWriter pw = new PrintWriter(new File("vehicles.txt"));
+			for(int i=0;i<modelVehicles.getSize();i++) {
+				Vehicle v = (Vehicle) modelVehicles.get(i);
+				pw.println(v.getBrand()+" "+v.getColour()+" "+v.getVehicleTypes());
+			}
+			pw.flush();
+			pw.close();
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 	

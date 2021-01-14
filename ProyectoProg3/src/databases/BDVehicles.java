@@ -58,7 +58,7 @@ public class BDVehicles {
 				
 				log(Level.SEVERE, "The table " + nombreBD + " created", null);
 			} catch (SQLException e) {
-				if (!e.getMessage().equals("table " + nombreBD + " already exists")) // Este error sí es correcto si la
+				if (!e.getMessage().equals("table " + nombreBD + " already exists")) // Este error sï¿½ es correcto si la
 																						// tabla ya existe
 					log(Level.SEVERE, "The table " + nombreBD + " already exists", e);
 			}
@@ -75,11 +75,11 @@ public class BDVehicles {
 			
 			Statement stmtForId= connection.createStatement();
 			
-			insertSql.setLong(1, vehicle.getLicensePlate());
+			//insertSql.setLong(1, vehicle.getLicensePlate());
 			insertSql.setString(2, String.valueOf(vehicle.getBrand()));
 			insertSql.setString(3,String.valueOf(vehicle.getColour()));
 			insertSql.setString(4, String.valueOf(vehicle.getVehicleTypes()));
-			insertSql.setString(5, String.valueOf(vehicle.getPolices()));
+			//insertSql.setString(5, String.valueOf(vehicle.getPolices()));
 
 			insertSql.executeUpdate();
 			
@@ -92,7 +92,7 @@ public class BDVehicles {
 	
 	public static void delete(Vehicle vehicle) {
 		try (PreparedStatement stmt = connection.prepareStatement("DELETE FROM VehicleTable WHERE licensePlate=?")) {
-			stmt.setInt(1, vehicle.getLicensePlate());
+			//stmt.setInt(1, vehicle.getLicensePlate());
 			stmt.executeUpdate();
 			
 			
@@ -103,12 +103,12 @@ public class BDVehicles {
 	
 	public static void update(Vehicle vehicle) {
 		try (PreparedStatement stmt = connection.prepareStatement("UPDATE VehicleTable SET licensePlate=?, brand=?, colour=?, vehicles=?, polices=?  WHERE licensePlate=?")) {
-			stmt.setInt(1, vehicle.getLicensePlate());
+			//stmt.setInt(1, vehicle.getLicensePlate());
 			stmt.setString(2, String.valueOf(vehicle.getBrand()));
 			stmt.setString(3,String.valueOf(vehicle.getColour()));
 			stmt.setString(4, String.valueOf(vehicle.getVehicleTypes()));
-			stmt.setString(5, String.valueOf(vehicle.getPolices()));
-			stmt.setInt(6, vehicle.getLicensePlate());
+			//stmt.setString(5, String.valueOf(vehicle.getPolices()));
+			//stmt.setInt(6, vehicle.getLicensePlate());
 					
 			stmt.executeUpdate();
 			
