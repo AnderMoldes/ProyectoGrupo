@@ -1,7 +1,7 @@
 package windows;
 
 import javax.swing.*;
-
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -10,19 +10,23 @@ import java.awt.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
-
 import classes.Brand;
 import classes.Brand.BrandEnum;
+import classes.Colour.ColourEnum;
+import classes.PoliceStation;
+import classes.Vehicle;
 import classes.VehicleTypes;
 
-
+import classes.Vehicle;
 import java.awt.event.*;
+import java.util.Date;
+import classes.*;
 
 public class VehicleWindow extends JFrame{
-	
+	PoliceStation policeStation;
+	Vehicle vehicles;
 	JPanel panel1;
 	JPanel panel2;
-
 	JMenuBar bar;
 	JMenu types;
 	JMenuItem patrolCar;
@@ -35,78 +39,121 @@ public class VehicleWindow extends JFrame{
 	JComboBox<VehicleTypes> comboTypes;
 	JLabel brand;
 	JComboBox<BrandEnum> comboBrand;
+	JComboBox<ColourEnum> comboColour;
 	
 	
-	public class MiModelo extends DefaultTableModel {
-		   public boolean isCellEditable (int row, int column) {
-		       // Aqu� devolvemos true o false seg�n queramos que una celda
-		       // identificada por fila,columna (row,column), sea o no editable
-			   
-		       return false;
-		   }
-		}
+	private JPanel contentPane;
 	
 	
 	public VehicleWindow(){
-		JPanel panel1 = new JPanel();
-		JPanel panel2 = new JPanel();
 		
-		JMenuBar bar = new JMenuBar();
-		JMenu types = new JMenu("Types of Vehicle");
-		JMenuItem patrolCar = new JMenuItem("Patrol Car");
-		JMenuItem armoredCar = new JMenuItem("Armored Car");
-		JMenuItem armoredVan = new JMenuItem("Armored Van");
-		JMenuItem motorbike = new JMenuItem("Motorbike");
-		JMenuItem truck = new JMenuItem("Truck");
 		
-		JLabel type = new JLabel("Type of vehicle");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 807, 559);
+		setVisible(true);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 		
-		JComboBox<VehicleTypes> comboTypes = new JComboBox<VehicleTypes>();
-		comboTypes.addItem(VehicleTypes.PATROLCAR);
-		comboTypes.addItem(VehicleTypes.ARMOREDCAR);
-		comboTypes.addItem(VehicleTypes.ARMOREDVAN);
-		comboTypes.addItem(VehicleTypes.MOTORBIKE);
-		comboTypes.addItem(VehicleTypes.TRUCK);
 		
-		JLabel brand = new JLabel("Brand");
+		JLabel brandLabel = new JLabel("Brand:");
+		brandLabel.setBounds(645, 190, 127, 44);
+		contentPane.add(brandLabel);
 		
-		JComboBox<BrandEnum> comboBrand = new JComboBox<BrandEnum>();
+		JComboBox<BrandEnum> comboBrand = new JComboBox();
 		comboBrand.addItem(BrandEnum.MITSUBISHI);
 		comboBrand.addItem(BrandEnum.NISSAN);
 		comboBrand.addItem(BrandEnum.PEUGEOT);
 		comboBrand.addItem(BrandEnum.RENAULT);
 		comboBrand.addItem(BrandEnum.SEAT);
+		comboBrand.setBounds(629, 231, 132, 22);
+		contentPane.add(comboBrand);
 		
-		this.setLayout(new FlowLayout());
-				
-		MiModelo modelVehicles = new MiModelo();
-		modelVehicles.addColumn("license plate");
-		modelVehicles.addColumn("brand");
-		modelVehicles.addColumn("colour");
+		JLabel colourJLabel = new JLabel("Colour:");
+		colourJLabel.setBounds(645, 264, 138, 22);
+		contentPane.add(colourJLabel);
 		
-		JTable table = new JTable(modelVehicles);
-		JScrollPane scrollVehicles= new JScrollPane(table);
+		JComboBox<ColourEnum> comboColour = new JComboBox();
+		comboColour.setBounds(629, 289, 132, 22);
+		comboColour.addItem(ColourEnum.BLACK);
+		comboColour.addItem(ColourEnum.BLUE);
+		comboColour.addItem(ColourEnum.GOLD);
+		comboColour.addItem(ColourEnum.GREEN);
+		comboColour.addItem(ColourEnum.GREY);
+		comboColour.addItem(ColourEnum.RED);
+		comboColour.addItem(ColourEnum.WHITE);
+		contentPane.add(comboColour);
 		
-		add(panel2);
-		add(panel1);
+		JLabel labelType = new JLabel("Vehicle Type:");
+		labelType.setBounds(645, 322, 138, 22);
+		contentPane.add(labelType);
 		
-		panel2.add(scrollVehicles);
+		JComboBox<VehicleTypes> comboType = new JComboBox();
+		comboType.addItem(VehicleTypes.PATROLCAR);
+		comboType.addItem(VehicleTypes.ARMOREDCAR);
+		comboType.addItem(VehicleTypes.ARMOREDVAN);
+		comboType.addItem(VehicleTypes.MOTORBIKE);
+		comboType.addItem(VehicleTypes.TRUCK);
 		
-		bar.add(types);
-		types.add(patrolCar);
-		types.add(armoredCar);
-		types.add(armoredVan);
-		types.add(motorbike);
-		types.add(truck);
+		comboType.setBounds(629, 355, 132, 22);
+		contentPane.add(comboType);
 		
-		panel1.add(type);
-		panel1.add(comboTypes);
-		panel1.add(brand);
-		panel1.add(comboBrand);
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(0, 0, 793, 22);
+		contentPane.add(menuBar);
 		
-		panel1.setLayout(new GridLayout(2,2));
+		JMenu menuInfo = new JMenu("Info for Vehycle types:");
+		menuBar.add(menuInfo);
 		
-		setJMenuBar(bar);
+		JMenuItem patrolCar = new JMenuItem("Patrol Car");
+		menuInfo.add(patrolCar);
+		
+		JMenuItem armoredCar = new JMenuItem("Armored Car");
+		menuInfo.add(armoredCar);
+		
+		JMenuItem armoredVan = new JMenuItem("Armored Van");
+		menuInfo.add(armoredVan);
+		
+		JMenuItem motorbike = new JMenuItem("Motorbike");
+		menuInfo.add(motorbike);
+		
+		JMenuItem truck = new JMenuItem("Truck");
+		menuInfo.add(truck);
+		
+		
+		DefaultListModel<Object> modelVehicles = new DefaultListModel();
+		JList vehicleJList = new JList(modelVehicles);
+		contentPane.add(vehicleJList);
+		vehicleJList.setBounds(72, 234, 503, 143);
+		
+		JButton bback = new JButton("Back");
+		bback.setBounds(10, 417, 89, 23);
+		contentPane.add(bback);
+		
+		JButton bdelete = new JButton("Delete");
+		bdelete.setBounds(10, 156, 112, 23);
+		contentPane.add(bdelete);
+		
+		JButton bshow = new JButton("Show");
+		bshow.setBounds(164, 156, 112, 23);
+		contentPane.add(bshow);
+		
+		JButton bupdate = new JButton("Update");
+		bupdate.setBounds(320, 156, 112, 23);
+		contentPane.add(bupdate);
+		
+		JButton bsave = new JButton("Save");
+		bsave.setBounds(486, 156, 112, 23);
+		contentPane.add(bsave);
+		
+		JButton bcreate = new JButton("Create");
+		bcreate.setBounds(649, 156, 112, 23);
+		contentPane.add(bcreate);
+		
+		
+			
+		
 		
 		patrolCar.addActionListener(new ActionListener() {
 			
@@ -148,13 +195,44 @@ public class VehicleWindow extends JFrame{
 				
 			}
 		});
+		bcreate.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				crearVehiculo(vehicles, policeStation, modelVehicles);
+			}
+			
+		});
+		bback.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				dispose();
+				new GeneralWindow();
+			}
+		});
 		
 		
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setTitle("VEHICLE MANAGEMENT");
 		
-		pack();
-		setResizable(false);
-		setVisible(true);
 	}
+	public void crearVehiculo(Vehicle vehicle, PoliceStation policeStation,DefaultListModel model) {
+		Vehicle nuevo;
+		
+		if (vehicle != null) {
+			nuevo = vehicle;
+		} else {
+			nuevo = new Vehicle();
+		}
+		nuevo.setColour((ColourEnum) comboColour.getSelectedItem());
+		nuevo.setBrand((BrandEnum) comboBrand.getSelectedItem());
+		nuevo.setVehicleTypes((VehicleTypes) comboTypes.getSelectedItem());
+		
+		if (vehicle == null) {
+			policeStation.getVehicles().add(nuevo);
+			model.addElement(nuevo);
+		}
+	}
+	
 }

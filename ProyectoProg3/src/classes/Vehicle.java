@@ -11,21 +11,24 @@ public class Vehicle {
 	private int licensePlate;
 	private BrandEnum brand;
 	private ColourEnum colour;
+	private VehicleTypes vehicles;
 	private List<Workers> polices;
 
-	public Vehicle(int licensePlate, BrandEnum brand, ColourEnum colour, ArrayList<Workers> polices) {
+	public Vehicle(int licensePlate, BrandEnum brand, ColourEnum colour, ArrayList<Workers> polices,VehicleTypes vehicles) {
 		super();
 		this.licensePlate = counter++;
 		this.brand = brand;
 		this.colour = colour;
 		this.polices = polices;
+		this.vehicles = vehicles;
 	}
 
 	public Vehicle() {
 		super();
 		this.brand = BrandEnum.SEAT;
-		this.colour = Colour.ColourEnum.BLACK;
+		this.colour = ColourEnum.BLACK;
 		this.polices = new ArrayList<Workers>();
+		this.vehicles = VehicleTypes.PATROLCAR;
 	}
 
 	public int getLicensePlate() {
@@ -47,6 +50,13 @@ public class Vehicle {
 	public void setColour(ColourEnum colour) {
 		this.colour = colour;
 	}
+	public VehicleTypes getVehicleTypes() {
+		return vehicles;
+	}
+
+	public void setVehicleTypes(VehicleTypes vehicles) {
+		this.vehicles = vehicles;
+	}
 
 	public ArrayList<Workers> getPolices() {
 		return (ArrayList<Workers>) polices;
@@ -59,7 +69,7 @@ public class Vehicle {
 	@Override
 	public String toString() {
 		return "Vehicle number " + licensePlate + " Brand: " + brand + " Colour" + colour + " Polices in the vehicle: "
-				+ polices;
+				+ polices + "Vehicle Type: "+vehicles;
 	}
 
 }

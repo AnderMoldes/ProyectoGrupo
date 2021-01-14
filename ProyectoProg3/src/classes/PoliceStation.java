@@ -8,21 +8,24 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class PoliceStation implements Serializable{ 
 	private String name;
 	private int numWorkers;
 	private String address;
 	private List<Workers> workers;
 	private List<Detained> detained;
+	private List<Vehicle> vehicles;
 
 	public PoliceStation(String name, int numWorkers, String address, ArrayList<Workers> workers,
-			ArrayList<Detained> detained) {
+			ArrayList<Detained> detained, ArrayList<Vehicle> vehicles) {
 		super();
 		this.name = name;
 		this.numWorkers = numWorkers;
 		this.address = address;
 		this.workers = new ArrayList<Workers>(workers);
 		this.detained = new ArrayList<Detained>(detained);
+		this.vehicles = new ArrayList<Vehicle>(vehicles);
 	}
 
 	public PoliceStation() {
@@ -32,6 +35,7 @@ public class PoliceStation implements Serializable{
 		this.address = "";
 		this.workers = new ArrayList<Workers>();
 		this.detained = new ArrayList<Detained>();
+		this.vehicles = new ArrayList<Vehicle>();
 	}
 
 	public String getName() {
@@ -74,6 +78,15 @@ public class PoliceStation implements Serializable{
 		this.detained = new ArrayList<Detained>(detained);;
 	}
 	
+	
+	public ArrayList<Vehicle> getVehicles() {
+		return (ArrayList<Vehicle>) vehicles;
+	}
+
+	public void setVehicles(ArrayList<Vehicle> vehicles) {
+		this.vehicles = new ArrayList<Vehicle>(vehicles);;
+	}
+
 	public void saveFile(String fileName) {
 		try {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName));
@@ -84,6 +97,7 @@ public class PoliceStation implements Serializable{
 			this.setDetained(police.getDetained());
 			this.setName(police.getName());
 			this.setWorkers(police.getWorkers());
+			this.setVehicles(police.getVehicles());
 			
 			ois.close();
 		} catch (IOException e) {
@@ -95,7 +109,10 @@ public class PoliceStation implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Police_Station [name=" + name + ", numWorkers=" + numWorkers + ", address=" + address + ", , workers=" + workers + ", detained=" + detained + "]";
+		return "PoliceStation [name=" + name + ", numWorkers=" + numWorkers + ", address=" + address + ", workers="
+				+ workers + ", detained=" + detained + ", vehicles=" + vehicles + "]";
 	}
+
+	
 
 }
