@@ -2,7 +2,6 @@ package windows;
 
 import java.awt.Color;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -31,8 +30,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
-
-
 import classes.Boss;
 import classes.PoliceStation;
 import classes.Specialty;
@@ -40,12 +37,14 @@ import classes.Specialty.SpecialtyEnum;
 import classes.Workers;
 import classes.Workers2;
 import databases.BDWorkers;
+import windows.WindowWorkers.MiModelo;
 
 public class WindowWorkers {
 
 	PoliceStation policeS;
 	Workers2 workers2;
 	Boss boss;
+	Workers workers;
 	private JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -53,10 +52,14 @@ public class WindowWorkers {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextArea textArea_5;
+	private JSpinner spinner;
+	private JRadioButton rdbtnNewRadioButton_1;
+	private JRadioButton rdbtnNewRadioButton;
+	private JComboBox<SpecialtyEnum> comboBox;
+	private ButtonGroup group;
 	private JTable table;
 	private MiModelo modelWorkers;
 	BDWorkers conexion;
-	private static String code;
 
 	public class MiModelo extends DefaultTableModel {
 		public boolean isCellEditable(int row, int column) {
@@ -67,35 +70,234 @@ public class WindowWorkers {
 		}
 
 	}
-	
-	public void visualizar_datos() {
-		conexion= new BDWorkers();
-		Workers2 workers= new Workers2();
-		ArrayList<Workers2> list= conexion.consultarDatos();
-		
-		
-		if (list.size()>0) {
 
-			for (int i=0; i<list.size(); i++) {
+	public void agregar() {
+		Workers2 creation;
+		Boss creationB;
+		Object[] object;
+
+		if (workers != null) {
+			creation = null;
+			creationB = null;
+			object = null;
+
+		} else {
+			object = new Object[9];
+			creation = new Workers2();
+			creationB = new Boss();
+		}
+
+		if (rdbtnNewRadioButton_1.isSelected() || rdbtnNewRadioButton.isSelected()) {
+
+			String texto = textField_3.getText();
+			if ("".equals(texto)) {
+				object[0] = null;
+				object[1] = spinner.getValue();
+				object[2] = textField.getText();
+				object[3] = textField_1.getText();
+
+				if (rdbtnNewRadioButton_1.isSelected()) {
+					object[4] = rdbtnNewRadioButton_1.getActionCommand();
+				} else if (rdbtnNewRadioButton.isSelected()) {
+					object[4] = rdbtnNewRadioButton.getActionCommand();
+				}
+
+				object[5] = comboBox.getSelectedItem();
+				object[6] = textField_4.getText().toString();
+				object[7] = textField_2.getText();
+				object[8] = null;
+
+				creation.setGrade((int) spinner.getValue());
+				creation.setName(textField.getText());
+				creation.setSurname(textField_1.getText());
+
+				if (rdbtnNewRadioButton_1.isSelected()) {
+					creation.setGender(rdbtnNewRadioButton_1.getActionCommand());
+				} else if (rdbtnNewRadioButton.isSelected()) {
+					creation.setGender(rdbtnNewRadioButton.getActionCommand());
+				}
+
+				creation.setSpecialty((SpecialtyEnum) comboBox.getSelectedItem());
+				creation.setStartWorkingIn((String) textField_4.getText());
+				creation.setAssesment(textField_2.getText());
+
+				if (workers == null) {
+					policeS.getWorkers().add(creation);
+					modelWorkers.addRow(object);
+					System.out.println(creation.toString());
+
+				}
+
+				spinner.setValue(0);
+				textField.setText("");
+				textField_1.setText("");
+				group.clearSelection();
+				comboBox.setSelectedIndex(0);
+				textField_2.setText("");
+
+			} else {
+
+				object[0] = null;
+				object[1] = spinner.getValue();
+				object[2] = textField.getText();
+				object[3] = textField_1.getText();
+
+				if (rdbtnNewRadioButton_1.isSelected()) {
+					object[4] = rdbtnNewRadioButton_1.getActionCommand();
+				} else if (rdbtnNewRadioButton.isSelected()) {
+					object[4] = rdbtnNewRadioButton.getActionCommand();
+				}
+
+				object[5] = comboBox.getSelectedItem();
+				object[6] = textField_4.getText().toString();
+				object[7] = textField_2.getText();
+				object[8] = textField_3.getText();
+
+				creationB.setGrade((int) spinner.getValue());
+				creationB.setName(textField.getText());
+				creationB.setSurname(textField_1.getText());
+
+				if (rdbtnNewRadioButton_1.isSelected()) {
+					creationB.setGender(rdbtnNewRadioButton_1.getActionCommand());
+				} else if (rdbtnNewRadioButton.isSelected()) {
+					creationB.setGender(rdbtnNewRadioButton.getActionCommand());
+				}
+
+				creationB.setSpecialty((SpecialtyEnum) comboBox.getSelectedItem());
+				creationB.setStartWorkingIn((String) textField_4.getText());
+				creationB.setAssesment(textField_2.getText());
+				creationB.setFunction(textField_3.getText());
+
+				if (workers == null) {
+					policeS.getWorkers().add(creationB);
+					modelWorkers.addRow(object);
+					System.out.println(creationB.toString());
+
+				}
+
+				spinner.setValue(0);
+				textField.setText("");
+				textField_1.setText("");
+				group.clearSelection();
+				comboBox.setSelectedIndex(0);
+				textField_2.setText("");
+				textField_3.setText("");
+
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Gender required field");
+		}
+	}
+
+	public void llenar_tablaWorkers() {
+
+		conexion = new BDWorkers();
+		workers2 = new Workers2();
+		boss = new Boss();
+		ArrayList<Workers2> list = conexion.consultarDatos();
+
+		if (list.size() > 0) {
+
+			for (int i = 0; i < list.size(); i++) {
 				Object fila[] = new Object[8];
 				workers2 = list.get(i);
 				fila[0] = workers2.getCode();
 				fila[1] = workers2.getGrade();
 				fila[2] = workers2.getName();
-				fila[3]= workers2.getSurname();
+				fila[3] = workers2.getSurname();
 				fila[4] = workers2.getGender();
-				fila[5]= workers2.getSpecialty();
+				fila[5] = workers2.getSpecialty();
 				fila[6] = workers2.getStartWorkingIn();
-				fila[7]= workers2.getAssesment();
+				fila[7] = workers2.getAssesment();
 				modelWorkers.addRow(fila);
 			}
 		}
-		
 		table.setModel(modelWorkers);
-	
 	}
 
-	
+	public void llenar_tablaBoss() {
+
+		conexion = new BDWorkers();
+		workers2 = new Workers2();
+		boss = new Boss();
+		ArrayList<Boss> listBoss = conexion.consultarDatosBoss();
+
+		if (listBoss.size() > 0) {
+
+			for (int i = 0; i < listBoss.size(); i++) {
+				Object filaB[] = new Object[9];
+				boss = listBoss.get(i);
+				filaB[0] = boss.getCode();
+				filaB[1] = boss.getGrade();
+				filaB[2] = boss.getName();
+				filaB[3] = boss.getSurname();
+				filaB[4] = boss.getGender();
+				filaB[5] = boss.getSpecialty();
+				filaB[6] = boss.getStartWorkingIn();
+				filaB[7] = boss.getAssesment();
+				modelWorkers.addRow(filaB);
+			}
+		}
+		table.setModel(modelWorkers);
+
+	}
+
+	public void update_workers() {
+		conexion = new BDWorkers();
+		Workers2 workers = new Workers2();
+
+		workers.setGrade((int) spinner.getValue());
+		workers.setName(textField.getText());
+		workers.setSurname(textField_1.getText());
+
+		if (rdbtnNewRadioButton_1.isSelected()) {
+			workers.setGender(rdbtnNewRadioButton_1.getActionCommand());
+		} else if (rdbtnNewRadioButton.isSelected()) {
+			workers.setGender(rdbtnNewRadioButton.getActionCommand());
+		}
+
+		workers.setSpecialty((SpecialtyEnum) comboBox.getSelectedItem());
+		workers.setStartWorkingIn(textField_4.getText());
+		workers.setAssesment(textField_2.getText());
+		workers.setCode(Integer.parseInt(textArea_5.getText()));
+
+		conexion.update(workers);
+	}
+
+	public void update_boss() {
+		Boss boss = new Boss();
+
+		boss.setGrade((int) spinner.getValue());
+		boss.setName(textField.getText());
+		boss.setSurname(textField_1.getText());
+
+		if (rdbtnNewRadioButton_1.isSelected()) {
+			boss.setGender(rdbtnNewRadioButton_1.getActionCommand());
+		} else if (rdbtnNewRadioButton.isSelected()) {
+			boss.setGender(rdbtnNewRadioButton.getActionCommand());
+		}
+
+		boss.setSpecialty((SpecialtyEnum) comboBox.getSelectedItem());
+		boss.setStartWorkingIn(textField_4.getText());
+		boss.setAssesment(textField_2.getText());
+		boss.setFunction(textField_3.getText());
+		boss.setCode(Integer.parseInt(textArea_5.getText()));
+
+		conexion.updateBoss(boss);
+	}
+
+	public void delete_workers() {
+		Workers2 workers2 = new Workers2();
+		workers2.setCode(Integer.parseInt(textArea_5.getText()));
+		conexion.delete(workers2);
+	}
+
+	public void delete_boss() {
+		Boss boss = new Boss();
+		boss.setCode(Integer.parseInt(textArea_5.getText()));
+		conexion.deleteBoss(boss);
+	}
+
 	public WindowWorkers(Workers workers, PoliceStation policeStation) {
 
 		policeS = new PoliceStation();
@@ -132,7 +334,7 @@ public class WindowWorkers {
 		lblNewLabel.setBounds(45, 56, 129, 23);
 		frame.getContentPane().add(lblNewLabel);
 
-		JSpinner spinner = new JSpinner(new SpinnerNumberModel(0, 0, 5, 1));
+		spinner = new JSpinner(new SpinnerNumberModel(0, 0, 5, 1));
 		spinner.setBounds(45, 79, 78, 20);
 		frame.getContentPane().add(spinner);
 
@@ -158,13 +360,13 @@ public class WindowWorkers {
 		lblNewLabel_3.setBounds(45, 222, 111, 14);
 		frame.getContentPane().add(lblNewLabel_3);
 
-		ButtonGroup group = new ButtonGroup();
+		group = new ButtonGroup();
 
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Male");
+		rdbtnNewRadioButton = new JRadioButton("Male");
 		rdbtnNewRadioButton.setBounds(45, 243, 111, 23);
 		frame.getContentPane().add(rdbtnNewRadioButton);
 
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Female");
+		rdbtnNewRadioButton_1 = new JRadioButton("Female");
 		rdbtnNewRadioButton_1.setBounds(173, 243, 111, 23);
 		frame.getContentPane().add(rdbtnNewRadioButton_1);
 
@@ -175,7 +377,7 @@ public class WindowWorkers {
 		lblNewLabel_4.setBounds(45, 283, 111, 14);
 		frame.getContentPane().add(lblNewLabel_4);
 
-		JComboBox<SpecialtyEnum> comboBox = new JComboBox<SpecialtyEnum>();
+		comboBox = new JComboBox<SpecialtyEnum>();
 		comboBox.addItem(SpecialtyEnum.DRIVER);
 		comboBox.addItem(SpecialtyEnum.DOCTOR);
 		comboBox.addItem(SpecialtyEnum.SECURITY);
@@ -227,7 +429,7 @@ public class WindowWorkers {
 		frame.getContentPane().add(textField_3);
 		textField_3.setColumns(10);
 
-	    modelWorkers = new MiModelo();
+		modelWorkers = new MiModelo();
 		modelWorkers.addColumn("code");
 		modelWorkers.addColumn("grade");
 		modelWorkers.addColumn("name");
@@ -252,7 +454,7 @@ public class WindowWorkers {
 			public void valueChanged(ListSelectionEvent e) {
 				if (table.getSelectedColumn() != -1) {
 					int fila = table.getSelectedRow();
-					
+
 					textArea_5.setText(table.getValueAt(fila, 0).toString());
 					spinner.setValue(table.getValueAt(fila, 1));
 					textField.setText(table.getValueAt(fila, 2).toString());
@@ -273,13 +475,13 @@ public class WindowWorkers {
 						comboBox.setSelectedIndex(0);
 					} else if (textoCombo.equals("DOCTOR")) {
 						comboBox.setSelectedIndex(1);
+					}else if (textoCombo.equals("SECURITY")) {
+						comboBox.setSelectedIndex(2);
 					}
 
 					textField_4.setText(table.getValueAt(fila, 6).toString());
 					textField_2.setText(table.getValueAt(fila, 7).toString());
 //					textField_3.setText(table.getValueAt(fila, 8).toString());
-					
-					
 
 				}
 
@@ -315,121 +517,7 @@ public class WindowWorkers {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Workers2 creation;
-				Boss creationB;
-				Object[] object;
-
-				if (workers != null) {
-					creation = null;
-					creationB = null;
-					object = null;
-
-				} else {
-					object = new Object[9];
-					creation = new Workers2();
-					creationB = new Boss();
-				}
-
-				if (rdbtnNewRadioButton_1.isSelected() || rdbtnNewRadioButton.isSelected()) {
-
-					String texto = textField_3.getText();
-					if ("".equals(texto)) {
-						object[0] = null;
-						object[1] = spinner.getValue();
-						object[2] = textField.getText();
-						object[3] = textField_1.getText();
-
-						if (rdbtnNewRadioButton_1.isSelected()) {
-							object[4] = rdbtnNewRadioButton_1.getActionCommand();
-						} else if (rdbtnNewRadioButton.isSelected()) {
-							object[4] = rdbtnNewRadioButton.getActionCommand();
-						}
-
-						object[5] = comboBox.getSelectedItem();
-						object[6] = textField_4.getText().toString();
-						object[7] = textField_2.getText();
-						object[8] = null;
-
-						creation.setGrade((int) spinner.getValue());
-						creation.setName(textField.getText());
-						creation.setSurname(textField_1.getText());
-
-						if (rdbtnNewRadioButton_1.isSelected()) {
-							creation.setGender(rdbtnNewRadioButton_1.getActionCommand());
-						} else if (rdbtnNewRadioButton.isSelected()) {
-							creation.setGender(rdbtnNewRadioButton.getActionCommand());
-						}
-
-						creation.setSpecialty((SpecialtyEnum) comboBox.getSelectedItem());
-						creation.setStartWorkingIn((String) textField_4.getText());
-						creation.setAssesment(textField_2.getText());
-
-						if (workers == null) {
-							policeS.getWorkers().add(creation);
-							modelWorkers.addRow(object);
-							System.out.println(creation.toString());
-
-						}
-
-						spinner.setValue(0);
-						textField.setText("");
-						textField_1.setText("");
-						group.clearSelection();
-						comboBox.setSelectedIndex(0);
-						textField_2.setText("");
-
-					} else {
-
-						object[0] = null;
-						object[1] = spinner.getValue();
-						object[2] = textField.getText();
-						object[3] = textField_1.getText();
-
-						if (rdbtnNewRadioButton_1.isSelected()) {
-							object[4] = rdbtnNewRadioButton_1.getActionCommand();
-						} else if (rdbtnNewRadioButton.isSelected()) {
-							object[4] = rdbtnNewRadioButton.getActionCommand();
-						}
-
-						object[5] = comboBox.getSelectedItem();
-						object[6] = textField_4.getText().toString();
-						object[7] = textField_2.getText();
-						object[8] = textField_3.getText();
-
-						creationB.setGrade((int) spinner.getValue());
-						creationB.setName(textField.getText());
-						creationB.setSurname(textField_1.getText());
-
-						if (rdbtnNewRadioButton_1.isSelected()) {
-							creationB.setGender(rdbtnNewRadioButton_1.getActionCommand());
-						} else if (rdbtnNewRadioButton.isSelected()) {
-							creationB.setGender(rdbtnNewRadioButton.getActionCommand());
-						}
-
-						creationB.setSpecialty((SpecialtyEnum) comboBox.getSelectedItem());
-						creationB.setStartWorkingIn((String) textField_4.getText());
-						creationB.setAssesment(textField_2.getText());
-						creationB.setFunction(textField_3.getText());
-
-						if (workers == null) {
-							policeS.getWorkers().add(creationB);
-							modelWorkers.addRow(object);
-							System.out.println(creationB.toString());
-
-						}
-
-						spinner.setValue(0);
-						textField.setText("");
-						textField_1.setText("");
-						group.clearSelection();
-						comboBox.setSelectedIndex(0);
-						textField_2.setText("");
-						textField_3.setText("");
-
-					}
-				} else {
-					JOptionPane.showMessageDialog(null, "Gender required field");
-				}
+				agregar();
 			}
 		});
 
@@ -476,52 +564,15 @@ public class WindowWorkers {
 
 			}
 		});
-		
-		conexion= new BDWorkers();
-		workers2 = new Workers2();
-		boss= new Boss();
-		ArrayList<Boss> listBoss= conexion.consultarDatosBoss();
-		ArrayList<Workers2> list= conexion.consultarDatos();
 
+		
 		btnNewButton_4.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (list.size()>0) {
-
-					for (int i=0; i<list.size(); i++) {
-						Object fila[] = new Object[8];
-						workers2 = list.get(i);
-						fila[0] = workers2.getCode();
-						fila[1] = workers2.getGrade();
-						fila[2] = workers2.getName();
-						fila[3]= workers2.getSurname();
-						fila[4] = workers2.getGender();
-						fila[5]= workers2.getSpecialty();
-						fila[6] = workers2.getStartWorkingIn();
-						fila[7]= workers2.getAssesment();
-						modelWorkers.addRow(fila);
-					}
-				}
-				table.setModel(modelWorkers);
-
-				if (listBoss.size()>0) {
-
-				for (int i=0; i<listBoss.size(); i++) {
-					Object filaB[] = new Object[9];
-					boss = listBoss.get(i);
-					filaB[0] = boss.getCode();
-					filaB[1] = boss.getGrade();
-					filaB[2] = boss.getName();
-					filaB[3]= boss.getSurname();
-					filaB[4] = boss.getGender();
-					filaB[5]= boss.getSpecialty();
-					filaB[6] = boss.getStartWorkingIn();
-					filaB[7]= boss.getAssesment();
-					modelWorkers.addRow(filaB);
-				}
-			}
-			table.setModel(modelWorkers);
+				modelWorkers.setRowCount(0);
+				llenar_tablaWorkers();
+				llenar_tablaBoss();
 
 			}
 		});
@@ -530,23 +581,8 @@ public class WindowWorkers {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (list.size()>0) {
-
-					for (int i=0; i<list.size(); i++) {
-						Object fila[] = new Object[8];
-						workers2 = list.get(i);
-						fila[0] = workers2.getCode();
-						fila[1] = workers2.getGrade();
-						fila[2] = workers2.getName();
-						fila[3]= workers2.getSurname();
-						fila[4] = workers2.getGender();
-						fila[5]= workers2.getSpecialty();
-						fila[6] = workers2.getStartWorkingIn();
-						fila[7]= workers2.getAssesment();
-						modelWorkers.addRow(fila);
-					}
-				}
-				table.setModel(modelWorkers);
+				modelWorkers.setRowCount(0);
+				llenar_tablaWorkers();
 
 			}
 		});
@@ -555,23 +591,8 @@ public class WindowWorkers {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (listBoss.size()>0) {
-
-					for (int i=0; i<listBoss.size(); i++) {
-						Object filaB[] = new Object[9];
-						boss = listBoss.get(i);
-						filaB[0] = boss.getCode();
-						filaB[1] = boss.getGrade();
-						filaB[2] = boss.getName();
-						filaB[3]= boss.getSurname();
-						filaB[4] = boss.getGender();
-						filaB[5]= boss.getSpecialty();
-						filaB[6] = boss.getStartWorkingIn();
-						filaB[7]= boss.getAssesment();
-						modelWorkers.addRow(filaB);
-					}
-				}
-				table.setModel(modelWorkers);
+				modelWorkers.setRowCount(0);
+				llenar_tablaBoss();
 
 			}
 		});
@@ -580,41 +601,9 @@ public class WindowWorkers {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (list.size()>0) {
-
-					for (int i=0; i<list.size(); i++) {
-						Object fila[] = new Object[8];
-						workers2 = list.get(i);
-						fila[0] = workers2.getCode();
-						fila[1] = workers2.getGrade();
-						fila[2] = workers2.getName();
-						fila[3]= workers2.getSurname();
-						fila[4] = workers2.getGender();
-						fila[5]= workers2.getSpecialty();
-						fila[6] = workers2.getStartWorkingIn();
-						fila[7]= workers2.getAssesment();
-						modelWorkers.addRow(fila);
-					}
-				}
-				table.setModel(modelWorkers);
-
-				if (listBoss.size()>0) {
-
-				for (int i=0; i<listBoss.size(); i++) {
-					Object filaB[] = new Object[9];
-					boss = listBoss.get(i);
-					filaB[0] = boss.getCode();
-					filaB[1] = boss.getGrade();
-					filaB[2] = boss.getName();
-					filaB[3]= boss.getSurname();
-					filaB[4] = boss.getGender();
-					filaB[5]= boss.getSpecialty();
-					filaB[6] = boss.getStartWorkingIn();
-					filaB[7]= boss.getAssesment();
-					modelWorkers.addRow(filaB);
-				}
-			}
-			table.setModel(modelWorkers);
+				modelWorkers.setRowCount(0);
+				llenar_tablaWorkers();
+				llenar_tablaBoss();
 
 			}
 		});
@@ -623,48 +612,11 @@ public class WindowWorkers {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				conexion = new BDWorkers();
-				 Workers2 workers = new Workers2();
-				
-				workers.setGrade((int) spinner.getValue());
-				workers.setName(textField.getText());
-				workers.setSurname(textField_1.getText());
-				
-				if (rdbtnNewRadioButton_1.isSelected()) {
-					workers.setGender(rdbtnNewRadioButton_1.getActionCommand());
-				} else if (rdbtnNewRadioButton.isSelected()) {
-					workers.setGender(rdbtnNewRadioButton.getActionCommand());
-				}
-				
-				workers.setSpecialty((SpecialtyEnum) comboBox.getSelectedItem());
-				workers.setStartWorkingIn(textField_4.getText());
-				workers.setAssesment(textField_2.getText());
-				workers.setCode(Integer.parseInt(textArea_5.getText()));
-				
-				conexion.update(workers);
-//			-----------------------------------	
-				
-				 Boss boss = new Boss();
-				
-				boss.setGrade((int) spinner.getValue());
-				boss.setName(textField.getText());
-				boss.setSurname(textField_1.getText());
-				
-				if (rdbtnNewRadioButton_1.isSelected()) {
-					boss.setGender(rdbtnNewRadioButton_1.getActionCommand());
-				} else if (rdbtnNewRadioButton.isSelected()) {
-					boss.setGender(rdbtnNewRadioButton.getActionCommand());
-				}
-				
-				boss.setSpecialty((SpecialtyEnum) comboBox.getSelectedItem());
-				boss.setStartWorkingIn(textField_4.getText());
-				boss.setAssesment(textField_2.getText());
-				boss.setFunction(textField_3.getText());
-				boss.setCode(Integer.parseInt(textArea_5.getText()));
-				
-				conexion.updateBoss(boss);
-				
-				
+				update_workers();
+				//update_boss;
+				llenar_tablaWorkers();
+				//llenar_tablaboss;
+
 			}
 		});
 
@@ -672,21 +624,10 @@ public class WindowWorkers {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				conexion= new BDWorkers();
-				Workers2 workers2= new Workers2();
-				workers2.setCode(Integer.parseInt(textArea_5.getText()));
-				conexion.delete(workers2);
-				
-				Boss boss= new Boss();
-				boss.setCode(Integer.parseInt(textArea_5.getText()));
-				conexion.deleteBoss(boss);
-				
-				visualizar_datos();
+				delete_workers();
+				llenar_tablaWorkers();
 			}
 		});
-		
-		
-		
 
 		frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
 		frame.setTitle("POLICE MANAGEMENT");
@@ -694,5 +635,4 @@ public class WindowWorkers {
 		frame.setVisible(true);
 
 	}
-
 }
