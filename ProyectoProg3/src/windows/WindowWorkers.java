@@ -1,14 +1,21 @@
 package windows;
 
 import java.awt.Color;
-
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -23,12 +30,13 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
 
 import classes.Boss;
 import classes.PoliceStation;
@@ -37,7 +45,6 @@ import classes.Specialty.SpecialtyEnum;
 import classes.Workers;
 import classes.Workers2;
 import databases.BDWorkers;
-import windows.WindowWorkers.MiModelo;
 
 public class WindowWorkers {
 
@@ -59,6 +66,7 @@ public class WindowWorkers {
 	private ButtonGroup group;
 	private JTable table;
 	private MiModelo modelWorkers;
+	private int clic_tabla = 0;
 	BDWorkers conexion;
 
 	public class MiModelo extends DefaultTableModel {
@@ -66,7 +74,10 @@ public class WindowWorkers {
 			// Aqu� devolvemos true o false seg�n queramos que una celda
 			// identificada por fila,columna (row,column), sea o no editable
 
-			return false;
+			if (column == 0) {
+				return false;
+			}
+			return true;
 		}
 
 	}
@@ -189,7 +200,7 @@ public class WindowWorkers {
 		}
 	}
 
-	public void llenar_tablaWorkers() {
+	public void llenar_tablaWorkers(JTable table) {
 
 		conexion = new BDWorkers();
 		workers2 = new Workers2();
@@ -213,6 +224,7 @@ public class WindowWorkers {
 			}
 		}
 		table.setModel(modelWorkers);
+
 	}
 
 	public void llenar_tablaBoss() {
@@ -235,6 +247,7 @@ public class WindowWorkers {
 				filaB[5] = boss.getSpecialty();
 				filaB[6] = boss.getStartWorkingIn();
 				filaB[7] = boss.getAssesment();
+				filaB[8] = boss.getFunction();
 				modelWorkers.addRow(filaB);
 			}
 		}
@@ -243,59 +256,99 @@ public class WindowWorkers {
 	}
 
 	public void update_workers() {
-		conexion = new BDWorkers();
-		Workers2 workers = new Workers2();
 
-		workers.setGrade((int) spinner.getValue());
-		workers.setName(textField.getText());
-		workers.setSurname(textField_1.getText());
+		table.getModel().addTableModelListener((TableModelEvent e) -> {
 
-		if (rdbtnNewRadioButton_1.isSelected()) {
-			workers.setGender(rdbtnNewRadioButton_1.getActionCommand());
-		} else if (rdbtnNewRadioButton.isSelected()) {
-			workers.setGender(rdbtnNewRadioButton.getActionCommand());
-		}
+			if (e.getType() == TableModelEvent.UPDATE) {
 
-		workers.setSpecialty((SpecialtyEnum) comboBox.getSelectedItem());
-		workers.setStartWorkingIn(textField_4.getText());
-		workers.setAssesment(textField_2.getText());
-		workers.setCode(Integer.parseInt(textArea_5.getText()));
+				int input = JOptionPane.showConfirmDialog(null, "Are you sure you want to update?", "data update",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (input == 0) {
 
-		conexion.update(workers);
-	}
+					try {
+						int fila = e.getFirstRow();
 
-	public void update_boss() {
-		Boss boss = new Boss();
+						if (table.getValueAt(fila, 8) == null) {
+							int code = (int) table.getValueAt(table.getSelectedRow(), 0);
 
-		boss.setGrade((int) spinner.getValue());
-		boss.setName(textField.getText());
-		boss.setSurname(textField_1.getText());
+							String grade = table.getValueAt(fila, 1).toString();
+							String name = "" + table.getValueAt(fila, 2);
+							String surname = "" + table.getValueAt(fila, 3);
+							String gender = "" + table.getValueAt(fila, 4);
+							String specialty = "" + table.getValueAt(fila, 5);
+							String startWorkinIn = "" + table.getValueAt(fila, 6);
+							String assessment = "" + table.getValueAt(fila, 7);
 
-		if (rdbtnNewRadioButton_1.isSelected()) {
-			boss.setGender(rdbtnNewRadioButton_1.getActionCommand());
-		} else if (rdbtnNewRadioButton.isSelected()) {
-			boss.setGender(rdbtnNewRadioButton.getActionCommand());
-		}
+							String sql = "UPDATE WorkersTable SET grade=?, name=?, surname=?, gender=?, Specialty=?, startWorkingIn=?, Assessment=? where code=?;";
+							PreparedStatement stmt = conexion.getConection().prepareStatement(sql);
 
-		boss.setSpecialty((SpecialtyEnum) comboBox.getSelectedItem());
-		boss.setStartWorkingIn(textField_4.getText());
-		boss.setAssesment(textField_2.getText());
-		boss.setFunction(textField_3.getText());
-		boss.setCode(Integer.parseInt(textArea_5.getText()));
+							stmt.setString(1, grade);
+							stmt.setString(2, name);
+							stmt.setString(3, surname);
+							stmt.setString(4, gender);
+							stmt.setString(5, specialty);
+							stmt.setString(6, startWorkinIn);
+							stmt.setString(7, assessment);
+							stmt.setInt(8, code);
 
-		conexion.updateBoss(boss);
+							stmt.executeUpdate();
+							JOptionPane.showMessageDialog(null, "  UPDATE WORKER COMPLETED ");
+
+						} else {
+							int code = (int) table.getValueAt(table.getSelectedRow(), 0);
+							String grade = table.getValueAt(fila, 1).toString();
+							String name = "" + table.getValueAt(fila, 2);
+							String surname = "" + table.getValueAt(fila, 3);
+							String gender = "" + table.getValueAt(fila, 4);
+							String specialty = "" + table.getValueAt(fila, 5);
+							String startWorkinIn = "" + table.getValueAt(fila, 6);
+							String assessment = "" + table.getValueAt(fila, 7);
+							String fuction = "" + table.getValueAt(fila, 8);
+
+							String sql = "UPDATE WorkersTableBoss SET grade=?, name=?, surname=?, gender=?, Specialty=?, startWorkingIn=?, Assessment=?, function=?  WHERE code=?;";
+							PreparedStatement stmt = conexion.getConection().prepareStatement(sql);
+
+							stmt.setString(1, grade);
+							stmt.setString(2, name);
+							stmt.setString(3, surname);
+							stmt.setString(4, gender);
+							stmt.setString(5, specialty);
+							stmt.setString(6, startWorkinIn);
+							stmt.setString(7, assessment);
+							stmt.setString(8, fuction);
+							stmt.setInt(9, code);
+
+							stmt.executeUpdate();
+							JOptionPane.showMessageDialog(null, "  UPDATE BOSS COMPLETED ");
+						}
+
+					} catch (SQLException e2) {
+						System.out.println("Could not update worker in database ");
+					}
+				}
+			}
+		});
 	}
 
 	public void delete_workers() {
 		Workers2 workers2 = new Workers2();
 		workers2.setCode(Integer.parseInt(textArea_5.getText()));
 		conexion.delete(workers2);
+
 	}
 
 	public void delete_boss() {
 		Boss boss = new Boss();
 		boss.setCode(Integer.parseInt(textArea_5.getText()));
 		conexion.deleteBoss(boss);
+	}
+
+	public void eliminar(final DefaultTableModel model) {
+		clic_tabla = table.getSelectedRowCount();
+		for (int i = clic_tabla; i < model.getRowCount(); i++) {
+			model.getDataVector().clear();
+		}
+
 	}
 
 	public WindowWorkers(Workers workers, PoliceStation policeStation) {
@@ -329,6 +382,12 @@ public class WindowWorkers {
 		JButton btnNewButton_4 = new JButton("Show");
 		btnNewButton_4.setBounds(739, 258, 111, 23);
 		frame.getContentPane().add(btnNewButton_4);
+		
+		JButton btnNewButton_5 = new JButton(new ImageIcon(((new ImageIcon(
+				"descarga.png").getImage() 
+				   .getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)))));
+		btnNewButton_5.setBounds(860, 0, 34, 33);
+		frame.getContentPane().add(btnNewButton_5);
 
 		JLabel lblNewLabel = new JLabel("Grade: ");
 		lblNewLabel.setBounds(45, 56, 129, 23);
@@ -443,7 +502,8 @@ public class WindowWorkers {
 		table = new JTable(modelWorkers);
 		table.setBounds(243, 311, 567, 296);
 
-		JScrollPane scrollWorkers = new JScrollPane(table);
+		JScrollPane scrollWorkers = new JScrollPane();
+		scrollWorkers.setViewportView(table);
 		scrollWorkers.setBounds(243, 311, 567, 296);
 
 		frame.getContentPane().add(scrollWorkers);
@@ -452,38 +512,42 @@ public class WindowWorkers {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				if (table.getSelectedColumn() != -1) {
-					int fila = table.getSelectedRow();
+				clic_tabla = table.getSelectedRow();
 
-					textArea_5.setText(table.getValueAt(fila, 0).toString());
-					spinner.setValue(table.getValueAt(fila, 1));
-					textField.setText(table.getValueAt(fila, 2).toString());
-					textField_1.setText(table.getValueAt(fila, 3).toString());
+				int code = (int) table.getValueAt(clic_tabla, 0);
+				int grade = (int) table.getValueAt(clic_tabla, 1);
+				String name = "" + table.getValueAt(clic_tabla, 2);
+				String surname = "" + table.getValueAt(clic_tabla, 3);
+				String gender = "" + table.getValueAt(clic_tabla, 4);
+				String specialty = "" + table.getValueAt(clic_tabla, 5);
+				String startWorkinIn = "" + table.getValueAt(clic_tabla, 6);
+				String assessment = "" + table.getValueAt(clic_tabla, 7);
+				String fuction = "" + table.getValueAt(clic_tabla, 8);
 
-					String texto = table.getValueAt(fila, 4).toString();
+				textArea_5.setText(String.valueOf(code));
+				spinner.setValue(grade);
+				textField.setText(name);
+				textField_1.setText(surname);
 
-					if (texto.equals("Male")) {
-						rdbtnNewRadioButton.setSelected(true);
+				if (gender.equals("Male")) {
+					rdbtnNewRadioButton.setSelected(true);
 
-					} else if (texto.equals("Female")) {
-						rdbtnNewRadioButton_1.setSelected(true);
-
-					}
-
-					String textoCombo = table.getValueAt(fila, 5).toString();
-					if (textoCombo.equals("DRIVER")) {
-						comboBox.setSelectedIndex(0);
-					} else if (textoCombo.equals("DOCTOR")) {
-						comboBox.setSelectedIndex(1);
-					}else if (textoCombo.equals("SECURITY")) {
-						comboBox.setSelectedIndex(2);
-					}
-
-					textField_4.setText(table.getValueAt(fila, 6).toString());
-					textField_2.setText(table.getValueAt(fila, 7).toString());
-//					textField_3.setText(table.getValueAt(fila, 8).toString());
+				} else if (gender.equals("Female")) {
+					rdbtnNewRadioButton_1.setSelected(true);
 
 				}
+
+				if (specialty.equals("DRIVER")) {
+					comboBox.setSelectedIndex(0);
+				} else if (specialty.equals("DOCTOR")) {
+					comboBox.setSelectedIndex(1);
+				} else if (specialty.equals("SECURITY")) {
+					comboBox.setSelectedIndex(2);
+				}
+
+				textField_4.setText(startWorkinIn);
+				textField_2.setText(assessment);
+				textField_3.setText(fuction);
 
 			}
 		});
@@ -513,11 +577,18 @@ public class WindowWorkers {
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Show All");
 		mnNewMenu.add(mntmNewMenuItem_4);
 
+		update_workers();
+
 		btnNewButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				agregar();
+				int input = JOptionPane.showConfirmDialog(btnNewButton_1,
+						"Are you sure you want to create? Remember that the gender field is necessary", "data creation",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (input == 0) {
+					agregar();
+				}
 			}
 		});
 
@@ -525,18 +596,23 @@ public class WindowWorkers {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for (Workers workers : policeS.getWorkers()) {
-					if (workers instanceof Workers2) {
-						BDWorkers.insertIntoPrepStat((Workers2) workers);
+
+				int input = JOptionPane.showConfirmDialog(btnNewButton_1, "Are you sure you want to save?",
+						"Data saving", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (input == 0) {
+
+					for (Workers workers : policeS.getWorkers()) {
+						if (workers instanceof Workers2) {
+							BDWorkers.insertIntoPrepStat((Workers2) workers);
+						}
+					}
+
+					for (Workers workers : policeS.getWorkers()) {
+						if (workers instanceof Boss) {
+							BDWorkers.insertIntoPrepStatBoss((Boss) workers);
+						}
 					}
 				}
-
-				for (Workers workers : policeS.getWorkers()) {
-					if (workers instanceof Boss) {
-						BDWorkers.insertIntoPrepStatBoss((Boss) workers);
-					}
-				}
-
 			}
 		});
 
@@ -565,13 +641,13 @@ public class WindowWorkers {
 			}
 		});
 
-		
 		btnNewButton_4.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
 				modelWorkers.setRowCount(0);
-				llenar_tablaWorkers();
+				llenar_tablaWorkers(table);
 				llenar_tablaBoss();
 
 			}
@@ -582,7 +658,7 @@ public class WindowWorkers {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				modelWorkers.setRowCount(0);
-				llenar_tablaWorkers();
+				llenar_tablaWorkers(table);
 
 			}
 		});
@@ -602,7 +678,7 @@ public class WindowWorkers {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				modelWorkers.setRowCount(0);
-				llenar_tablaWorkers();
+				llenar_tablaWorkers(table);
 				llenar_tablaBoss();
 
 			}
@@ -612,11 +688,10 @@ public class WindowWorkers {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				update_workers();
-				//update_boss;
-				llenar_tablaWorkers();
-				//llenar_tablaboss;
-
+				JOptionPane.showMessageDialog(null,
+						"To update an attribute, select the row you would like to modify and make the change in"
+								+ " the appropriate cell.",
+						"Updated information", JOptionPane.INFORMATION_MESSAGE, null);
 			}
 		});
 
@@ -624,8 +699,33 @@ public class WindowWorkers {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				delete_workers();
-				llenar_tablaWorkers();
+				int input = JOptionPane.showConfirmDialog(btnNewButton_1, "Are you sure you want to delete?",
+						"data erasure", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (input == 0) {
+
+					if (table.getValueAt(clic_tabla, 8) == null) {
+						delete_workers();
+					} else {
+						delete_boss();
+					}
+					eliminar(modelWorkers);
+					llenar_tablaWorkers(table);
+					llenar_tablaBoss();
+				}
+			}
+		});
+		
+		btnNewButton_5.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int input = JOptionPane.showConfirmDialog(btnNewButton_1, "Are you sure you want to go back?",
+						"Go back to menu", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (input == 0) {
+					 new GeneralWindow();
+					frame.dispose();
+				}
+				
 			}
 		});
 

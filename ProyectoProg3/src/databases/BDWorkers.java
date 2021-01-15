@@ -17,9 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 
-import org.w3c.dom.events.EventTarget;
 
 import classes.Boss;
 import classes.Specialty;
@@ -51,7 +49,7 @@ public class BDWorkers{
 	private static boolean LOGGING = true;
 
 	// Conectarse a la base de datos
-	public static Connection initBD(String nombreBD) {
+	public static  Connection initBD(String nombreBD) {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection("jdbc:sqlite:" + nombreBD);
@@ -64,7 +62,7 @@ public class BDWorkers{
 	}
 
 	// Conectarse a la base de datos
-	public static void conection(String nombreBD) {
+	public static  void conection(String nombreBD) {
 		try {
 			statement = connection.createStatement();
 			try {
@@ -83,7 +81,7 @@ public class BDWorkers{
 	}
 
 	// Conectarse a la base de datos
-	public static void conectionBoss(String nombreBD) {
+	public static  void conectionBoss(String nombreBD) {
 		try {
 			statement = connection.createStatement();
 			try {
@@ -109,7 +107,7 @@ public class BDWorkers{
 
 
 	// InsertarDatos con preparedStatement
-	public static void insertIntoPrepStat(Workers2 workers) {
+	public static  void insertIntoPrepStat(Workers2 workers) {
 		try {
 			PreparedStatement insertSql = connection.prepareStatement(
 					"INSERT INTO WorkersTable(code, grade, name, surname, gender, Specialty, startWorkingIn, Assessment)  VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
@@ -176,39 +174,11 @@ public class BDWorkers{
 		
 	}
 	
-
-	public void update(Workers2 workers) {
-		
-		String sql= "UPDATE WorkersTable SET grade=?, name=?, surname=?, gender=?, Specialty=?, startWorkingIn=?, Assessment=? where code=?;";
-		PreparedStatement stmt = null;
-		try {
-			stmt=connection.prepareStatement(sql);
-			stmt.setInt(1, workers.getGrade());
-			stmt.setString(2, workers.getName());
-			stmt.setString(3, workers.getSurname());
-			stmt.setString(4, workers.getGender());
-			stmt.setString(5, workers.getSpecialty().toString());
-			stmt.setString(6, workers.getStartWorkingIn().toString());
-			stmt.setString(7, workers.getAssesment());
-			stmt.setInt(8, workers.getCode());
-			
-			stmt.executeUpdate();
-	
-			
-			log(Level.SEVERE, "Completed", null);
-			JOptionPane.showMessageDialog(null, "  UPDATE COMPLETED ");
-		} catch (SQLException e) {
-			log(Level.SEVERE, "No se pudo guardar el usuario en la BD", e);
-		}
-		
-		
-	}
-
-
 	public void delete(Workers2 workers) {
 		try (PreparedStatement stmt = connection.prepareStatement("DELETE FROM WorkersTable WHERE code=?")) {
 			stmt.setInt(1, workers.getCode());
 			stmt.executeUpdate();
+			stmt.close();
 			
 			
 		} catch (SQLException e) {
@@ -219,7 +189,7 @@ public class BDWorkers{
 	
 	
 	
-	public static void insertIntoPrepStatBoss(Boss boss) {
+	public static  void insertIntoPrepStatBoss(Boss boss) {
 		try {
 			PreparedStatement insertSql = connection.prepareStatement(
 					"INSERT INTO WorkersTableBoss(code, grade, name, surname, gender, Specialty, startWorkingIn, Assessment, function)  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -285,32 +255,12 @@ public class BDWorkers{
 	}
 	
 	
-	public  void updateBoss(Boss boss) {
-		try (PreparedStatement stmt = connection.prepareStatement("UPDATE WorkersTableBoss SET grade=?, name=?, surname=?, gender=?, Specialty=?, startWorkingIn=?, Assessment=?, function=?  WHERE code=?")) {
-			stmt.setInt(1, boss.getGrade());
-			stmt.setString(2, boss.getName());
-			stmt.setString(3, boss.getSurname());
-			stmt.setString(4, boss.getGender());
-			stmt.setString(5, boss.getSpecialty().toString());
-			stmt.setString(6, boss.getStartWorkingIn().toString());
-			stmt.setString(7, boss.getAssesment());
-			stmt.setString(8, boss.getFunction());
-			stmt.setInt(8, boss.getCode());
-			
-			stmt.executeUpdate();
-			
-			log(Level.SEVERE, "Completed", null);
-			JOptionPane.showMessageDialog(null, "  UPDATE COMPLETED ");
-		} catch (SQLException e) {
-			log(Level.SEVERE, "No se pudo guardar el usuario en la BD", e);
-		}
-	}
 	
 	public void deleteBoss(Boss boss) {
 		try (PreparedStatement stmt = connection.prepareStatement("DELETE FROM WorkersTableBoss WHERE code=?")) {
 			stmt.setInt(1, boss.getCode());
 			stmt.executeUpdate();
-			
+			stmt.close();
 		} catch (SQLException e) {
 			log(Level.SEVERE, "No se pudo borrar el usuario en la BD", e);
 		}
@@ -320,7 +270,7 @@ public class BDWorkers{
 	
 	
 	// Cerrar conexion
-	public static void cerrarBD(Connection con, Statement st) {
+	public  void cerrarBD(Connection con, Statement st) {
 		try {
 			if (st != null)
 				st.close();
@@ -333,7 +283,7 @@ public class BDWorkers{
 	}
 
 	// Reiniciar
-	public static void dropTable(String nombreBD) {
+	public static  void dropTable(String nombreBD) {
 		try {
 			statement = connection.createStatement();
 			statement.executeUpdate("drop table if exists WorkersTable");
@@ -343,5 +293,18 @@ public class BDWorkers{
 			log(Level.SEVERE, "An error has ocurred deleting database", e);
 		}
 	}
+
+	public static Connection getConnection() {
+		return connection;
+	}
+
+
+	public static Statement getStatement() {
+		return statement;
+	}
+
+	
+	
+	
 
 }
