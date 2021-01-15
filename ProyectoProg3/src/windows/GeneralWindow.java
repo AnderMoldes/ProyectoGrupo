@@ -209,6 +209,24 @@ public class GeneralWindow {
 				
 			}
 		});
+		btnNewButton_2_1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new WindowManageWorkers();
+				frame.dispose();
+			}
+		});
+		btnNewButton_2_2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new WindowManageDetained();
+				frame.dispose();
+			}
+		});
 		
 		frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
 		frame.setTitle("POLICE MANAGEMENT");
