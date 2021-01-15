@@ -25,6 +25,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -150,9 +151,6 @@ public class VehicleWindow extends JFrame{
 		bshow.setBounds(164, 156, 112, 23);
 		contentPane.add(bshow);
 		
-		JButton bupdate = new JButton("Update");
-		bupdate.setBounds(320, 156, 112, 23);
-		contentPane.add(bupdate);
 		
 		JButton bsave = new JButton("Save");
 		bsave.setBounds(486, 156, 112, 23);
@@ -248,6 +246,57 @@ public class VehicleWindow extends JFrame{
 
 			
 		});
+		bshow.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+					try {
+						BufferedReader br = new BufferedReader(new FileReader("vehicles.txt"));
+						if(modelVehicles.isEmpty()) {
+						String line = br.readLine();
+						while(line!=null) {
+							String data[] = line.split(" ");
+							BrandEnum bra = BrandEnum.valueOf(data[0]);
+							ColourEnum col = ColourEnum.valueOf(data[1]);
+							VehicleTypes veh = VehicleTypes.valueOf(data[2]);
+						
+							Vehicle v = new Vehicle(bra,col,veh);
+							modelVehicles.addElement(v);
+							line = br.readLine();
+						}
+						vehicleJList.setModel(modelVehicles);
+						br.close();
+					}else {
+						JOptionPane.showMessageDialog(null, "Error.");
+					}
+				
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		bdelete.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				int question = JOptionPane.showConfirmDialog(null, "Are you sure?");
+				if (question == 0) {
+					
+				Vehicle v = (Vehicle) vehicleJList.getSelectedValue();
+				al.remove(v);
+				modelVehicles.removeElement(v);
+				doCSV();
+				}
+			}
+		});
 		
 		
 		
@@ -259,6 +308,7 @@ public class VehicleWindow extends JFrame{
 			for(int i=0;i<modelVehicles.getSize();i++) {
 				Vehicle v = (Vehicle) modelVehicles.get(i);
 				pw.println(v.getBrand()+" "+v.getColour()+" "+v.getVehicleTypes());
+				al.add(v);
 			}
 			pw.flush();
 			pw.close();
