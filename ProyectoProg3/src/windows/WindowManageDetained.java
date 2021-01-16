@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -12,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import classes.Detained;
+import classes.Workers;
 
 public class WindowManageDetained extends JFrame{
 	private JPanel contentPane;
@@ -26,12 +29,16 @@ public class WindowManageDetained extends JFrame{
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JList listDetained = new JList();
+		DefaultListModel<Detained> modelDetained1 = new DefaultListModel();
+		
+		JList listDetained = new JList(modelDetained1);
 		listDetained.setBackground(Color.WHITE);
 		listDetained.setBounds(39, 232, 267, 340);
 		contentPane.add(listDetained);
 		
-		JList listManage = new JList();
+		DefaultListModel<Detained> modelDetained2 = new DefaultListModel();
+		
+		JList listManage = new JList(modelDetained2);
 		listManage.setBackground(Color.WHITE);
 		listManage.setBounds(468, 232, 267, 340);
 		contentPane.add(listManage);
@@ -84,6 +91,36 @@ public class WindowManageDetained extends JFrame{
 				// TODO Auto-generated method stub
 				new GeneralWindow();
 				dispose();
+			}
+		});
+		
+		bmanageRight.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				int pos = listDetained.getSelectedIndex();
+				if(pos!=-1) {
+					modelDetained2.addElement(modelDetained1.get(pos));
+					modelDetained1.remove(pos);
+					listDetained.setModel(modelDetained1);
+					listManage.setModel(modelDetained2);
+				}
+			}
+		});
+		
+		bmanageLeft.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				int pos = listManage.getSelectedIndex();
+				if(pos!=-1) {
+					modelDetained1.addElement(modelDetained2.get(pos));
+					modelDetained2.remove(pos);
+					listDetained.setModel(modelDetained1);
+					listManage.setModel(modelDetained2);
+				}
 			}
 		});
 	}

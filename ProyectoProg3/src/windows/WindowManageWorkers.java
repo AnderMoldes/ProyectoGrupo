@@ -30,15 +30,15 @@ public class WindowManageWorkers extends JFrame{
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		DefaultListModel<Workers> modeloWorker1 = new DefaultListModel();
+		DefaultListModel<Workers> modelWorker1 = new DefaultListModel();
 		
-		JList listVehicle = new JList(modeloWorker1);
+		JList listVehicle = new JList(modelWorker1);
 		listVehicle.setBounds(39, 232, 267, 340);
 		contentPane.add(listVehicle);
 		
-		DefaultListModel<Workers> modeloWorker2 = new DefaultListModel();
+		DefaultListModel<Workers> modelWorker2 = new DefaultListModel();
 		
-		JList listManage = new JList(modeloWorker2);
+		JList listManage = new JList(modelWorker2);
 		listManage.setBounds(468, 232, 267, 340);
 		contentPane.add(listManage);
 		
@@ -97,10 +97,10 @@ public class WindowManageWorkers extends JFrame{
 				// TODO Auto-generated method stub
 				int pos = listVehicle.getSelectedIndex();
 				if(pos!=-1) {
-					modeloWorker2.addElement(modeloWorker1.get(pos));
-					modeloWorker1.remove(pos);
-					listManage.setModel(modeloWorker2);
-					listVehicle.setModel(modeloWorker1);
+					modelWorker2.addElement(modelWorker1.get(pos));
+					modelWorker1.remove(pos);
+					listManage.setModel(modelWorker2);
+					listVehicle.setModel(modelWorker1);
 				}
 			}
 		});
@@ -110,12 +110,12 @@ public class WindowManageWorkers extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				int pos = listVehicle.getSelectedIndex();
+				int pos = listManage.getSelectedIndex();
 				if(pos!=-1) {
-					modeloWorker1.addElement(modeloWorker2.get(pos));
-					modeloWorker2.remove(pos);
-					listManage.setModel(modeloWorker1);
-					listVehicle.setModel(modeloWorker2);
+					modelWorker1.addElement(modelWorker2.get(pos));
+					modelWorker2.remove(pos);
+					listVehicle.setModel(modelWorker1);
+					listManage.setModel(modelWorker2);
 				}
 			}
 		});
