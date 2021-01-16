@@ -170,6 +170,7 @@ public class WorkersWindow extends JFrame {
 		setSize(500, 500);
 		setResizable(false);
 		setVisible(true);
+		
 
 	}
 

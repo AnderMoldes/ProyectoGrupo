@@ -174,6 +174,7 @@ public class BDWorkers{
 		
 	}
 	
+	
 	public void delete(Workers2 workers) {
 		try (PreparedStatement stmt = connection.prepareStatement("DELETE FROM WorkersTable WHERE code=?")) {
 			stmt.setInt(1, workers.getCode());

@@ -26,7 +26,7 @@ public class MainWindow extends JFrame {
 		SimpleAttributeSet attrs = new SimpleAttributeSet();
 		StyleConstants.setBold(attrs, true);
 		title.getStyledDocument().insertString(title.getStyledDocument().getLength(),
-				"¡Welcome to the police station!", attrs);
+				"ï¿½Welcome to the police station!", attrs);
 
 		SimpleAttributeSet center = new SimpleAttributeSet();
 		StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
@@ -55,6 +55,7 @@ public class MainWindow extends JFrame {
 		pack();
 		setResizable(false);
 		setVisible(true);
+		setLocationRelativeTo( null );
 	}
 
 	public static void main(String[] args) {

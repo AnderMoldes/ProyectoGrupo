@@ -232,8 +232,9 @@ public class GeneralWindow {
 		
 		frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
 		frame.setTitle("POLICE MANAGEMENT");
-		frame.setResizable(true);
+		frame.setResizable(false);
 		frame.setVisible(true);
+		frame.setLocationRelativeTo( null );
 
 //		createWorkers.addActionListener(new ActionListener() {
 //
