@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -12,14 +13,19 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
-
+import classes.Boss;
 import classes.Vehicle;
 import classes.Workers;
+import classes.Workers2;
+import databases.BDWorkers;
 
 
 public class WindowManageWorkers extends JFrame{
 	private JPanel contentPane;
+	BDWorkers conexion;
+	Workers2 workers2;
 	
 	public WindowManageWorkers() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,6 +62,24 @@ public class WindowManageWorkers extends JFrame{
 		contentPane.add(bmanageLeft);
 		
 		JComboBox comboWorkers = new JComboBox();
+		//Hacer que se visualicen los workers de la BBDD
+		//consultarDatos()
+		ArrayList<Workers2> arrayWorkers = new ArrayList();
+		cargarDatosComboBox(arrayWorkers);
+		if (arrayWorkers != null) {
+			for (int i = 0; i < arrayWorkers.size(); i++) {
+				comboWorkers.add(null, arrayWorkers.get(i));
+			}
+		}else {
+			
+		}
+		/*ArrayList<Workers2> arrayWorkers = new ArrayList();
+		cargarDatosComboBox(arrayWorkers);
+		
+		for (int i = 0; i < arrayWorkers.size(); i++) {
+			comboWorkers.add(null, arrayWorkers.get(i));
+		}*/
+		
 		comboWorkers.setBounds(39, 88, 696, 42);
 		contentPane.add(comboWorkers);
 		
@@ -80,6 +104,7 @@ public class WindowManageWorkers extends JFrame{
 		JButton bback = new JButton("Back");
 		bback.setBounds(340, 533, 89, 23);
 		contentPane.add(bback);
+		
 		
 		bback.addActionListener(new ActionListener() {
 			
@@ -120,6 +145,25 @@ public class WindowManageWorkers extends JFrame{
 				}
 			}
 		});
+	}
+	//Métodos
+	public void cargarDatosComboBox(ArrayList<Workers2> aw) {
+
+		conexion = new BDWorkers();
+		//workers2 = new Workers2();
+		//DefaultListModel<Workers2> modelWorkers = new DefaultListModel();
+		ArrayList<Workers2> listWorkers = conexion.consultarDatos();
+
+		if (listWorkers.size() > 0) {
+
+			for (int i = 0; i < listWorkers.size(); i++) {
+				workers2 = listWorkers.get(i);
+				aw.add(workers2);
+				
+			}
+		}
+		
+
 	}
 
 }
