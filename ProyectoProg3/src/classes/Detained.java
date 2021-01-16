@@ -1,8 +1,9 @@
 package classes;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Detained {
+public class Detained implements Asignable,Serializable{
 	
 	
 	protected int identificative;

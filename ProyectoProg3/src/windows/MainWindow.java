@@ -3,6 +3,7 @@ package windows;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,6 +15,9 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
+import databases.BDWorkers;
+import databases.BDetained;
+
 public class MainWindow extends JFrame {
 
 	JLabel image;
@@ -21,6 +25,8 @@ public class MainWindow extends JFrame {
 	JTextPane title;
 
 	public MainWindow() throws BadLocationException {
+		BDWorkers cc = new BDWorkers();
+		Connection cn = cc.getConection();
 
 		title = new JTextPane();
 		SimpleAttributeSet attrs = new SimpleAttributeSet();
@@ -45,6 +51,8 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				BDWorkers.initBD("Workers.db");
+				BDetained.initBD("Detained.db");
 				new GeneralWindow();
 				dispose();
 			}

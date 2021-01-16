@@ -6,7 +6,7 @@ import java.util.Date;
 
 import classes.Specialty.SpecialtyEnum;
 
-public class Workers implements Serializable, Comparable<Workers>{
+public class Workers implements Asignable,Serializable, Comparable<Workers>{
 
 
     protected int code;

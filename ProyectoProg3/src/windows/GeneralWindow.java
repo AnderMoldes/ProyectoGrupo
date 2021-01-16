@@ -66,9 +66,9 @@ public class GeneralWindow {
 		JMenu mnNewMenu = new JMenu("File");
 		menuBar.add(mnNewMenu);
 
-		JMenuItem mntmNewMenuItem = new JMenuItem("Create/Activate Database");
-		mnNewMenu.add(mntmNewMenuItem);
-		frame.getContentPane().setLayout(null);
+//		JMenuItem mntmNewMenuItem = new JMenuItem("Create/Activate Database");
+//		mnNewMenu.add(mntmNewMenuItem);
+//		frame.getContentPane().setLayout(null);
 		
 		JMenuItem table = new JMenuItem("Create/Activate Tables");
 		mnNewMenu.add(table);
@@ -176,16 +176,16 @@ public class GeneralWindow {
 			}
 		});
 
-		mntmNewMenuItem.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				BDWorkers.initBD("Workers.db");
-				BDetained.initBD("Detained.db");
-
-			}
-		});
+//		mntmNewMenuItem.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//
+//				BDWorkers.initBD("Workers.db");
+//				BDetained.initBD("Detained.db");
+//
+//			}
+//		});
 		
 		table.addActionListener(new ActionListener() {
 			
@@ -225,7 +225,7 @@ public class GeneralWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				new WindowManageDetained();
+				new WindowManageDetained(police);
 				frame.dispose();
 			}
 		});

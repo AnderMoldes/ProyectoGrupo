@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -13,21 +14,29 @@ public class PoliceStation implements Serializable{
 	private String name;
 	private int numWorkers;
 	private String address;
-	private List<Workers> workers;
-	private List<Detained> detained;
-	private List<Vehicle> vehicles;
+	private ArrayList<Workers> workers;
+	private ArrayList<Detained> detained;
+	private ArrayList<Vehicle> vehicles;
+	private HashMap<Asignable, ArrayList<Detained>> hmWorDetai;
+	private HashMap<Workers, ArrayList<Vehicle>> hmWorVehi;
+
+	
+
+	
 
 	public PoliceStation(String name, int numWorkers, String address, ArrayList<Workers> workers,
-			ArrayList<Detained> detained, ArrayList<Vehicle> vehicles) {
+			ArrayList<Detained> detained, ArrayList<Vehicle> vehicles,
+			HashMap<Asignable, ArrayList<Detained>> hmWorDetai, HashMap<Workers, ArrayList<Vehicle>> hmWorVehi) {
 		super();
 		this.name = name;
 		this.numWorkers = numWorkers;
 		this.address = address;
-		this.workers = new ArrayList<Workers>(workers);
-		this.detained = new ArrayList<Detained>(detained);
-		this.vehicles = new ArrayList<Vehicle>(vehicles);
+		this.workers = workers;
+		this.detained = detained;
+		this.vehicles = vehicles;
+		this.hmWorDetai = hmWorDetai;
+		this.hmWorVehi = hmWorVehi;
 	}
-
 	public PoliceStation() {
 		super();
 		this.name = "";
@@ -36,57 +45,108 @@ public class PoliceStation implements Serializable{
 		this.workers = new ArrayList<Workers>();
 		this.detained = new ArrayList<Detained>();
 		this.vehicles = new ArrayList<Vehicle>();
+		this.hmWorDetai = new HashMap<Asignable,ArrayList<Detained>>();
+		this.hmWorVehi = new HashMap<Workers, ArrayList<Vehicle>>();
+		
 	}
+	
 
+	/**
+	 * @return the name
+	 */
 	public String getName() {
 		return name;
 	}
-
+	/**
+	 * @param name the name to set
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	/**
+	 * @return the numWorkers
+	 */
 	public int getNumWorkers() {
 		return numWorkers;
 	}
-
+	/**
+	 * @param numWorkers the numWorkers to set
+	 */
 	public void setNumWorkers(int numWorkers) {
 		this.numWorkers = numWorkers;
 	}
-
+	/**
+	 * @return the address
+	 */
 	public String getAddress() {
 		return address;
 	}
-
+	/**
+	 * @param address the address to set
+	 */
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
+	/**
+	 * @return the workers
+	 */
 	public ArrayList<Workers> getWorkers() {
-		return (ArrayList<Workers>) workers;
+		return workers;
 	}
-
+	/**
+	 * @param workers the workers to set
+	 */
 	public void setWorkers(ArrayList<Workers> workers) {
-		this.workers = new ArrayList<Workers>(workers);
+		this.workers = workers;
 	}
-
+	/**
+	 * @return the detained
+	 */
 	public ArrayList<Detained> getDetained() {
-		return (ArrayList<Detained>) detained;
+		return detained;
 	}
-
+	/**
+	 * @param detained the detained to set
+	 */
 	public void setDetained(ArrayList<Detained> detained) {
-		this.detained = new ArrayList<Detained>(detained);;
+		this.detained = detained;
 	}
-	
-	
+	/**
+	 * @return the vehicles
+	 */
 	public ArrayList<Vehicle> getVehicles() {
-		return (ArrayList<Vehicle>) vehicles;
+		return vehicles;
 	}
-
+	/**
+	 * @param vehicles the vehicles to set
+	 */
 	public void setVehicles(ArrayList<Vehicle> vehicles) {
-		this.vehicles = new ArrayList<Vehicle>(vehicles);;
+		this.vehicles = vehicles;
 	}
-
+	/**
+	 * @return the hmWorDetai
+	 */
+	public HashMap<Asignable, ArrayList<Detained>> getHmWorDetai() {
+		return hmWorDetai;
+	}
+	/**
+	 * @param hmWorDetai the hmWorDetai to set
+	 */
+	public void setHmWorDetai(HashMap<Asignable, ArrayList<Detained>> hmWorDetai) {
+		this.hmWorDetai = hmWorDetai;
+	}
+	/**
+	 * @return the hmWorVehi
+	 */
+	public HashMap<Workers, ArrayList<Vehicle>> getHmWorVehi() {
+		return hmWorVehi;
+	}
+	/**
+	 * @param hmWorVehi the hmWorVehi to set
+	 */
+	public void setHmWorVehi(HashMap<Workers, ArrayList<Vehicle>> hmWorVehi) {
+		this.hmWorVehi = hmWorVehi;
+	}
 	public void saveFile(String fileName) {
 		try {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName));
@@ -98,6 +158,8 @@ public class PoliceStation implements Serializable{
 			this.setName(police.getName());
 			this.setWorkers(police.getWorkers());
 			this.setVehicles(police.getVehicles());
+			this.setHmWorDetai(police.getHmWorDetai());
+			this.setHmWorVehi(police.getHmWorVehi());
 			
 			ois.close();
 		} catch (IOException e) {

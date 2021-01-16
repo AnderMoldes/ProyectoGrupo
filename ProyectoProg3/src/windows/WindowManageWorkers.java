@@ -180,7 +180,6 @@ public class WindowManageWorkers extends JFrame {
 			}
 		});
 	}
-	// M�todos
 
 	public void cargarDatosComboBox() {
 
