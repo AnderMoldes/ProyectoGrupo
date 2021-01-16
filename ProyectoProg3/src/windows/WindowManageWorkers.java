@@ -60,14 +60,20 @@ public class WindowManageWorkers extends JFrame {
 		modelWorker1 = new DefaultListModel<Vehicle>();
 
 		listVehicle = new JList(modelWorker1);
-		listVehicle.setBounds(39, 232, 267, 340);
-		contentPane.add(listVehicle);
+		JScrollPane scrollListVehicle = new JScrollPane(listVehicle);
+		scrollListVehicle.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollListVehicle.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollListVehicle.setBounds(39, 232, 267, 340);
+		contentPane.add(scrollListVehicle);
 
 		DefaultListModel<Vehicle> modelWorker2 = new DefaultListModel();
 
 		JList listManage = new JList(modelWorker2);
-		listManage.setBounds(468, 232, 267, 340);
-		contentPane.add(listManage);
+		JScrollPane scrollListManage = new JScrollPane(listManage);
+		scrollListManage.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollListManage.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollListManage.setBounds(468, 232, 267, 340);
+		contentPane.add(scrollListManage);
 
 		JButton bmanageRight = new JButton("=>");
 		bmanageRight.setBackground(Color.RED);

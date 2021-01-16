@@ -53,13 +53,16 @@ public class VehicleWindow extends JFrame{
 	JComboBox<ColourEnum> comboColour;
 	DefaultListModel<Object> modelVehicles = new DefaultListModel();
 	JList vehicleJList = new JList(modelVehicles);
+	JScrollPane scrollVehicle = new JScrollPane(vehicleJList);
+	
 	
 	private JPanel contentPane;
 	
 	ArrayList<Vehicle> al = new ArrayList<>();
 	
 	public VehicleWindow(){
-		
+		scrollVehicle.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollVehicle.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 807, 559);
@@ -136,8 +139,8 @@ public class VehicleWindow extends JFrame{
 		
 		
 		
-		contentPane.add(vehicleJList);
-		vehicleJList.setBounds(72, 234, 503, 143);
+		contentPane.add(scrollVehicle);
+		scrollVehicle.setBounds(72, 234, 503, 143);
 		
 		JButton bback = new JButton("Back");
 		bback.setBounds(10, 417, 89, 23);

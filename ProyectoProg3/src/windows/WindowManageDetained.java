@@ -13,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import classes.Arrested;
@@ -55,16 +57,22 @@ public class WindowManageDetained extends JFrame {
 
 		listDetained = new JList<>(modelDetained1);
 		listDetained.setBackground(Color.WHITE);
-		listDetained.setBounds(39, 232, 267, 340);
-		contentPane.add(listDetained);
+		JScrollPane scrollDetained = new JScrollPane(listDetained);
+		scrollDetained.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollDetained.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollDetained.setBounds(39, 232, 267, 340);
+		contentPane.add(scrollDetained);
 		cargarDatosJlist();
 
 		DefaultListModel<Detained> modelDetained2 = new DefaultListModel();
 
 		JList listManage = new JList(modelDetained2);
 		listManage.setBackground(Color.WHITE);
-		listManage.setBounds(468, 232, 267, 340);
-		contentPane.add(listManage);
+		JScrollPane scrollListManage = new JScrollPane(listManage);
+		scrollListManage.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollListManage.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollListManage.setBounds(468, 232, 267, 340);
+		contentPane.add(scrollListManage);
 
 		JButton bmanageRight = new JButton("=>");
 		bmanageRight.setBackground(Color.CYAN);
