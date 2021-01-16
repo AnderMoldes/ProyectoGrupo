@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -12,6 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import classes.Workers;
+
 
 public class WindowManageWorkers extends JFrame{
 	private JPanel contentPane;
@@ -26,13 +30,15 @@ public class WindowManageWorkers extends JFrame{
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		DefaultListModel<Workers> modeloWorker1 = new DefaultListModel();
 		
-		
-		JList listVehicle = new JList();
+		JList listVehicle = new JList(modeloWorker1);
 		listVehicle.setBounds(39, 232, 267, 340);
 		contentPane.add(listVehicle);
 		
-		JList listManage = new JList();
+		DefaultListModel<Workers> modeloWorker2 = new DefaultListModel();
+		
+		JList listManage = new JList(modeloWorker2);
 		listManage.setBounds(468, 232, 267, 340);
 		contentPane.add(listManage);
 		
@@ -81,6 +87,21 @@ public class WindowManageWorkers extends JFrame{
 				// TODO Auto-generated method stub
 				new GeneralWindow();
 				dispose();
+			}
+		});
+		
+		bmanageRight.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				int pos = listVehicle.getSelectedIndex();
+				if(pos!=-1) {
+					modeloWorker2.addElement(modeloWorker1.get(pos));
+					modeloWorker1.remove(pos);
+					listManage.setModel(modeloWorker2);
+					listVehicle.setModel(modeloWorker1);
+				}
 			}
 		});
 	}
