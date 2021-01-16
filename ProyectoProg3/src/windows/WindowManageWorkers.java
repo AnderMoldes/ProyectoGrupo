@@ -14,6 +14,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import classes.Vehicle;
 import classes.Workers;
 
 
@@ -30,13 +31,13 @@ public class WindowManageWorkers extends JFrame{
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		DefaultListModel<Workers> modelWorker1 = new DefaultListModel();
+		DefaultListModel<Vehicle> modelWorker1 = new DefaultListModel();
 		
 		JList listVehicle = new JList(modelWorker1);
 		listVehicle.setBounds(39, 232, 267, 340);
 		contentPane.add(listVehicle);
 		
-		DefaultListModel<Workers> modelWorker2 = new DefaultListModel();
+		DefaultListModel<Vehicle> modelWorker2 = new DefaultListModel();
 		
 		JList listManage = new JList(modelWorker2);
 		listManage.setBounds(468, 232, 267, 340);
