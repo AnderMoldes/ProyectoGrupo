@@ -104,6 +104,21 @@ public class WindowManageWorkers extends JFrame{
 				}
 			}
 		});
+		
+		bmanageLeft.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				int pos = listVehicle.getSelectedIndex();
+				if(pos!=-1) {
+					modeloWorker1.addElement(modeloWorker2.get(pos));
+					modeloWorker2.remove(pos);
+					listManage.setModel(modeloWorker1);
+					listVehicle.setModel(modeloWorker2);
+				}
+			}
+		});
 	}
 
 }
