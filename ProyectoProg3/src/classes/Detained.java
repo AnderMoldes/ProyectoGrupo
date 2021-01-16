@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class Detained {
 	
-	public static int container= 1;
 	
 	protected int identificative;
 	protected String name;
@@ -18,7 +17,7 @@ public class Detained {
 
 	public Detained(int identificative, String name, String lastName, int age, String gender) {
 		super();
-		this.identificative = container++;
+		this.identificative = identificative;
 		this.name = name;
 		this.lastName = lastName;
 		this.age = age;
@@ -29,7 +28,7 @@ public class Detained {
 
 	public Detained() {
 		super();
-		this.identificative= container++;
+		this.identificative= 0;
 		this.name = "";
 		this.lastName = "";
 		this.age = 0;
@@ -37,11 +36,6 @@ public class Detained {
 	}
 	
 	
-
-	public static int getContainer() {
-		return container++;
-	}
-
 	public int getIdentificative() {
 		return identificative;
 	}

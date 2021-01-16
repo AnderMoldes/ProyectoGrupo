@@ -49,6 +49,8 @@ public class GeneralWindow {
 	private JTextField textField_2;
 	private JTable table;
 	private JTextField textField_4;
+	
+
 
 	public GeneralWindow() {
 		BDWorkers cc = new BDWorkers();
@@ -169,7 +171,7 @@ public class GeneralWindow {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new WindowDetained((Arrested) detained, police, null);
+				new WindowDetained(null, police);
 				frame.dispose();
 			}
 		});

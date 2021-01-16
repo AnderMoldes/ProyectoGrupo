@@ -31,7 +31,7 @@ public class Fined extends Detained {
 		this.description = description;
 	}
 
-	public double getPayment() {
+	public int getPayment() {
 		return payment;
 	}
 
@@ -49,7 +49,7 @@ public class Fined extends Detained {
 
 	@Override
 	public String toString() {
-		return " Description: " + description + ". Citizenship: " + citizenship
+		return " Fined= Description: " + description + ". Citizenship: " + citizenship
 				+ ". Payment: " + payment + ". Name: " + name + " " 
 				+ lastName + ". Age: " + age + ". Gender: " + gender ;
 	}

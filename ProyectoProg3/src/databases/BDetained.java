@@ -61,7 +61,7 @@ public class BDetained {
 				
 				log(Level.SEVERE, "The table " + nombreBD + " created", null);
 			} catch (SQLException e) {
-				if (!e.getMessage().equals("table " + nombreBD + " already exists")) // Este error sí es correcto si la
+				if (!e.getMessage().equals("table " + nombreBD + " already exists")) // Este error sï¿½ es correcto si la
 																						// tabla ya existe
 					log(Level.SEVERE, "The table " + nombreBD + " already exists", e);
 			}
@@ -82,7 +82,7 @@ public class BDetained {
 				
 				log(Level.SEVERE, "The table " + nombreBD + " created", null);
 			} catch (SQLException e) {
-				if (!e.getMessage().equals("table " + nombreBD + " already exists")) // Este error sí es correcto si la
+				if (!e.getMessage().equals("table " + nombreBD + " already exists")) // Este error sï¿½ es correcto si la
 																						// tabla ya existe
 					log(Level.SEVERE, "The table " + nombreBD + " already exists", e);
 			}
@@ -96,23 +96,26 @@ public class BDetained {
 		return connection;
 	}
 
+	public static Statement getStatement() {
+		return statement;
+	}
 
 	// InsertarDatos con preparedStatement
 	public static void insertIntoPrepStat(Arrested arrested) {
 		try {
 			PreparedStatement insertSql = connection.prepareStatement(
-					"INSERT INTO DetainedTable( name, LastName, age, gender, numberOfArrest, description, jailRelease, cityzenship) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+					"INSERT INTO DetainedTable(ID, name, LastName, age, gender, numberOfArrest, description, jailRelease, cityzenship) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			Statement stmtForId= connection.createStatement();
 			
 			//insertSql.setLong(1, arrested.getIdentificative());
-			insertSql.setString(1, arrested.getName());
-			insertSql.setString(2, arrested.getLastName());
-			insertSql.setLong(3, arrested.getAge());
-			insertSql.setString(4, arrested.getGender());
-			insertSql.setLong(5, arrested.getNumberOfArrest());
-			insertSql.setString(6, arrested.getDescription());
-			insertSql.setString(7, arrested.getJailRelease());
-			insertSql.setString(8, arrested.getCitizenship().toString());
+			insertSql.setString(2, arrested.getName());
+			insertSql.setString(3, arrested.getLastName());
+			insertSql.setLong(4, arrested.getAge());
+			insertSql.setString(5, arrested.getGender());
+			insertSql.setLong(6, arrested.getNumberOfArrest());
+			insertSql.setString(7, arrested.getDescription());
+			insertSql.setString(8, arrested.getJailRelease());
+			insertSql.setString(9, arrested.getCitizenship().toString());
 		
 
 			insertSql.executeUpdate();
@@ -132,20 +135,27 @@ public class BDetained {
 		}
 	}
 
-	public static ArrayList<Object[]> consultarDatosArrested(String nombreBD) throws SQLException {
+	public  ArrayList<Arrested> consultarDatosArrested(){
 	
-		ArrayList<Object[]> datos = new ArrayList<Object[]>();
-		String consultaSQL = "SELECT * FROM " + nombreBD + ";";
+		ArrayList<Arrested> datos = new ArrayList<Arrested>();
+		String consultaSQL = "SELECT * FROM DetainedTable;";
 		try {
 			
 			ResultSet rs = connection.createStatement().executeQuery(consultaSQL);
 			
 			while (rs.next()) {
-				Object filas[]= new Object[9];
-				for (int i = 0; i < filas.length; i++) {
-					filas[i]= rs.getObject(i+1);
-				}
-				datos.add(filas);
+				Arrested arrested= new Arrested();
+				arrested.setIdentificative(rs.getInt(1));
+				arrested.setName(rs.getString(2));
+				arrested.setLastName(rs.getString(3));
+				arrested.setAge(rs.getInt(4));
+				arrested.setGender(rs.getString(5));
+				arrested.setNumberOfArrest((rs.getInt(6)));
+				arrested.setDescription(rs.getString(7));
+				arrested.setJailRelease(rs.getString(8));
+				Country c= Country.valueOf(rs.getString(9));
+				arrested.setCitizenship(c);
+				datos.add(arrested); 
 			}
 			
 			rs.close();
@@ -155,30 +165,10 @@ public class BDetained {
 		}
 		return datos;
 	}
-	public static void update(Arrested arrested) {
-		try (PreparedStatement stmt = connection.prepareStatement("UPDATE DetainedTable SET name=?, LastName=?, age=?, gender=?, numberOfArrest=?, description=?, jailRelease=?, cityzenship=?   WHERE identificative=?")) {
-			stmt.setInt(1, arrested.getIdentificative());
-			stmt.setString(2, arrested.getName());
-			stmt.setString(3, arrested.getLastName());
-			stmt.setInt(4, arrested.getAge());
-			stmt.setString(5, arrested.getGender().toString());
-			stmt.setInt(6, arrested.getNumberOfArrest());
-			stmt.setString(7, arrested.getDescription());
-			stmt.setString(8, arrested.getJailRelease());
-			stmt.setString(9, arrested.getCitizenship().toString());
-			
-			stmt.executeUpdate();
-			
-			log(Level.SEVERE, "Completed", null);
-			
-		} catch (SQLException e) {
-			log(Level.SEVERE, "No se pudo guardar el usuario en la BD", e);
-		}
-		
-	}
+	
 
-	public static void delete(Arrested arrested) {
-		try (PreparedStatement stmt = connection.prepareStatement("DELETE FROM user WHERE identificative=?")) {
+	public  void delete(Arrested arrested) {
+		try (PreparedStatement stmt = connection.prepareStatement("DELETE FROM DetainedTable WHERE ID=?")) {
 			stmt.setInt(1, arrested.getIdentificative());
 			stmt.executeUpdate();
 			
@@ -195,18 +185,18 @@ public class BDetained {
 	public static void insertIntoPrepStatFained(Fined fained) {
 		try {
 			PreparedStatement insertSql = connection.prepareStatement(
-					"INSERT INTO FainedTable( name, LastName, age, gender, description, cityzenship, payment) VALUES (?, ?, ?, ?, ?, ?, ?)");
+					"INSERT INTO FainedTable(ID, name, LastName, age, gender, description, cityzenship, payment) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 			
 			Statement stmtForId= connection.createStatement();
 			
 			//insertSql.setLong(1, fained.getIdentificative());
-			insertSql.setString(1, fained.getName());
-			insertSql.setString(2, fained.getLastName());
-			insertSql.setLong(3,fained.getAge());
-			insertSql.setString(4, fained.getGender());
-			insertSql.setString(5, fained.getDescription());
-			insertSql.setString(6, fained.getCitizenship().toString());
-			insertSql.setInt(7, (int) fained.getPayment());
+			insertSql.setString(2, fained.getName());
+			insertSql.setString(3, fained.getLastName());
+			insertSql.setLong(4,fained.getAge());
+			insertSql.setString(5, fained.getGender());
+			insertSql.setString(6, fained.getDescription());
+			insertSql.setString(7, fained.getCitizenship().toString());
+			insertSql.setLong(8,  fained.getPayment());
 
 			insertSql.executeUpdate();
 			
@@ -225,40 +215,26 @@ public class BDetained {
 		}
 	}
 
-	public static ArrayList<Object[]> consultarDatosFained(String nombreBD) throws SQLException {
-//		String consultaSQL = "SELECT * FROM " + nombreBD + ";";
-//		try {
-//			ResultSet rs = connection.createStatement().executeQuery(consultaSQL);
-//			while (rs.next()) {
-//				int identificative = rs.getInt("identificative");
-//				String name = rs.getString("name");
-//				String lastname = rs.getString("lastname");
-//				int age = rs.getInt("age");
-//				String gender = rs.getString("gender");
-//				String Description = rs.getString("Description");
-//				String Citizenship = rs.getString("Citizenship");
-//				int Payment = rs.getInt("Payment");
-//				System.out.println("Identificative of the Arrested: " + identificative + ". Name: " + name
-//						+ ". Lastname: " + lastname + ". Age: " + age + ". Gender: " + gender + ". Description: "
-//						+ Description + ". Citizenship: " + Citizenship + ". Payment: " + Payment);
-//			}
-//			rs.close();
-//		} catch (Exception e) {
-//			log(Level.SEVERE, "ERROR AL RECUPERAR DATOS", e);
-//		}
+	public  ArrayList<Fined> consultarDatosFained()  {
 		
-		ArrayList<Object[]> datos = new ArrayList<Object[]>();
-		String consultaSQL = "SELECT * FROM " + nombreBD + ";";
+		ArrayList<Fined> datos = new ArrayList<Fined>();
+		String consultaSQL = "SELECT * FROM FainedTable;";
 		try {
 			
 			ResultSet rs = connection.createStatement().executeQuery(consultaSQL);
 			
 			while (rs.next()) {
-				Object filas[]= new Object[8];
-				for (int i = 0; i < filas.length; i++) {
-					filas[i]= rs.getObject(i+1);
-				}
-				datos.add(filas);
+				Fined fined= new Fined();
+				fined.setIdentificative(rs.getInt(1));
+				fined.setName(rs.getString(2));
+				fined.setLastName(rs.getString(3));
+				fined.setAge(rs.getInt(4));
+				fined.setGender(rs.getString(5));
+				fined.setDescription(rs.getString(6));
+				Country c= Country.valueOf(rs.getString(7));
+				fined.setCitizenship(c);
+				fined.setPayment(rs.getInt(8));
+				datos.add(fined); 
 			}
 			
 			rs.close();
@@ -269,27 +245,16 @@ public class BDetained {
 		return datos;
 	}
 	
-	public static void updateFined(Fined fined) {
-		try (PreparedStatement stmt = connection.prepareStatement("UPDATE DetainedTable SET name=?, LastName=?, age=?, gender=?, numberOfArrest=?, description=?, jailRelease=?, cityzenship=?   WHERE identificative=?")) {
-			
-			stmt.setString(1, fined.getName());
-			stmt.setString(2, fined.getLastName());
-			stmt.setInt(3, fined.getAge());
-			stmt.setString(4, fined.getGender().toString());
-			stmt.setString(5, fined.getDescription());
-			stmt.setString(6, fined.getCitizenship().toString());
-			stmt.setInt(7, (int) fined.getPayment());
-			
+	
+	public  void deleteFined(Fined fined) {
+		try (PreparedStatement stmt = connection.prepareStatement("DELETE FROM FainedTable WHERE ID=?")) {
+			stmt.setInt(1, fined.getIdentificative());
 			stmt.executeUpdate();
 			
-			log(Level.SEVERE, "Completed", null);
-			
 		} catch (SQLException e) {
-			log(Level.SEVERE, "No se pudo guardar el usuario en la BD", e);
+			log(Level.SEVERE, "No se pudo borrar el usuario en la BD", e);
 		}
-		
-	}
-		
+	}	
 	
 	
 

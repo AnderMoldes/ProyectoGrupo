@@ -52,7 +52,7 @@ public class WindowWorkers {
 	Workers2 workers2;
 	Boss boss;
 	Workers workers;
-	private JFrame frame;
+	protected JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -68,6 +68,8 @@ public class WindowWorkers {
 	private MiModelo modelWorkers;
 	private int clic_tabla = 0;
 	BDWorkers conexion;
+	
+
 
 	public class MiModelo extends DefaultTableModel {
 		public boolean isCellEditable(int row, int column) {
@@ -204,7 +206,6 @@ public class WindowWorkers {
 
 		conexion = new BDWorkers();
 		workers2 = new Workers2();
-		boss = new Boss();
 		ArrayList<Workers2> list = conexion.consultarDatos();
 
 		if (list.size() > 0) {
@@ -334,7 +335,6 @@ public class WindowWorkers {
 		Workers2 workers2 = new Workers2();
 		workers2.setCode(Integer.parseInt(textArea_5.getText()));
 		conexion.delete(workers2);
-
 	}
 
 	public void delete_boss() {
@@ -583,7 +583,7 @@ public class WindowWorkers {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int input = JOptionPane.showConfirmDialog(btnNewButton_1,
+				int input = JOptionPane.showConfirmDialog(btnNewButton,
 						"Are you sure you want to create? Remember that the gender field is necessary", "data creation",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if (input == 0) {
@@ -699,7 +699,7 @@ public class WindowWorkers {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int input = JOptionPane.showConfirmDialog(btnNewButton_1, "Are you sure you want to delete?",
+				int input = JOptionPane.showConfirmDialog(btnNewButton_3, "Are you sure you want to delete?",
 						"data erasure", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if (input == 0) {
 
@@ -728,6 +728,8 @@ public class WindowWorkers {
 				
 			}
 		});
+		
+		
 
 		frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
 		frame.setTitle("POLICE MANAGEMENT");
@@ -735,4 +737,6 @@ public class WindowWorkers {
 		frame.setVisible(true);
 
 	}
+	
+	
 }

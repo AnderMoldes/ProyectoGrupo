@@ -294,9 +294,7 @@ public class BDWorkers{
 		}
 	}
 
-	public static Connection getConnection() {
-		return connection;
-	}
+	
 
 
 	public static Statement getStatement() {
