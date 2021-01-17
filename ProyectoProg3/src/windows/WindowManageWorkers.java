@@ -126,8 +126,12 @@ public class WindowManageWorkers extends JFrame {
 		contentPane.add(lmanage);
 
 		JButton bback = new JButton("Back");
-		bback.setBounds(340, 533, 89, 23);
+		bback.setBounds(341, 503, 89, 23);
 		contentPane.add(bback);
+		
+		JButton btnSave = new JButton("Save");
+		btnSave.setBounds(341, 537, 89, 23);
+		contentPane.add(btnSave);
 
 		PoliceStation policeStation = new PoliceStation();
 		Workers empleado = (Workers) comboWorkers.getSelectedItem();

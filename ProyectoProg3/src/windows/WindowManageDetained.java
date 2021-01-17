@@ -153,12 +153,14 @@ public class WindowManageDetained extends JFrame {
 		contentPane.add(lmanage);
 
 		JButton bback = new JButton("Back");
-		bback.setBounds(340, 533, 89, 23);
+		bback.setBounds(341, 503, 89, 23);
 		contentPane.add(bback);
 		
-		//Worker = Empleado
-		//Jinete = Detained
-
+		JButton btnSave = new JButton("Save");
+		btnSave.setBounds(341, 537, 89, 23);
+		contentPane.add(btnSave);
+		
+		
 		bback.addActionListener(new ActionListener() {
 
 			@Override
