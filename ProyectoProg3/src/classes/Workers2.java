@@ -21,7 +21,7 @@ public class Workers2 extends Workers {
 
 	@Override
 	public String toString() {
-		return " worker" +code+ ": Function: Worker. Grade: " + grade + ". Name: " + name + ", " + surname + ". Gender: "
+		return " worker " +code+ ": Function: Worker. Grade: " + grade + ". Name: " + name + ", " + surname + ". Gender: "
 				+ gender + ". Specialty: " + Specialty + ". He/She start workin in " + startWorkingIn + ". Assesment: "
 				+ Assesment;
 	}

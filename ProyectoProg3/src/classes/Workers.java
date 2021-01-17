@@ -115,7 +115,7 @@ public class Workers implements Asignable,Serializable, Comparable<Workers>{
 
 	@Override
 	public String toString() {
-		return " worker " +code+ ": Function: Worker. Grade: " + grade + ". Name: " + name + ", " + surname + "Gender: "
+		return " worker: " +code+ ": Function: Worker. Grade: " + grade + ". Name: " + name + ", " + surname + "Gender: "
 				+ gender + ". Specialty: " + Specialty + ". He/She start workin in " + startWorkingIn + ". Assesment: "
 				+ Assesment;
 	}
