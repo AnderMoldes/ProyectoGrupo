@@ -1,9 +1,6 @@
 package classes;
 
-//public enum Specialty {
-//	DRIVER,DOCTOR,SECURITY
-//
-//}
+
 public class Specialty {
 public static enum SpecialtyEnum {
 	DRIVER ("DRIVER"), 

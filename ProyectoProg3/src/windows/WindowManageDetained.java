@@ -71,7 +71,8 @@ public class WindowManageDetained extends JFrame {
 		for (Workers workers : policeS.getWorkers()) {
 			comboWorkers.addItem((Asignable) workers);
 		}
-
+		
+		//Scroll and list for the left JList
 		modelDetained1 = new DefaultListModel<>();
 
 		listDetained = new JList<>(modelDetained1);
@@ -95,7 +96,7 @@ public class WindowManageDetained extends JFrame {
 			modelDetained1.addElement(detained);
 		}
 		
-
+		//Scroll and list for the right JLIst
 		DefaultListModel modelDetained2 = new DefaultListModel();
 
 		JList listManage = new JList(modelDetained2);
@@ -116,7 +117,7 @@ public class WindowManageDetained extends JFrame {
 			}
 		} 
 		
-
+		//Objects from panels
 		JButton bmanageRight = new JButton("=>");
 		bmanageRight.setBackground(Color.CYAN);
 		bmanageRight.setForeground(Color.BLACK);
@@ -160,7 +161,7 @@ public class WindowManageDetained extends JFrame {
 		btnSave.setBounds(341, 537, 89, 23);
 		contentPane.add(btnSave);
 		
-		
+		//Events
 		bback.addActionListener(new ActionListener() {
 
 			@Override

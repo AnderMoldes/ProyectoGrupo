@@ -8,19 +8,16 @@ import classes.Brand.BrandEnum;
 import classes.Colour.ColourEnum;
 
 public class Vehicle implements Serializable {
-//	private static int counter = 1;
 	private String licensePlate;
 	private BrandEnum brand;
 	private ColourEnum colour;
 	private VehicleTypes vehicles;
-	private List<Workers> polices;
 
-	public Vehicle(BrandEnum brand, ColourEnum colour, /*ArrayList<Workers> polices,*/VehicleTypes vehicles,String licensePlate) {
+	public Vehicle(BrandEnum brand, ColourEnum colour, VehicleTypes vehicles,String licensePlate) {
 		super();
 		this.licensePlate = licensePlate;
 		this.brand = brand;
 		this.colour = colour;
-		//this.polices = polices;
 		this.vehicles = vehicles;
 	}
 
@@ -28,7 +25,6 @@ public class Vehicle implements Serializable {
 		super();
 		this.brand = BrandEnum.SEAT;
 		this.colour = ColourEnum.BLACK;
-	//	this.polices = new ArrayList<Workers>();
 		this.vehicles = VehicleTypes.PATROLCAR;
 		this.licensePlate = "";
 	}
@@ -72,13 +68,6 @@ public class Vehicle implements Serializable {
 		this.vehicles = vehicles;
 	}
 
-//	public ArrayList<Workers> getPolices() {
-//		return (ArrayList<Workers>) polices;
-//	}
-//
-//	public void setPolices(ArrayList<Workers> polices) {
-//		this.polices = polices;
-//	}
 	
 
 	@Override

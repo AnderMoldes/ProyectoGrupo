@@ -17,7 +17,7 @@ import classes.Colour.ColourEnum;
 import classes.PoliceStation;
 import classes.Vehicle;
 import classes.VehicleTypes;
-import classes.GeneradorMatriculasV;
+import classes.PlateGenerator;
 import databases.BDWorkers;
 import classes.Vehicle;
 import java.awt.event.*;
@@ -74,7 +74,8 @@ public class VehicleWindow extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+		
+		//Items
 		JLabel brandLabel = new JLabel("Brand:");
 		brandLabel.setBounds(645, 190, 127, 44);
 		contentPane.add(brandLabel);
@@ -175,7 +176,9 @@ public class VehicleWindow extends JFrame {
 		JButton btnGeneratePlate = new JButton("Generate plate");
 		btnGeneratePlate.setBounds(299, 156, 159, 23);
 		contentPane.add(btnGeneratePlate);
-
+		
+		
+		//Events
 		patrolCar.addActionListener(new ActionListener() {
 
 			@Override
@@ -252,10 +255,10 @@ public class VehicleWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GeneradorMatriculasV generar = new GeneradorMatriculasV();
+				PlateGenerator generar = new PlateGenerator();
 				Random rand = new Random();
-				String matricula = generar.generarMatriculaLetra(rand, "", 0, 4) + " "
-						+ generar.generarMatriculaNum(rand, "", 0, 3);
+				String matricula = generar.plateLeterGenerator(rand, "", 0, 4) + " "
+						+ generar.generateNumbPlate(rand, "", 0, 3);
 				tField.setText(matricula);
 
 			}
@@ -335,7 +338,7 @@ public class VehicleWindow extends JFrame {
 		});
 
 	}
-
+	//Function to save
 	private void doCSV() {
 		// TODO Auto-generated method stub
 		try {

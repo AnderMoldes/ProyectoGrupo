@@ -107,7 +107,7 @@ public class BDetained {
 					"INSERT INTO DetainedTable(ID, name, LastName, age, gender, numberOfArrest, description, jailRelease, cityzenship) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			Statement stmtForId= connection.createStatement();
 			
-			//insertSql.setLong(1, arrested.getIdentificative());
+			
 			insertSql.setString(2, arrested.getName());
 			insertSql.setString(3, arrested.getLastName());
 			insertSql.setLong(4, arrested.getAge());
@@ -189,7 +189,6 @@ public class BDetained {
 			
 			Statement stmtForId= connection.createStatement();
 			
-			//insertSql.setLong(1, fained.getIdentificative());
 			insertSql.setString(2, fained.getName());
 			insertSql.setString(3, fained.getLastName());
 			insertSql.setLong(4,fained.getAge());
