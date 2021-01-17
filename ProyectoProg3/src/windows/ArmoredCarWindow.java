@@ -30,7 +30,8 @@ public class ArmoredCarWindow extends JFrame {
 		JTextArea text = new JTextArea();
 
 		JButton back = new JButton("Back");
-
+		
+		//Texto donde añadimos informacion sobre el coche armado
 		text.setEditable(false);
 		text.setText(" The armored car is a wheeled armored personnel carrier designed for military\n"
 				+ " and law enforcement use. It is in use by several military forces and law enforcement\n"
