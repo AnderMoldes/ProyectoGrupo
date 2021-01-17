@@ -37,6 +37,8 @@ import databases.BDWorkers;
 import databases.BDetained;
 
 public class WindowManageDetained extends JFrame {
+
+	// Declaramos
 	private JPanel contentPane;
 	BDWorkers conexion;
 	BDetained conexionD;
@@ -50,22 +52,23 @@ public class WindowManageDetained extends JFrame {
 	private JList listDetained;
 
 	public WindowManageDetained(PoliceStation policeStation) {
-		
+
+		// Diseño
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 790, 662);
 		setVisible(true);
-		setLocationRelativeTo( null );
-		
+		setLocationRelativeTo(null);
+
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.LIGHT_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		comboWorkers = new JComboBox<>();
 		comboWorkers.setBackground(Color.CYAN);
 		comboWorkers.setForeground(Color.BLACK);
-		
+
 		policeS = new PoliceStation();
 		conexion = new BDWorkers();
 		ArrayList<Boss> listBoss = conexion.consultarDatosBoss();
@@ -73,13 +76,12 @@ public class WindowManageDetained extends JFrame {
 		policeS.getWorkers().addAll(list);
 		policeS.getWorkers().addAll(listBoss);
 		System.out.println(policeS.toString());
-		
-		
+
 		for (Workers workers : policeS.getWorkers()) {
 			comboWorkers.addItem((Asignable) workers);
 		}
-		
-		//Scroll and list for the left JList
+
+		// Scroll and list for the left JList
 		modelDetained1 = new DefaultListModel<>();
 
 		listDetained = new JList<>(modelDetained1);
@@ -89,7 +91,7 @@ public class WindowManageDetained extends JFrame {
 		scrollDetained.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollDetained.setBounds(39, 232, 267, 340);
 		contentPane.add(scrollDetained);
-		
+
 		policeS = new PoliceStation();
 		conexionD = new BDetained();
 		ArrayList<Arrested> listA = conexionD.consultarDatosArrested();
@@ -97,13 +99,12 @@ public class WindowManageDetained extends JFrame {
 		policeS.getDetained().addAll(listA);
 		policeS.getDetained().addAll(listF);
 		System.out.println(policeS.toString());
-		
-		
+
 		for (Detained detained : policeS.getDetained()) {
 			modelDetained1.addElement(detained);
 		}
-		
-		//Scroll and list for the right JLIst
+
+		// Scroll and list for the right JLIst
 		DefaultListModel modelDetained2 = new DefaultListModel();
 
 		JList listManage = new JList(modelDetained2);
@@ -113,18 +114,18 @@ public class WindowManageDetained extends JFrame {
 		scrollListManage.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollListManage.setBounds(468, 232, 267, 340);
 		contentPane.add(scrollListManage);
-		
-		Asignable asignable= (Asignable) comboWorkers.getSelectedItem();
-		ArrayList<Detained> detainedAsignados= policeS.getHmWorDetai().get(asignable);
+
+		Asignable asignable = (Asignable) comboWorkers.getSelectedItem();
+		ArrayList<Detained> detainedAsignados = policeS.getHmWorDetai().get(asignable);
 		modelDetained2.clear();
-		
+
 		if (detainedAsignados != null) {
 			for (Detained detained : detainedAsignados) {
 				modelDetained2.addElement(detained);
 			}
-		} 
-		
-		//Objects from panels
+		}
+
+		// Objects from panels
 		JButton bmanageRight = new JButton("=>");
 		bmanageRight.setBackground(Color.CYAN);
 		bmanageRight.setForeground(Color.BLACK);
@@ -137,8 +138,6 @@ public class WindowManageDetained extends JFrame {
 		bmanageLeft.setBounds(316, 412, 142, 67);
 		contentPane.add(bmanageLeft);
 
-		
-		
 		comboWorkers.setBounds(39, 88, 696, 42);
 		contentPane.add(comboWorkers);
 
@@ -163,12 +162,13 @@ public class WindowManageDetained extends JFrame {
 		JButton bback = new JButton("Back");
 		bback.setBounds(341, 503, 89, 23);
 		contentPane.add(bback);
-		
+
 		JButton btnSave = new JButton("Save");
 		btnSave.setBounds(341, 537, 89, 23);
 		contentPane.add(btnSave);
-		
-		//Events
+
+		// Events
+		// Boton para volver atras
 		bback.addActionListener(new ActionListener() {
 
 			@Override
@@ -179,60 +179,62 @@ public class WindowManageDetained extends JFrame {
 			}
 		});
 
+		// Boton que mueve hacia la derecha
 		bmanageRight.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				Asignable asignable= (Asignable) comboWorkers.getSelectedItem();
-				ArrayList<Detained> detainedAsignados= policeS.getHmWorDetai().get(asignable);
-				Detained detained= (Detained) listDetained.getSelectedValue();
-				
-				if (detained!= null) {
-					
-					if (detainedAsignados==null) {
-						detainedAsignados= new ArrayList<Detained>(); 
+				Asignable asignable = (Asignable) comboWorkers.getSelectedItem();
+				ArrayList<Detained> detainedAsignados = policeS.getHmWorDetai().get(asignable);
+				Detained detained = (Detained) listDetained.getSelectedValue();
+
+				if (detained != null) {
+
+					if (detainedAsignados == null) {
+						detainedAsignados = new ArrayList<Detained>();
 						detainedAsignados.add(detained);
 						policeS.getHmWorDetai().put(asignable, detainedAsignados);
 						modelDetained2.addElement(detained);
 						modelDetained1.removeElement(detained);
-						
-					}else {
+
+					} else {
 						if (detainedAsignados.indexOf(detained) < 0) {
 							detainedAsignados.add(detained);
 							policeS.getHmWorDetai().put(asignable, detainedAsignados);
 							modelDetained2.addElement(detained);
 							modelDetained1.removeElement(detained);
 						}
-						
+
 					}
 				}
-				
+
 			}
 		});
 
+		// Boton que mueve hacia la izquierda
 		bmanageLeft.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				Asignable asignable= (Asignable) comboWorkers.getSelectedItem();
-				Detained detained= (Detained) listManage.getSelectedValue();
+				Asignable asignable = (Asignable) comboWorkers.getSelectedItem();
+				Detained detained = (Detained) listManage.getSelectedValue();
 				modelDetained2.removeElement(detained);
 				policeS.getHmWorDetai().get(asignable).remove(detained);
 				modelDetained1.addElement(detained);
-				
+
 			}
 		});
-		
+
 		comboWorkers.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Asignable asignable= (Asignable) comboWorkers.getSelectedItem();
-				ArrayList<Detained> detainedAsignados= policeS.getHmWorDetai().get(asignable);
+				Asignable asignable = (Asignable) comboWorkers.getSelectedItem();
+				ArrayList<Detained> detainedAsignados = policeS.getHmWorDetai().get(asignable);
 				modelDetained2.clear();
-				
+
 				if (detainedAsignados != null) {
 					for (Detained detained : detainedAsignados) {
 						modelDetained2.addElement(detained);
@@ -240,7 +242,8 @@ public class WindowManageDetained extends JFrame {
 				}
 			}
 		});
-		
+
+		// Boton guardar
 		btnSave.addActionListener(new ActionListener() {
 
 			@Override
@@ -248,7 +251,6 @@ public class WindowManageDetained extends JFrame {
 				HashMap<Asignable, ArrayList<Detained>> hmWorDetai = new HashMap<Asignable, ArrayList<Detained>>();
 				Properties properties = new Properties();
 				hmWorDetai = policeS.getHmWorDetai();
-				
 
 				for (Entry<Asignable, ArrayList<Detained>> entry : hmWorDetai.entrySet()) {
 					properties.put(entry.getKey(), entry.getValue());
@@ -282,8 +284,7 @@ public class WindowManageDetained extends JFrame {
 			System.out.println(properties.getProperty(clave.toString()));
 
 		}
-		
+
 	}
-	
 
 }
