@@ -14,28 +14,26 @@ import classes.VehicleTypes;
 
 import java.awt.event.*;
 
-public class PatrolCarWindow extends JFrame{
+public class PatrolCarWindow extends JFrame {
 
+	// Declaramos
 	JPanel panelPhoto;
 	JPanel panelText;
-	
 	JLabel image;
-	
 	JTextArea text;
 	JButton back;
-	
-    
-	
+
 	public PatrolCarWindow() {
 		JPanel panelPhoto = new JPanel();
 		JPanel panelText = new JPanel();
-		
+
 		image = new JLabel(new ImageIcon("patrol.png"));
-		
+
 		JTextArea text = new JTextArea();
-		
-		JButton back = new JButton("Back");	
-		
+
+		JButton back = new JButton("Back");
+
+		// Texto donde añadimos informacion sobre el vehiculo patrulla
 		text.setEditable(false);
 		text.setText(" The patrol car is a ground vehicle used by police for transportation during\n "
 				+ " patrols and to enable them to respond to incidents and chases. Typical uses of a police\n"
@@ -46,37 +44,39 @@ public class PatrolCarWindow extends JFrame{
 				+ " Police cars typically have rooftop flashing lights, a siren, and emblems or markings indicating \n"
 				+ " that the vehicle is a police car. Some police cars may have reinforced bumpers and alley lights, for \n"
 				+ " illuminating darkened alleys.");
-		
+
+		// Eventos
 		back.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				
+
 			}
 		});
-		
-		this.setLayout(new GridLayout(2,1));
+
+		// Diseño
+		this.setLayout(new GridLayout(2, 1));
 		panelPhoto.setLayout(new BorderLayout());
-		
+
 		panelPhoto.add(image, BorderLayout.CENTER);
-		
+
 		add(panelPhoto);
 		add(panelText);
-		
+
 		panelPhoto.setLayout(new FlowLayout());
-		
+
 		panelText.setLayout(new BorderLayout());
-		
+
 		panelText.add(text, BorderLayout.CENTER);
 		panelText.add(back, BorderLayout.SOUTH);
-		
+
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setTitle("PATROL CAR");	
+		setTitle("PATROL CAR");
 		pack();
 		setResizable(false);
 		setVisible(true);
 		setLocationRelativeTo(null);
-		
+
 	}
 }

@@ -14,8 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 public class ArmoredCarWindow extends JFrame {
-	
-	//Declaramos
+
+	// Declaramos
 	JPanel panelPhoto;
 	JPanel panelText;
 	JLabel image;
@@ -31,8 +31,8 @@ public class ArmoredCarWindow extends JFrame {
 		JTextArea text = new JTextArea();
 
 		JButton back = new JButton("Back");
-		
-		//Texto donde añadimos informacion sobre el coche armado
+
+		// Texto donde añadimos informacion sobre el coche armado
 		text.setEditable(false);
 		text.setText(" The armored car is a wheeled armored personnel carrier designed for military\n"
 				+ " and law enforcement use. It is in use by several military forces and law enforcement\n"
@@ -43,7 +43,7 @@ public class ArmoredCarWindow extends JFrame {
 				+ " way during terrorist threats, hostage incidents, or encounters with large gatherings\n"
 				+ " of aggressors. The armored car is designed to provide protection from a variety\n"
 				+ " of small arms, explosives and IED threats.");
-		//Eventos
+		// Eventos
 		back.addActionListener(new ActionListener() {
 
 			@Override
@@ -52,7 +52,7 @@ public class ArmoredCarWindow extends JFrame {
 
 			}
 		});
-		
+
 		// Diseño
 		this.setLayout(new GridLayout(2, 1));
 		panelPhoto.setLayout(new BorderLayout());
