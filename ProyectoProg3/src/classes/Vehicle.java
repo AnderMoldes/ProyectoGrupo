@@ -9,15 +9,15 @@ import classes.Colour.ColourEnum;
 
 public class Vehicle implements Serializable {
 //	private static int counter = 1;
-//	private int licensePlate;
+	private String licensePlate;
 	private BrandEnum brand;
 	private ColourEnum colour;
 	private VehicleTypes vehicles;
 	private List<Workers> polices;
 
-	public Vehicle(/*int licensePlate,*/ BrandEnum brand, ColourEnum colour, /*ArrayList<Workers> polices,*/VehicleTypes vehicles) {
+	public Vehicle(BrandEnum brand, ColourEnum colour, /*ArrayList<Workers> polices,*/VehicleTypes vehicles,String licensePlate) {
 		super();
-		//this.licensePlate = counter++;
+		this.licensePlate = licensePlate;
 		this.brand = brand;
 		this.colour = colour;
 		//this.polices = polices;
@@ -30,11 +30,24 @@ public class Vehicle implements Serializable {
 		this.colour = ColourEnum.BLACK;
 	//	this.polices = new ArrayList<Workers>();
 		this.vehicles = VehicleTypes.PATROLCAR;
+		this.licensePlate = "";
 	}
-//
-//	public int getLicensePlate() {
-//		return licensePlate;
-//	}
+	
+	
+
+	/**
+	 * @return the licensePlate
+	 */
+	public String getLicensePlate() {
+		return licensePlate;
+	}
+
+	/**
+	 * @param licensePlate the licensePlate to set
+	 */
+	public void setLicensePlate(String licensePlate) {
+		this.licensePlate = licensePlate;
+	}
 
 	public BrandEnum getBrand() {
 		return brand;
@@ -70,7 +83,7 @@ public class Vehicle implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Brand: " + brand + ".  Colour: " + colour + ".   Vehicle Type: "+vehicles;
+		return "Brand: " + brand + ".  Colour: " + colour + ".   Vehicle Type: "+vehicles+". License Plate: "+licensePlate;
 	}
 
 }

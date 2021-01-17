@@ -142,8 +142,9 @@ public class WindowManageWorkers extends JFrame {
 					BrandEnum bra = BrandEnum.valueOf(data[0]);
 					ColourEnum col = ColourEnum.valueOf(data[1]);
 					VehicleTypes veh = VehicleTypes.valueOf(data[2]);
+					String pla = String.valueOf(data[3]);
 
-					Vehicle v = new Vehicle(bra, col, veh);
+					Vehicle v = new Vehicle(bra, col, veh,pla);
 					modelWorker1.addElement(v);
 
 					policeStation.getVehicles().add(v);

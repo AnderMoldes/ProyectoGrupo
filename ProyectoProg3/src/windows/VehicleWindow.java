@@ -162,6 +162,19 @@ public class VehicleWindow extends JFrame{
 		bcreate.setBounds(649, 156, 112, 23);
 		contentPane.add(bcreate);
 		
+
+		JTextField tField = new JTextField();
+		tField.setBounds(629, 430, 132, 31);
+		contentPane.add(tField);
+		tField.setColumns(10);
+		
+		JLabel lblLicensePlate = new JLabel("License Plate:");
+		lblLicensePlate.setBounds(629, 397, 138, 22);
+		contentPane.add(lblLicensePlate);
+		
+		JButton btnGeneratePlate = new JButton("Generate plate");
+		btnGeneratePlate.setBounds(299, 156, 159, 23);
+		contentPane.add(btnGeneratePlate);
 		
 		
 			
@@ -216,12 +229,14 @@ public class VehicleWindow extends JFrame{
 				VehicleTypes vehicle;
 				BrandEnum brand;
 				ColourEnum colour;
+				String plate;
 				
 				vehicle = (VehicleTypes) comboType.getSelectedItem();
 				brand = (BrandEnum) comboBrand.getSelectedItem();
 				colour = (ColourEnum) comboColour.getSelectedItem();
+				plate = tField.getText();
 				
-				Vehicle v = new Vehicle(brand,colour,vehicle);
+				Vehicle v = new Vehicle(brand,colour,vehicle,plate);
 				policeStation.getVehicles().add(v);
 				
 				modelVehicles.addElement(v);
@@ -266,8 +281,9 @@ public class VehicleWindow extends JFrame{
 							BrandEnum bra = BrandEnum.valueOf(data[0]);
 							ColourEnum col = ColourEnum.valueOf(data[1]);
 							VehicleTypes veh = VehicleTypes.valueOf(data[2]);
+							String pla = String.valueOf(data[3]);
 						
-							Vehicle v = new Vehicle(bra,col,veh);
+							Vehicle v = new Vehicle(bra,col,veh,pla);
 							modelVehicles.addElement(v);
 							policeStation.getVehicles().add(v);
 							line = br.readLine();
@@ -314,7 +330,7 @@ public class VehicleWindow extends JFrame{
 			PrintWriter pw = new PrintWriter(new File("vehicles.txt"));
 			for(int i=0;i<modelVehicles.getSize();i++) {
 				Vehicle v = (Vehicle) modelVehicles.get(i);
-				pw.println(v.getBrand()+" "+v.getColour()+" "+v.getVehicleTypes());
+				pw.println(v.getBrand()+" "+v.getColour()+" "+v.getVehicleTypes()+" "+v.getLicensePlate());
 				al.add(v);
 				policeStation.getVehicles().add(v);	
 			}
