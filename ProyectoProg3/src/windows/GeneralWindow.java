@@ -84,7 +84,7 @@ public class GeneralWindow {
 		btnNewButton.setBounds(500, 65, 97, 130);
 		frame.getContentPane().add(btnNewButton);
 
-		JButton btnNewButton_2 = new JButton("Manage Relations");
+		JButton btnNewButton_2 = new JButton("Vehicles");
 		btnNewButton_2.setBounds(65, 239, 170, 23);
 		frame.getContentPane().add(btnNewButton_2);
 
@@ -232,6 +232,16 @@ public class GeneralWindow {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				new WindowManageDetained(police);
+				frame.dispose();
+			}
+		});
+		
+		btnNewButton_2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new VehicleWindow();
 				frame.dispose();
 			}
 		});

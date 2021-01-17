@@ -98,7 +98,7 @@ public class WindowWorkers {
 
 		public void gestorProperties() throws FileNotFoundException, IOException {
 			propiedades = new Properties();
-			propiedades.load(new FileReader("Workers.properties"));
+			propiedades.load(new FileReader("Vehicles.properties"));
 		}
 
 		public String leerUna(String key, Properties pe) throws FileNotFoundException, IOException {
@@ -799,6 +799,28 @@ public class WindowWorkers {
 					frame.dispose();
 				}
 
+			}
+		});
+		
+		btnNewButton_6.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Map<String, String> list;
+				GestorPropertiesW gest= new GestorPropertiesW();
+				Properties pe= new Properties();
+				try {
+					pe.load(new FileReader("Vehicle.properties"));
+					list= gest.leerTodo(pe);
+					
+					spinner.setValue(list.get("grade"));
+					textField.setText(list.get("name"));
+					textField_1.setText(list.get("surname"));
+					
+				} catch (Exception e2) {
+					
+				}
 			}
 		});
 
