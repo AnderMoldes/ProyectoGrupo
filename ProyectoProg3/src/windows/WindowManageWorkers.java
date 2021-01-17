@@ -39,6 +39,7 @@ public class WindowManageWorkers extends JFrame {
 	private JPanel contentPane;
 	BDWorkers conexion;
 	Workers2 workers2;
+	Workers workers;
 	Boss boss;
 	PoliceStation policeS;
 	private JComboBox<Asignable> comboWorkers;
@@ -165,7 +166,6 @@ public class WindowManageWorkers extends JFrame {
 		}
 
 		policeStation.getVehicles();
-		
 
 		bback.addActionListener(new ActionListener() {
 
@@ -182,24 +182,36 @@ public class WindowManageWorkers extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+
 				Asignable asignable = (Asignable) comboWorkers.getSelectedItem();
+				workers = new Workers();
+				workers = (Workers) asignable;
+
 				ArrayList<Vehicle> vehicleDeclarados = policeStation.getHmWorVehi().get(asignable);
 				Vehicle vehicle = (Vehicle) listVehicle.getSelectedValue();
 
-				if (vehicle != null) {
+				int input = JOptionPane.showConfirmDialog(bmanageRight,
+						"The worker=> " + workers.getName() + " has selected the vehicle=> " + vehicle.getBrand() + ", "
+								+ vehicle.getVehicleTypes() + ".\n                                                 "
+								+ "Are you sure?",
+						" data relation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (input == 0) {
 
-					if (vehicleDeclarados == null) {
-						vehicleDeclarados = new ArrayList<Vehicle>();
-						vehicleDeclarados.add(vehicle);
-						policeS.getHmWorVehi().put(asignable, vehicleDeclarados);
-						modelWorker2.addElement(vehicle);
-						modelWorker1.removeElement(vehicle);
-					} else {
-						if (vehicleDeclarados.indexOf(vehicle) < 0) {
+					if (vehicle != null) {
+
+						if (vehicleDeclarados == null) {
+							vehicleDeclarados = new ArrayList<Vehicle>();
 							vehicleDeclarados.add(vehicle);
 							policeS.getHmWorVehi().put(asignable, vehicleDeclarados);
 							modelWorker2.addElement(vehicle);
 							modelWorker1.removeElement(vehicle);
+						} else {
+							if (vehicleDeclarados.indexOf(vehicle) < 0) {
+								vehicleDeclarados.add(vehicle);
+								policeS.getHmWorVehi().put(asignable, vehicleDeclarados);
+								modelWorker2.addElement(vehicle);
+								modelWorker1.removeElement(vehicle);
+							}
 						}
 					}
 				}
@@ -213,18 +225,27 @@ public class WindowManageWorkers extends JFrame {
 				// TODO Auto-generated method stub
 				Asignable asignable = (Asignable) comboWorkers.getSelectedItem();
 				Vehicle vehicle = (Vehicle) listManage.getSelectedValue();
-				modelWorker2.removeElement(vehicle);
-				policeS.getHmWorVehi().get(asignable).remove(vehicle);
-				modelWorker1.addElement(vehicle);
+				
+				int input = JOptionPane.showConfirmDialog(bmanageRight,
+						"The worker=> " + workers.getName() + " has selected the vehicle=> " + vehicle.getBrand() + ", "
+								+ vehicle.getVehicleTypes() + ".\n              "
+								+ "Are you sure to take the vehicle away from the worker?",
+						" data relation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (input == 0) {
+					
+					modelWorker2.removeElement(vehicle);
+					policeS.getHmWorVehi().get(asignable).remove(vehicle);
+					modelWorker1.addElement(vehicle);
+				}
 			}
 		});
-		
+
 		comboWorkers.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Asignable asignable = (Asignable) comboWorkers.getSelectedItem();
-				ArrayList<Vehicle> vehiclesAsignados= policeS.getHmWorVehi().get(asignable);
+				ArrayList<Vehicle> vehiclesAsignados = policeS.getHmWorVehi().get(asignable);
 				modelWorker2.clear();
 				if (vehiclesAsignados != null) {
 					for (Vehicle vehicle : vehiclesAsignados) {

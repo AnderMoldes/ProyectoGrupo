@@ -83,6 +83,8 @@ public class WindowWorkers {
 		}
 
 	}
+	
+	
 
 	public void agregar() {
 		Workers2 creation;
@@ -649,7 +651,8 @@ public class WindowWorkers {
 				modelWorkers.setRowCount(0);
 				llenar_tablaWorkers(table);
 				llenar_tablaBoss();
-
+				
+				
 			}
 		});
 
@@ -738,6 +741,8 @@ public class WindowWorkers {
 		frame.setLocationRelativeTo( null );
 
 	}
+	
+	
 	
 	
 }
