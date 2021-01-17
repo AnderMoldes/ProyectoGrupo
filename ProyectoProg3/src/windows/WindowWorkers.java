@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -429,9 +430,9 @@ public class WindowWorkers {
 		JButton btnNewButton_4 = new JButton("Show");
 		btnNewButton_4.setBounds(739, 258, 111, 23);
 		frame.getContentPane().add(btnNewButton_4);
-
+		URL iconURL = getClass().getResource("/icons/descarga.png");
 		JButton btnNewButton_5 = new JButton(new ImageIcon(
-				((new ImageIcon("descarga.png").getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)))));
+				((new ImageIcon(iconURL).getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)))));
 		btnNewButton_5.setBounds(860, 0, 34, 33);
 		frame.getContentPane().add(btnNewButton_5);
 

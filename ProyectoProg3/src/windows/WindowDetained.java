@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -378,9 +379,9 @@ public class WindowDetained {
 		JButton bsave = new JButton("Save");
 		bsave.setBounds(739, 170, 111, 23);
 		frame.getContentPane().add(bsave);
-
+		URL iconURL = getClass().getResource("/icons/descarga.png");
 		JButton btnNewButton_5 = new JButton(new ImageIcon(
-				((new ImageIcon("descarga.png").getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)))));
+				((new ImageIcon(iconURL).getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)))));
 		btnNewButton_5.setBounds(860, 0, 34, 33);
 		frame.getContentPane().add(btnNewButton_5);
 

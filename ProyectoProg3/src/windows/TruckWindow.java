@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,8 +29,8 @@ public class TruckWindow extends JFrame{
 	public TruckWindow() {
 		JPanel panelPhoto = new JPanel();
 		JPanel panelText = new JPanel();
-		
-		image = new JLabel(new ImageIcon("truck.jpg"));
+		URL iconURL = getClass().getResource("/icons/truck.jpg");
+		image = new JLabel(new ImageIcon(iconURL));
 		
 		JTextArea text = new JTextArea();
 		

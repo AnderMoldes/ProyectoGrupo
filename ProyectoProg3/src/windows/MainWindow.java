@@ -3,6 +3,7 @@ package windows;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.sql.Connection;
 
 import javax.swing.ImageIcon;
@@ -40,8 +41,8 @@ public class MainWindow extends JFrame {
 
 		title.setEditable(false);
 		add(title, BorderLayout.NORTH);
-
-		image = new JLabel(new ImageIcon("police_station.jpg"));
+		URL iconURL = getClass().getResource("/icons/police_station.jpg");
+		image = new JLabel(new ImageIcon(iconURL));
 		add(image, BorderLayout.CENTER);
 
 		start = new JButton("Get started with management");

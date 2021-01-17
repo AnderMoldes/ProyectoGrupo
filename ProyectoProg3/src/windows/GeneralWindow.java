@@ -22,6 +22,7 @@ import databases.BDWorkers;
 import databases.BDetained;
 
 import java.awt.event.*;
+import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -79,8 +80,8 @@ public class GeneralWindow {
 		mnNewMenu.add(vehicle);
 		frame.getContentPane().setLayout(null);
 		
-
-		JButton btnNewButton = new JButton(new ImageIcon("POLICIAS_Y_LADRONES_35.gif"));
+		URL iconURL1 = getClass().getResource("/icons/POLICIAS_Y_LADRONES_35.gif");
+		JButton btnNewButton = new JButton(new ImageIcon(iconURL1));
 		btnNewButton.setBounds(500, 65, 97, 130);
 		frame.getContentPane().add(btnNewButton);
 
@@ -109,14 +110,15 @@ public class GeneralWindow {
 		JProgressBar progressBar = new JProgressBar(0, 100);
 		progressBar.setBounds(415, 360, 146, 14);
 		frame.getContentPane().add(progressBar);
-
-		JButton btnNewButton_1 = new JButton(new ImageIcon("criminal-preso.gif"));
+		
+		URL iconURL2 = getClass().getResource("/icons/criminal-preso.gif");
+		JButton btnNewButton_1 = new JButton(new ImageIcon(iconURL2));
 		btnNewButton_1.setBounds(181, 65, 97, 130);
 		frame.getContentPane().add(btnNewButton_1);
 		progressBar.setVisible(false);
 		
-
-		JButton buttonInfo =new JButton(new ImageIcon(((new ImageIcon("info.jpg").getImage()  .getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)))));
+		URL iconURL3 = getClass().getResource("/icons/info.jpg");
+		JButton buttonInfo =new JButton(new ImageIcon(((new ImageIcon(iconURL3).getImage()  .getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)))));
 		buttonInfo.setBounds(24, 11, 34, 30);
 		frame.getContentPane().add(buttonInfo);
 		buttonInfo.setEnabled(true);

@@ -13,6 +13,7 @@ import classes.Brand;
 import classes.VehicleTypes;
 
 import java.awt.event.*;
+import java.net.URL;
 
 public class PatrolCarWindow extends JFrame {
 
@@ -26,8 +27,8 @@ public class PatrolCarWindow extends JFrame {
 	public PatrolCarWindow() {
 		JPanel panelPhoto = new JPanel();
 		JPanel panelText = new JPanel();
-
-		image = new JLabel(new ImageIcon("patrol.png"));
+		URL iconURL = getClass().getResource("/icons/patrol.png");
+		image = new JLabel(new ImageIcon(iconURL));
 
 		JTextArea text = new JTextArea();
 

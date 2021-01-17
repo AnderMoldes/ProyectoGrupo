@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,8 +26,8 @@ public class MotorBikeWindow extends JFrame {
 	public MotorBikeWindow() {
 		JPanel panelPhoto = new JPanel();
 		JPanel panelText = new JPanel();
-
-		image = new JLabel(new ImageIcon("motorbike.jpg"));
+		URL iconURL = getClass().getResource("/icons/motorbike.jpg");
+		image = new JLabel(new ImageIcon(iconURL));
 
 		JTextArea text = new JTextArea();
 
