@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +15,11 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -45,6 +52,7 @@ import classes.Specialty.SpecialtyEnum;
 import classes.Workers;
 import classes.Workers2;
 import databases.BDWorkers;
+import windows.VehicleWindow.GestorProperties;
 
 public class WindowWorkers {
 
@@ -68,8 +76,6 @@ public class WindowWorkers {
 	private MiModelo modelWorkers;
 	private int clic_tabla = 0;
 	BDWorkers conexion;
-	
-
 
 	public class MiModelo extends DefaultTableModel {
 		public boolean isCellEditable(int row, int column) {
@@ -83,6 +89,45 @@ public class WindowWorkers {
 		}
 
 	}
+	
+	
+
+	public class GestorPropertiesW {
+
+		private Properties propiedades;
+
+		public void gestorProperties() throws FileNotFoundException, IOException {
+			propiedades = new Properties();
+			propiedades.load(new FileReader("Workers.properties"));
+		}
+
+		public String leerUna(String key, Properties pe) throws FileNotFoundException, IOException {
+			String r = "";
+			r = pe.getProperty(key);
+
+			return r;
+
+		}
+
+		public Map<String, String> leerTodo(Properties pe) throws FileNotFoundException, IOException {
+
+			if (pe == null) {
+				new GestorPropertiesW();
+			}
+
+			Map<String, String> listadoPropiedades = new HashMap<String, String>();
+
+			Enumeration<Object> claves = pe.keys();
+
+			while (claves.hasMoreElements()) {
+				Object clave = claves.nextElement();
+				listadoPropiedades.put(clave.toString(), pe.get(clave).toString());
+			}
+
+			return listadoPropiedades;
+		}
+	}
+	
 	
 	
 
@@ -384,10 +429,9 @@ public class WindowWorkers {
 		JButton btnNewButton_4 = new JButton("Show");
 		btnNewButton_4.setBounds(739, 258, 111, 23);
 		frame.getContentPane().add(btnNewButton_4);
-		
-		JButton btnNewButton_5 = new JButton(new ImageIcon(((new ImageIcon(
-				"descarga.png").getImage() 
-				   .getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)))));
+
+		JButton btnNewButton_5 = new JButton(new ImageIcon(
+				((new ImageIcon("descarga.png").getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)))));
 		btnNewButton_5.setBounds(860, 0, 34, 33);
 		frame.getContentPane().add(btnNewButton_5);
 
@@ -510,6 +554,32 @@ public class WindowWorkers {
 
 		frame.getContentPane().add(scrollWorkers);
 
+		JButton btnNewButton_6 = new JButton("Default values Workers");
+
+		btnNewButton_6.setBounds(337, 209, 173, 23);
+		frame.getContentPane().add(btnNewButton_6);
+
+		btnNewButton_6.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+
+		JButton btnNewButton_7 = new JButton("Default values Boss");
+		btnNewButton_7.setBounds(337, 243, 173, 23);
+		frame.getContentPane().add(btnNewButton_7);
+
+		btnNewButton_7.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -558,6 +628,7 @@ public class WindowWorkers {
 		lblNewLabel_7_1.setForeground(Color.RED);
 		lblNewLabel_7_1.setBounds(47, 31, 359, 14);
 		frame.getContentPane().add(lblNewLabel_7_1);
+
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 
@@ -651,8 +722,7 @@ public class WindowWorkers {
 				modelWorkers.setRowCount(0);
 				llenar_tablaWorkers(table);
 				llenar_tablaBoss();
-				
-				
+
 			}
 		});
 
@@ -717,32 +787,27 @@ public class WindowWorkers {
 				}
 			}
 		});
-		
+
 		btnNewButton_5.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int input = JOptionPane.showConfirmDialog(btnNewButton_1, "Are you sure you want to go back?",
 						"Go back to menu", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if (input == 0) {
-					 new GeneralWindow();
+					new GeneralWindow();
 					frame.dispose();
 				}
-				
+
 			}
 		});
-		
-		
 
 		frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
 		frame.setTitle("POLICE MANAGEMENT");
 		frame.setResizable(false);
 		frame.setVisible(true);
-		frame.setLocationRelativeTo( null );
+		frame.setLocationRelativeTo(null);
 
 	}
-	
-	
-	
-	
+
 }

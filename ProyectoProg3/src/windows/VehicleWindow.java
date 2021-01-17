@@ -19,6 +19,7 @@ import classes.Vehicle;
 import classes.VehicleTypes;
 import classes.PlateGenerator;
 import databases.BDWorkers;
+import windows.VehicleWindow.GestorProperties;
 import classes.Vehicle;
 import java.awt.event.*;
 import java.io.BufferedReader;
@@ -30,6 +31,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 import java.util.Random;
 
 import classes.*;
@@ -47,10 +52,7 @@ public class VehicleWindow extends JFrame {
 	JMenuItem truck;
 
 	JLabel type;
-	JComboBox<VehicleTypes> comboTypes;
 	JLabel brand;
-	JComboBox<BrandEnum> comboBrand;
-	JComboBox<ColourEnum> comboColour;
 	DefaultListModel<Object> modelVehicles = new DefaultListModel();
 	JList vehicleJList = new JList(modelVehicles);
 	JScrollPane scrollVehicle = new JScrollPane(vehicleJList);
@@ -59,6 +61,42 @@ public class VehicleWindow extends JFrame {
 	private JPanel contentPane;
 
 	ArrayList<Vehicle> al = new ArrayList<>();
+	
+	public class GestorProperties {
+
+		private Properties propiedades;
+
+		public void gestorProperties() throws FileNotFoundException, IOException {
+			propiedades = new Properties();
+			propiedades.load(new FileReader("Vehicle.properties"));
+		}
+
+		public String leerUna(String key, Properties pe) throws FileNotFoundException, IOException {
+			String r = "";
+			r = pe.getProperty(key);
+
+			return r;
+
+		}
+
+		public Map<String, String> leerTodo(Properties pe) throws FileNotFoundException, IOException {
+
+		if (pe == null) {
+			new GestorProperties();
+		}
+
+		Map<String, String> listadoPropiedades = new HashMap<String, String>();
+
+		Enumeration<Object> claves = pe.keys();
+
+		while (claves.hasMoreElements()) {
+			Object clave = claves.nextElement();
+			listadoPropiedades.put(clave.toString(), pe.get(clave).toString());
+		}
+
+		return listadoPropiedades;
+		}
+	}
 
 	public VehicleWindow() {
 		scrollVehicle.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -176,6 +214,10 @@ public class VehicleWindow extends JFrame {
 		JButton btnGeneratePlate = new JButton("Generate plate");
 		btnGeneratePlate.setBounds(299, 156, 159, 23);
 		contentPane.add(btnGeneratePlate);
+		
+		JButton btnNewButton = new JButton("Default values");
+		btnNewButton.setBounds(314, 434, 127, 23);
+		contentPane.add(btnNewButton);
 		
 		
 		//Events
@@ -333,6 +375,29 @@ public class VehicleWindow extends JFrame {
 					modelVehicles.removeElement(v);
 					policeStation.getVehicles().remove(v);
 					doCSV();
+				}
+			}
+		});
+		
+		btnNewButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Map<String, String> list;
+				GestorProperties gest= new GestorProperties();
+				Properties pe= new Properties();
+				try {
+					pe.load(new FileReader("Vehicle.properties"));
+					list= gest.leerTodo(pe);
+					
+					tField.setText(list.get("plate"));
+		
+					comboBrand.setSelectedIndex(2);
+					comboType.setSelectedIndex(2);
+					comboColour.setSelectedIndex(2);
+					
+				} catch (Exception e2) {
+					
 				}
 			}
 		});

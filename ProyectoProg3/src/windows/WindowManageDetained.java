@@ -4,7 +4,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Properties;
+import java.util.Map.Entry;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -233,6 +240,48 @@ public class WindowManageDetained extends JFrame {
 				}
 			}
 		});
+		
+		btnSave.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				HashMap<Asignable, ArrayList<Detained>> hmWorDetai = new HashMap<Asignable, ArrayList<Detained>>();
+				Properties properties = new Properties();
+				hmWorDetai = policeS.getHmWorDetai();
+				
+
+				for (Entry<Asignable, ArrayList<Detained>> entry : hmWorDetai.entrySet()) {
+					properties.put(entry.getKey(), entry.getValue());
+
+				}
+
+				try {
+					properties.storeToXML(new FileOutputStream("data.properties"), null);
+					System.out.println(properties);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+		});
+
+		Properties properties = new Properties();
+		Enumeration<Object> claves = properties.keys();
+
+		try {
+			properties.load(new FileInputStream("data.properties"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		System.out.println(claves);
+
+		while (claves.hasMoreElements()) {
+			Object clave = claves.nextElement();
+			System.out.println(properties.getProperty(clave.toString()));
+
+		}
 		
 	}
 	

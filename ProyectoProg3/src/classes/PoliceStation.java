@@ -168,12 +168,14 @@ public class PoliceStation implements Serializable{
 			System.out.println("Erro reading de file" + fileName);
 		}
 	}
-
 	@Override
 	public String toString() {
 		return "PoliceStation [name=" + name + ", numWorkers=" + numWorkers + ", address=" + address + ", workers="
-				+ workers + ", detained=" + detained + ", vehicles=" + vehicles + "]";
+				+ workers + ", detained=" + detained + ", vehicles=" + vehicles + ", hmWorDetai=" + hmWorDetai
+				+ ", hmWorVehi=" + hmWorVehi + "]";
 	}
+
+	
 
 	
 
