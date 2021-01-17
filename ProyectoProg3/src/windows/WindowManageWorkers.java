@@ -134,8 +134,8 @@ public class WindowManageWorkers extends JFrame {
 		contentPane.add(btnSave);
 
 		PoliceStation policeStation = new PoliceStation();
-		Workers empleado = (Workers) comboWorkers.getSelectedItem();
-		ArrayList<Vehicle> jinetesDeclarados = policeStation.getHmWorVehi().get(empleado);
+		Workers worke = (Workers) comboWorkers.getSelectedItem();
+		ArrayList<Vehicle> declaredVehicles = policeStation.getHmWorVehi().get(workers);
 
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("vehicles.txt"));
