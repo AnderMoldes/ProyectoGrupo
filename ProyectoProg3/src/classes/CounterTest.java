@@ -1,10 +1,8 @@
-package tests;
+package classes;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
-
-import classes.Counter;
 
 public class CounterTest {
 

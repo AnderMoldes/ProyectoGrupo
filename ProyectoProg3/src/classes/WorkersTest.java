@@ -1,4 +1,4 @@
-package tests;
+package classes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,9 +6,7 @@ import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 
-import classes.Specialty;
 import classes.Specialty.SpecialtyEnum;
-import classes.Workers;
 
 public class WorkersTest {
 

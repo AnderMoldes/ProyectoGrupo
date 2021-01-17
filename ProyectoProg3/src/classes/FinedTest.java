@@ -1,12 +1,8 @@
-package tests;
+package classes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-
-import classes.Country;
-import classes.Detained;
-import classes.Fined;
 
 public class FinedTest {
 	@Test

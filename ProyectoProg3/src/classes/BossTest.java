@@ -1,14 +1,10 @@
-package tests;
+package classes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import classes.Arrested;
-import classes.Boss;
-import classes.Specialty;
 import classes.Specialty.SpecialtyEnum;
-import classes.Workers;
 
 public class BossTest {
 	@Test

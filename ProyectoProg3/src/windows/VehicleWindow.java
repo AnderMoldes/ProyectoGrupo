@@ -288,6 +288,7 @@ public class VehicleWindow extends JFrame {
 
 					modelVehicles.addElement(v);
 					al.add(v);
+					tField.setText("");
 				}
 
 			}

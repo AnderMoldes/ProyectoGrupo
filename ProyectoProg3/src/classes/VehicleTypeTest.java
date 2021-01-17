@@ -1,10 +1,8 @@
-package tests;
+package classes;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-
-import classes.VehicleTypes;
 
 public class VehicleTypeTest {
 	

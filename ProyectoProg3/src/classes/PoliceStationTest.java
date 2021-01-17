@@ -1,10 +1,8 @@
-package tests;
+package classes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-
-import classes.PoliceStation;
 
 public class PoliceStationTest {
 	

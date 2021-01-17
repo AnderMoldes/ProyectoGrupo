@@ -1,8 +1,6 @@
-package tests;
+package classes;
 
 import org.junit.jupiter.api.Test;
-
-import classes.Order;
 
 public class OrderTest {
 

@@ -1,4 +1,4 @@
-package tests;
+package classes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,9 +6,6 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import classes.Brand;
-import classes.Colour;
-import classes.Vehicle;
 import classes.Brand.BrandEnum;
 
 public class VehicleTest {
