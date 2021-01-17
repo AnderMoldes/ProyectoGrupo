@@ -138,7 +138,7 @@ public class WindowManageWorkers extends JFrame {
 		ArrayList<Vehicle> declaredVehicles = policeStation.getHmWorVehi().get(workers);
 
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("vehicles.txt"));//Buffer
+			BufferedReader br = new BufferedReader(new FileReader("vehicles.txt"));//Buffer Reader
 			if (modelWorker1.isEmpty()) {
 				String line = br.readLine();
 				while (line != null) {
