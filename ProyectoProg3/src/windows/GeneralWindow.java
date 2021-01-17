@@ -115,7 +115,7 @@ public class GeneralWindow {
 		frame.getContentPane().add(btnNewButton_1);
 		progressBar.setVisible(false);
 		
-		
+
 		JButton buttonInfo =new JButton(new ImageIcon(((new ImageIcon("info.jpg").getImage()  .getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)))));
 		buttonInfo.setBounds(24, 11, 34, 30);
 		frame.getContentPane().add(buttonInfo);
