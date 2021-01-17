@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 public class ArmoredCarWindow extends JFrame {
+	
 	//Declaramos
 	JPanel panelPhoto;
 	JPanel panelText;
@@ -52,7 +53,7 @@ public class ArmoredCarWindow extends JFrame {
 			}
 		});
 		
-		//Diseño
+		// Diseño
 		this.setLayout(new GridLayout(2, 1));
 		panelPhoto.setLayout(new BorderLayout());
 
