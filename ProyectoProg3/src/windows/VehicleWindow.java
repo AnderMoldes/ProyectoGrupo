@@ -1,6 +1,7 @@
 package windows;
 
 import javax.swing.*;
+
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -22,7 +23,6 @@ import databases.BDWorkers;
 import classes.Vehicle;
 import java.awt.event.*;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;

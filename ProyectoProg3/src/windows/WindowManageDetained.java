@@ -184,12 +184,14 @@ public class WindowManageDetained extends JFrame {
 						detainedAsignados.add(detained);
 						policeS.getHmWorDetai().put(asignable, detainedAsignados);
 						modelDetained2.addElement(detained);
+						modelDetained1.removeElement(detained);
 						
 					}else {
 						if (detainedAsignados.indexOf(detained) < 0) {
 							detainedAsignados.add(detained);
 							policeS.getHmWorDetai().put(asignable, detainedAsignados);
 							modelDetained2.addElement(detained);
+							modelDetained1.removeElement(detained);
 						}
 						
 					}
@@ -207,6 +209,7 @@ public class WindowManageDetained extends JFrame {
 				Detained detained= (Detained) listManage.getSelectedValue();
 				modelDetained2.removeElement(detained);
 				policeS.getHmWorDetai().get(asignable).remove(detained);
+				modelDetained1.addElement(detained);
 				
 			}
 		});

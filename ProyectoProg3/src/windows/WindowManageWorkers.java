@@ -40,22 +40,41 @@ public class WindowManageWorkers extends JFrame {
 	BDWorkers conexion;
 	Workers2 workers2;
 	Boss boss;
-	private JComboBox<Object> comboWorkers;
-	private DefaultListModel<Vehicle> modelWorker1;
+	PoliceStation policeS;
+	private JComboBox<Asignable> comboWorkers;
+	private DefaultListModel modelWorker1;
 	private JList listVehicle;
-	
+
 	public WindowManageWorkers() {
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 790, 662);
 		setVisible(true);
-		setLocationRelativeTo( null );
-		
+		setLocationRelativeTo(null);
+
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+
+		comboWorkers = new JComboBox<>();
+
+		policeS = new PoliceStation();
+		conexion = new BDWorkers();
+		ArrayList<Boss> listBoss = conexion.consultarDatosBoss();
+		ArrayList<Workers2> list = conexion.consultarDatos();
+		policeS.getWorkers().addAll(list);
+		policeS.getWorkers().addAll(listBoss);
+		System.out.println(policeS.toString());
+
+		for (Workers workers : policeS.getWorkers()) {
+			comboWorkers.addItem((Asignable) workers);
+		}
+
+		comboWorkers.setBounds(39, 88, 696, 42);
+
+		contentPane.add(comboWorkers);
 
 		modelWorker1 = new DefaultListModel<Vehicle>();
 
@@ -87,15 +106,6 @@ public class WindowManageWorkers extends JFrame {
 		bmanageLeft.setBounds(316, 412, 142, 67);
 		contentPane.add(bmanageLeft);
 
-		comboWorkers = new JComboBox<>();
-		
-
-		cargarDatosComboBox();
-
-		comboWorkers.setBounds(39, 88, 696, 42);
-
-		contentPane.add(comboWorkers);
-
 		JLabel lWorkers = new JLabel("Workers:");
 		lWorkers.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lWorkers.setForeground(Color.WHITE);
@@ -117,45 +127,46 @@ public class WindowManageWorkers extends JFrame {
 		JButton bback = new JButton("Back");
 		bback.setBounds(340, 533, 89, 23);
 		contentPane.add(bback);
-		
+
 		PoliceStation policeStation = new PoliceStation();
-		Workers empleado= (Workers) comboWorkers.getSelectedItem();
-		ArrayList<Vehicle> jinetesDeclarados= policeStation.getHmWorVehi().get(empleado);
-		
+		Workers empleado = (Workers) comboWorkers.getSelectedItem();
+		ArrayList<Vehicle> jinetesDeclarados = policeStation.getHmWorVehi().get(empleado);
+
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("vehicles.txt"));
-			if(modelWorker1.isEmpty()) {
-			String line = br.readLine();
-			while(line!=null) {
-				String data[] = line.split(" ");
-				BrandEnum bra = BrandEnum.valueOf(data[0]);
-				ColourEnum col = ColourEnum.valueOf(data[1]);
-				VehicleTypes veh = VehicleTypes.valueOf(data[2]);
-			
-				Vehicle v = new Vehicle(bra,col,veh);
-				modelWorker1.addElement(v);
-				
-				policeStation.getVehicles().add(v);
-				System.out.println(policeStation);
-				line = br.readLine();
+			if (modelWorker1.isEmpty()) {
+				String line = br.readLine();
+				while (line != null) {
+					String data[] = line.split(" ");
+					BrandEnum bra = BrandEnum.valueOf(data[0]);
+					ColourEnum col = ColourEnum.valueOf(data[1]);
+					VehicleTypes veh = VehicleTypes.valueOf(data[2]);
+
+					Vehicle v = new Vehicle(bra, col, veh);
+					modelWorker1.addElement(v);
+
+					policeStation.getVehicles().add(v);
+					System.out.println(policeStation);
+					line = br.readLine();
+				}
+				listVehicle.setModel(modelWorker1);
+
+				br.close();
+			} else {
+				JOptionPane.showMessageDialog(null, "Error.");
 			}
-			listVehicle.setModel(modelWorker1);
-			
-			br.close();
-		}else {
-			JOptionPane.showMessageDialog(null, "Error.");
+
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-	
-	} catch (FileNotFoundException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	} catch (IOException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	}
-		
+
 		policeStation.getVehicles();
 		
+
 		bback.addActionListener(new ActionListener() {
 
 			@Override
@@ -171,28 +182,26 @@ public class WindowManageWorkers extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				Workers empleado= (Workers) comboWorkers.getSelectedItem();
-				
-				ArrayList<Vehicle> jinetesDeclarados= policeStation.getHmWorVehi().get(empleado);
-				
-				Vehicle jinete= (Vehicle) listVehicle.getSelectedValue();
-				
-				if(jinete !=null) {
-				
-				if(jinetesDeclarados ==null) {
-					jinetesDeclarados= new ArrayList<Vehicle>();
-					jinetesDeclarados.add(jinete);
-					policeStation.getHmWorVehi().put(empleado, jinetesDeclarados);
-					modelWorker2.addElement(jinete);
-					modelWorker1.removeElement(jinete);
-				}else {
-					if(jinetesDeclarados.indexOf(jinete) < 0) {
-						jinetesDeclarados.add(jinete);
-						policeStation.getHmWorVehi().put(empleado, jinetesDeclarados);
-						modelWorker2.addElement(jinete);
-						modelWorker1.removeElement(jinete);
+				Asignable asignable = (Asignable) comboWorkers.getSelectedItem();
+				ArrayList<Vehicle> vehicleDeclarados = policeStation.getHmWorVehi().get(asignable);
+				Vehicle vehicle = (Vehicle) listVehicle.getSelectedValue();
+
+				if (vehicle != null) {
+
+					if (vehicleDeclarados == null) {
+						vehicleDeclarados = new ArrayList<Vehicle>();
+						vehicleDeclarados.add(vehicle);
+						policeS.getHmWorVehi().put(asignable, vehicleDeclarados);
+						modelWorker2.addElement(vehicle);
+						modelWorker1.removeElement(vehicle);
+					} else {
+						if (vehicleDeclarados.indexOf(vehicle) < 0) {
+							vehicleDeclarados.add(vehicle);
+							policeS.getHmWorVehi().put(asignable, vehicleDeclarados);
+							modelWorker2.addElement(vehicle);
+							modelWorker1.removeElement(vehicle);
+						}
 					}
-				}
 				}
 			}
 		});
@@ -202,40 +211,28 @@ public class WindowManageWorkers extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				Workers empleado= (Workers) comboWorkers.getSelectedItem();
-				Vehicle jinete = (Vehicle) listManage.getSelectedValue();
-				modelWorker2.removeElement(jinete);
-				policeStation.getHmWorVehi().put(empleado, jinetesDeclarados).remove(jinete);
-				modelWorker1.addElement(jinete);
+				Asignable asignable = (Asignable) comboWorkers.getSelectedItem();
+				Vehicle vehicle = (Vehicle) listManage.getSelectedValue();
+				modelWorker2.removeElement(vehicle);
+				policeS.getHmWorVehi().get(asignable).remove(vehicle);
+				modelWorker1.addElement(vehicle);
 			}
 		});
-	}
-
-	public void cargarDatosComboBox() {
-
-		conexion = new BDWorkers();
-		workers2 = new Workers2();
-		boss = new Boss();
-		ArrayList<Workers2> list = conexion.consultarDatos();
-		ArrayList<Boss> listB = conexion.consultarDatosBoss();
-
-		if (list.size() > 0 || listB.size() > 0) {
-
-			for (int i = 0; i < list.size(); i++) {
-				comboWorkers = new JComboBox<>();
-				workers2 = list.get(i);
-				for (Workers workers2 : list) {
-					comboWorkers.addItem(workers2);
+		
+		comboWorkers.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Asignable asignable = (Asignable) comboWorkers.getSelectedItem();
+				ArrayList<Vehicle> vehiclesAsignados= policeS.getHmWorVehi().get(asignable);
+				modelWorker2.clear();
+				if (vehiclesAsignados != null) {
+					for (Vehicle vehicle : vehiclesAsignados) {
+						modelWorker2.addElement(vehicle);
+					}
 				}
-
 			}
-			for (int i = 0; i < listB.size(); i++) {
-				boss = listB.get(i);
-				comboWorkers.addItem(boss);
-
-			}
-
-		}
+		});
 	}
 
 }
