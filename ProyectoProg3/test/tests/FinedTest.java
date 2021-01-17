@@ -12,7 +12,7 @@ public class FinedTest {
 	@Test
 	public void testGetIdentificative() {
 		Fined f = new Fined(0, "Aimar", "Herrador", 17, "male", "Agression",Country.Austria, 1000);
-		assertEquals(0, f.getIdentificative(),f.getContainer());
+		assertEquals(0, f.getIdentificative());
 		
 	}
 	

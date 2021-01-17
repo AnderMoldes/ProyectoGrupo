@@ -11,7 +11,7 @@ public class DetainedTest {
 	@Test
 	public void testGetIdentificative() {
 		Detained d = new Detained(0, "Jon", "Garcia", 17, "male");
-		assertEquals(0, d.getIdentificative(),d.getContainer());
+		assertEquals(0, d.getIdentificative());
 		
 	}
 	

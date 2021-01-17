@@ -12,7 +12,7 @@ public class ArrestedTest {
 	@Test
 	public void testGetIdentificative() {
 		Arrested a = new Arrested(0, "Ander", "Moldes", 24, "male", 1, "Bad person", "25/9/20", Country.Czechia);
-		assertEquals(0, a.getIdentificative(),a.getContainer());
+		assertEquals(0, a.getIdentificative());
 
 	}
 	
