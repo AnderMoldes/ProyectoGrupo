@@ -18,6 +18,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import classes.Arrested;
+import classes.Asignable;
 import classes.Boss;
 import classes.Detained;
 import classes.Fined;
@@ -30,14 +31,14 @@ import databases.BDetained;
 public class WindowManageDetained extends JFrame {
 	private JPanel contentPane;
 	BDWorkers conexion;
-	BDetained conexionDetained;
+	BDetained conexionD;
 	Workers2 workers2;
 	Boss boss;
 	Arrested arrested;
 	Fined fined;
 	PoliceStation policeS;
-	private JComboBox<Object> comboWorkers;
-	private DefaultListModel<Detained> modelDetained1;
+	private JComboBox<Asignable> comboWorkers;
+	private DefaultListModel modelDetained1;
 	private JList listDetained;
 
 	public WindowManageDetained(PoliceStation policeStation) {
@@ -52,6 +53,23 @@ public class WindowManageDetained extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		comboWorkers = new JComboBox<>();
+		comboWorkers.setBackground(Color.CYAN);
+		comboWorkers.setForeground(Color.BLACK);
+		
+		policeS = new PoliceStation();
+		conexion = new BDWorkers();
+		ArrayList<Boss> listBoss = conexion.consultarDatosBoss();
+		ArrayList<Workers2> list = conexion.consultarDatos();
+		policeS.getWorkers().addAll(list);
+		policeS.getWorkers().addAll(listBoss);
+		System.out.println(policeS.toString());
+		
+		
+		for (Workers workers : policeS.getWorkers()) {
+			comboWorkers.addItem((Asignable) workers);
+		}
 
 		modelDetained1 = new DefaultListModel<>();
 
@@ -62,9 +80,22 @@ public class WindowManageDetained extends JFrame {
 		scrollDetained.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollDetained.setBounds(39, 232, 267, 340);
 		contentPane.add(scrollDetained);
-		cargarDatosJlist();
+		
+		policeS = new PoliceStation();
+		conexionD = new BDetained();
+		ArrayList<Arrested> listA = conexionD.consultarDatosArrested();
+		ArrayList<Fined> listF = conexionD.consultarDatosFained();
+		policeS.getDetained().addAll(listA);
+		policeS.getDetained().addAll(listF);
+		System.out.println(policeS.toString());
+		
+		
+		for (Detained detained : policeS.getDetained()) {
+			modelDetained1.addElement(detained);
+		}
+		
 
-		DefaultListModel<Detained> modelDetained2 = new DefaultListModel();
+		DefaultListModel modelDetained2 = new DefaultListModel();
 
 		JList listManage = new JList(modelDetained2);
 		listManage.setBackground(Color.WHITE);
@@ -73,6 +104,17 @@ public class WindowManageDetained extends JFrame {
 		scrollListManage.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollListManage.setBounds(468, 232, 267, 340);
 		contentPane.add(scrollListManage);
+		
+		Asignable asignable= (Asignable) comboWorkers.getSelectedItem();
+		ArrayList<Detained> detainedAsignados= policeS.getHmWorDetai().get(asignable);
+		modelDetained2.clear();
+		
+		if (detainedAsignados != null) {
+			for (Detained detained : detainedAsignados) {
+				modelDetained2.addElement(detained);
+			}
+		} 
+		
 
 		JButton bmanageRight = new JButton("=>");
 		bmanageRight.setBackground(Color.CYAN);
@@ -86,10 +128,8 @@ public class WindowManageDetained extends JFrame {
 		bmanageLeft.setBounds(316, 412, 142, 67);
 		contentPane.add(bmanageLeft);
 
-		comboWorkers = new JComboBox<>();
-		comboWorkers.setBackground(Color.CYAN);
-		comboWorkers.setForeground(Color.BLACK);
-		cargarDatosComboBox();
+		
+		
 		comboWorkers.setBounds(39, 88, 696, 42);
 		contentPane.add(comboWorkers);
 
@@ -133,13 +173,28 @@ public class WindowManageDetained extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				int pos = listDetained.getSelectedIndex();
-				if (pos != -1) {
-					modelDetained2.addElement(modelDetained1.get(pos));
-					modelDetained1.remove(pos);
-					listManage.setModel(modelDetained2);
-					listDetained.setModel(modelDetained1);
+				Asignable asignable= (Asignable) comboWorkers.getSelectedItem();
+				ArrayList<Detained> detainedAsignados= policeS.getHmWorDetai().get(asignable);
+				Detained detained= (Detained) listDetained.getSelectedValue();
+				
+				if (detained!= null) {
+					
+					if (detainedAsignados==null) {
+						detainedAsignados= new ArrayList<Detained>(); 
+						detainedAsignados.add(detained);
+						policeS.getHmWorDetai().put(asignable, detainedAsignados);
+						modelDetained2.addElement(detained);
+						
+					}else {
+						if (detainedAsignados.indexOf(detained) < 0) {
+							detainedAsignados.add(detained);
+							policeS.getHmWorDetai().put(asignable, detainedAsignados);
+							modelDetained2.addElement(detained);
+						}
+						
+					}
 				}
+				
 			}
 		});
 
@@ -148,74 +203,31 @@ public class WindowManageDetained extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				int pos = listManage.getSelectedIndex();
-				if (pos != -1) {
-					modelDetained1.addElement(modelDetained2.get(pos));
-					modelDetained2.remove(pos);
-					listDetained.setModel(modelDetained1);
-					listManage.setModel(modelDetained2);
+				Asignable asignable= (Asignable) comboWorkers.getSelectedItem();
+				Detained detained= (Detained) listManage.getSelectedValue();
+				modelDetained2.removeElement(detained);
+				policeS.getHmWorDetai().get(asignable).remove(detained);
+				
+			}
+		});
+		
+		comboWorkers.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Asignable asignable= (Asignable) comboWorkers.getSelectedItem();
+				ArrayList<Detained> detainedAsignados= policeS.getHmWorDetai().get(asignable);
+				modelDetained2.clear();
+				
+				if (detainedAsignados != null) {
+					for (Detained detained : detainedAsignados) {
+						modelDetained2.addElement(detained);
+					}
 				}
 			}
 		});
+		
 	}
-
-	public void cargarDatosComboBox() {
-
-		conexion = new BDWorkers();
-		workers2 = new Workers2();
-		boss = new Boss();
-		ArrayList<Workers2> list = conexion.consultarDatos();
-		ArrayList<Boss> listB = conexion.consultarDatosBoss();
-
-		if (list.size() > 0 || listB.size() > 0) {
-
-			for (int i = 0; i < list.size(); i++) {
-				comboWorkers = new JComboBox<>();
-				workers2 = list.get(i);
-				for (Workers workers2 : list) {
-					comboWorkers.addItem(workers2);
-				}
-
-			}
-
-			for (int i = 0; i < listB.size(); i++) {
-				boss = listB.get(i);
-				comboWorkers.addItem(boss);
-
-			}
-
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	public void cargarDatosJlist() {
-		conexionDetained = new BDetained();
-		fined = new Fined();
-		arrested = new Arrested();
-		ArrayList<Fined> list = conexionDetained.consultarDatosFained();
-		ArrayList<Arrested> listA = conexionDetained.consultarDatosArrested();
-
-		if (list.size() > 0 || list.size() > 0) {
-
-			for (int i = 0; i < list.size(); i++) {
-				listDetained = new JList<>();
-				fined = list.get(i);
-
-				modelDetained1.addElement(fined);
-
-			}
-			for (int i = 0; i < listA.size(); i++) {
-
-				arrested = listA.get(i);
-
-				modelDetained1.addElement(arrested);
-
-			}
-
-		}
-
-		listDetained.setModel(modelDetained1);
-
-	}
+	
 
 }

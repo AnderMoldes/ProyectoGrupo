@@ -18,7 +18,7 @@ public class PoliceStation implements Serializable{
 	private ArrayList<Detained> detained;
 	private ArrayList<Vehicle> vehicles;
 	private HashMap<Asignable, ArrayList<Detained>> hmWorDetai;
-	private HashMap<Workers, ArrayList<Vehicle>> hmWorVehi;
+	private HashMap<Asignable, ArrayList<Vehicle>> hmWorVehi;
 
 	
 
@@ -26,16 +26,16 @@ public class PoliceStation implements Serializable{
 
 	public PoliceStation(String name, int numWorkers, String address, ArrayList<Workers> workers,
 			ArrayList<Detained> detained, ArrayList<Vehicle> vehicles,
-			HashMap<Asignable, ArrayList<Detained>> hmWorDetai, HashMap<Workers, ArrayList<Vehicle>> hmWorVehi) {
+			HashMap<Asignable, ArrayList<Detained>> hmWorDetai, HashMap<Asignable, ArrayList<Vehicle>> hmWorVehi) {
 		super();
 		this.name = name;
 		this.numWorkers = numWorkers;
 		this.address = address;
-		this.workers = workers;
-		this.detained = detained;
-		this.vehicles = vehicles;
-		this.hmWorDetai = hmWorDetai;
-		this.hmWorVehi = hmWorVehi;
+		this.workers = new ArrayList<Workers>(workers);
+		this.detained = new ArrayList<Detained>(detained);
+		this.vehicles = new ArrayList<Vehicle>(vehicles);
+		this.hmWorDetai = new HashMap<>(hmWorDetai);
+		this.hmWorVehi = new HashMap<>(hmWorVehi);
 	}
 	public PoliceStation() {
 		super();
@@ -46,7 +46,7 @@ public class PoliceStation implements Serializable{
 		this.detained = new ArrayList<Detained>();
 		this.vehicles = new ArrayList<Vehicle>();
 		this.hmWorDetai = new HashMap<Asignable,ArrayList<Detained>>();
-		this.hmWorVehi = new HashMap<Workers, ArrayList<Vehicle>>();
+		this.hmWorVehi = new HashMap<Asignable, ArrayList<Vehicle>>();
 		
 	}
 	
@@ -97,7 +97,7 @@ public class PoliceStation implements Serializable{
 	 * @param workers the workers to set
 	 */
 	public void setWorkers(ArrayList<Workers> workers) {
-		this.workers = workers;
+		this.workers = new ArrayList<Workers>(workers);
 	}
 	/**
 	 * @return the detained
@@ -109,7 +109,7 @@ public class PoliceStation implements Serializable{
 	 * @param detained the detained to set
 	 */
 	public void setDetained(ArrayList<Detained> detained) {
-		this.detained = detained;
+		this.detained = new ArrayList<Detained>(detained);
 	}
 	/**
 	 * @return the vehicles
@@ -121,7 +121,7 @@ public class PoliceStation implements Serializable{
 	 * @param vehicles the vehicles to set
 	 */
 	public void setVehicles(ArrayList<Vehicle> vehicles) {
-		this.vehicles = vehicles;
+		this.vehicles = new ArrayList<Vehicle>(vehicles);
 	}
 	/**
 	 * @return the hmWorDetai
@@ -133,19 +133,19 @@ public class PoliceStation implements Serializable{
 	 * @param hmWorDetai the hmWorDetai to set
 	 */
 	public void setHmWorDetai(HashMap<Asignable, ArrayList<Detained>> hmWorDetai) {
-		this.hmWorDetai = hmWorDetai;
+		this.hmWorDetai = new HashMap<Asignable, ArrayList<Detained>>(hmWorDetai);
 	}
 	/**
 	 * @return the hmWorVehi
 	 */
-	public HashMap<Workers, ArrayList<Vehicle>> getHmWorVehi() {
+	public HashMap<Asignable, ArrayList<Vehicle>> getHmWorVehi() {
 		return hmWorVehi;
 	}
 	/**
 	 * @param hmWorVehi the hmWorVehi to set
 	 */
-	public void setHmWorVehi(HashMap<Workers, ArrayList<Vehicle>> hmWorVehi) {
-		this.hmWorVehi = hmWorVehi;
+	public void setHmWorVehi(HashMap<Asignable, ArrayList<Vehicle>> hmWorVehi) {
+		this.hmWorVehi = new HashMap<Asignable, ArrayList<Vehicle>>(hmWorVehi);
 	}
 	public void saveFile(String fileName) {
 		try {
