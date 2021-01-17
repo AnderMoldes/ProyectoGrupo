@@ -18,7 +18,7 @@ import classes.Colour.ColourEnum;
 import classes.PoliceStation;
 import classes.Vehicle;
 import classes.VehicleTypes;
-
+import databases.BDWorkers;
 import classes.Vehicle;
 import java.awt.event.*;
 import java.io.BufferedReader;
@@ -34,7 +34,6 @@ import java.util.Date;
 import classes.*;
 
 public class VehicleWindow extends JFrame{
-	PoliceStation policeStation;
 	Vehicle vehicles;
 	JPanel panel1;
 	JPanel panel2;
@@ -55,7 +54,7 @@ public class VehicleWindow extends JFrame{
 	JList vehicleJList = new JList(modelVehicles);
 	JScrollPane scrollVehicle = new JScrollPane(vehicleJList);
 	
-	
+	PoliceStation policeStation = new PoliceStation();
 	private JPanel contentPane;
 	
 	ArrayList<Vehicle> al = new ArrayList<>();
@@ -164,6 +163,7 @@ public class VehicleWindow extends JFrame{
 		contentPane.add(bcreate);
 		
 		
+		
 			
 		
 		
@@ -222,6 +222,8 @@ public class VehicleWindow extends JFrame{
 				colour = (ColourEnum) comboColour.getSelectedItem();
 				
 				Vehicle v = new Vehicle(brand,colour,vehicle);
+				policeStation.getVehicles().add(v);
+				
 				modelVehicles.addElement(v);
 				al.add(v);
 				
@@ -267,6 +269,7 @@ public class VehicleWindow extends JFrame{
 						
 							Vehicle v = new Vehicle(bra,col,veh);
 							modelVehicles.addElement(v);
+							policeStation.getVehicles().add(v);
 							line = br.readLine();
 						}
 						vehicleJList.setModel(modelVehicles);
@@ -296,6 +299,7 @@ public class VehicleWindow extends JFrame{
 				Vehicle v = (Vehicle) vehicleJList.getSelectedValue();
 				al.remove(v);
 				modelVehicles.removeElement(v);
+				policeStation.getVehicles().remove(v);
 				doCSV();
 				}
 			}
@@ -312,7 +316,9 @@ public class VehicleWindow extends JFrame{
 				Vehicle v = (Vehicle) modelVehicles.get(i);
 				pw.println(v.getBrand()+" "+v.getColour()+" "+v.getVehicleTypes());
 				al.add(v);
+				policeStation.getVehicles().add(v);	
 			}
+			System.out.println(policeStation);
 			pw.flush();
 			pw.close();
 		} catch (FileNotFoundException e1) {

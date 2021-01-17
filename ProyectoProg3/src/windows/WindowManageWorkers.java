@@ -24,6 +24,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicComboBoxEditor;
 
+import classes.Asignable;
 import classes.Boss;
 import classes.PoliceStation;
 import classes.Vehicle;
@@ -39,7 +40,6 @@ public class WindowManageWorkers extends JFrame {
 	BDWorkers conexion;
 	Workers2 workers2;
 	Boss boss;
-	PoliceStation policeS;
 	private JComboBox<Object> comboWorkers;
 	private DefaultListModel<Vehicle> modelWorker1;
 	private JList listVehicle;
@@ -88,6 +88,7 @@ public class WindowManageWorkers extends JFrame {
 		contentPane.add(bmanageLeft);
 
 		comboWorkers = new JComboBox<>();
+		
 
 		cargarDatosComboBox();
 
@@ -117,6 +118,9 @@ public class WindowManageWorkers extends JFrame {
 		bback.setBounds(340, 533, 89, 23);
 		contentPane.add(bback);
 		
+		PoliceStation policeStation = new PoliceStation();
+		Workers empleado= (Workers) comboWorkers.getSelectedItem();
+		ArrayList<Vehicle> jinetesDeclarados= policeStation.getHmWorVehi().get(empleado);
 		
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("vehicles.txt"));
@@ -130,9 +134,13 @@ public class WindowManageWorkers extends JFrame {
 			
 				Vehicle v = new Vehicle(bra,col,veh);
 				modelWorker1.addElement(v);
+				
+				policeStation.getVehicles().add(v);
+				System.out.println(policeStation);
 				line = br.readLine();
 			}
 			listVehicle.setModel(modelWorker1);
+			
 			br.close();
 		}else {
 			JOptionPane.showMessageDialog(null, "Error.");
@@ -145,7 +153,9 @@ public class WindowManageWorkers extends JFrame {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();
 	}
-
+		
+		policeStation.getVehicles();
+		
 		bback.addActionListener(new ActionListener() {
 
 			@Override
@@ -161,12 +171,28 @@ public class WindowManageWorkers extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				int pos = listVehicle.getSelectedIndex();
-				if (pos != -1) {
-					modelWorker2.addElement(modelWorker1.get(pos));
-					modelWorker1.remove(pos);
-					listManage.setModel(modelWorker2);
-					listVehicle.setModel(modelWorker1);
+				Workers empleado= (Workers) comboWorkers.getSelectedItem();
+				
+				ArrayList<Vehicle> jinetesDeclarados= policeStation.getHmWorVehi().get(empleado);
+				
+				Vehicle jinete= (Vehicle) listVehicle.getSelectedValue();
+				
+				if(jinete !=null) {
+				
+				if(jinetesDeclarados ==null) {
+					jinetesDeclarados= new ArrayList<Vehicle>();
+					jinetesDeclarados.add(jinete);
+					policeStation.getHmWorVehi().put(empleado, jinetesDeclarados);
+					modelWorker2.addElement(jinete);
+					modelWorker1.removeElement(jinete);
+				}else {
+					if(jinetesDeclarados.indexOf(jinete) < 0) {
+						jinetesDeclarados.add(jinete);
+						policeStation.getHmWorVehi().put(empleado, jinetesDeclarados);
+						modelWorker2.addElement(jinete);
+						modelWorker1.removeElement(jinete);
+					}
+				}
 				}
 			}
 		});
@@ -176,13 +202,11 @@ public class WindowManageWorkers extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				int pos = listManage.getSelectedIndex();
-				if (pos != -1) {
-					modelWorker1.addElement(modelWorker2.get(pos));
-					modelWorker2.remove(pos);
-					listVehicle.setModel(modelWorker1);
-					listManage.setModel(modelWorker2);
-				}
+				Workers empleado= (Workers) comboWorkers.getSelectedItem();
+				Vehicle jinete = (Vehicle) listManage.getSelectedValue();
+				modelWorker2.removeElement(jinete);
+				policeStation.getHmWorVehi().put(empleado, jinetesDeclarados).remove(jinete);
+				modelWorker1.addElement(jinete);
 			}
 		});
 	}
