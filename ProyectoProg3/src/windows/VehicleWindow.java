@@ -2,6 +2,7 @@ package windows;
 
 import javax.swing.*;
 
+
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,6 +20,7 @@ import classes.Colour.ColourEnum;
 import classes.PoliceStation;
 import classes.Vehicle;
 import classes.VehicleTypes;
+import classes.GeneradorMatriculasV;
 import databases.BDWorkers;
 import classes.Vehicle;
 import java.awt.event.*;
@@ -31,6 +33,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
+
 import classes.*;
 
 public class VehicleWindow extends JFrame{
@@ -167,6 +171,7 @@ public class VehicleWindow extends JFrame{
 		tField.setBounds(629, 430, 132, 31);
 		contentPane.add(tField);
 		tField.setColumns(10);
+		tField.setEditable(false);
 		
 		JLabel lblLicensePlate = new JLabel("License Plate:");
 		lblLicensePlate.setBounds(629, 397, 138, 22);
@@ -247,6 +252,20 @@ public class VehicleWindow extends JFrame{
 			}
 			
 		});
+		btnGeneratePlate.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GeneradorMatriculasV generar= new GeneradorMatriculasV();
+				Random rand= new Random();
+				String matricula= generar.generarMatriculaLetra(rand, "", 0, 4) +" "+ generar.generarMatriculaNum(rand, "", 0, 3);
+				tField.setText(matricula);
+			
+				
+			}
+		});
+		
+		
 		bback.addActionListener(new ActionListener() {
 			
 			@Override

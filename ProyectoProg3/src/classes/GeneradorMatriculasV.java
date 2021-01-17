@@ -2,52 +2,57 @@ package classes;
 
 import java.util.Random;
 
+//recursive method to generate license plates
+
 public class GeneradorMatriculasV {
-	
-	public  static  void  main ( String [] args ) {
-		
 
-			Random rand = new Random();
-			int randomSize=numeroRandom(6, 12);
+	public static void main(String[] args) {
 
-			String password=generarContrasenha(rand, "", 0, randomSize);
-			System.out.println("password-->  "+password);
+		Random rand = new Random();
+		int randomSize = numeroRandom(6, 12);
+
+		String PlateL = generarMatriculaLetra(rand, "", 0, randomSize);
+		String plateN = generarMatriculaNum(rand, "", 0, randomSize);
+
+	}
+
+	public static char[] chars = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
+			'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+
+	public static Number[] numbers = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+	public static String generarMatriculaLetra(Random rand, String plate, int position, int longg) {
+
+		int randomChar = rand.nextInt(chars.length);
+
+		char c = chars[randomChar];
+
+		if (position == longg) {
+			return plate;
 		}
 
-		public static char[] chars = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
-				'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '!', '@',
-				'$', '%', '^', '&' };
+		return generarMatriculaLetra(rand, plate + Character.toUpperCase(c), position + 1, longg);
 
-		// I think it makes more sense returning the generated string and passing along
-		// the random number generator instead of recreating it at each recursive call
+	}
 
-		public static String generarContrasenha(Random rand, String password, int posicion, int largo) {
+	public static String generarMatriculaNum(Random rand, String plate, int position, int longg) {
 
-			boolean isLowerCase = rand.nextBoolean();
+		int randomNumber = rand.nextInt(numbers.length);
 
-			int randomChar = rand.nextInt(chars.length);
+		Number number = numbers[randomNumber];
 
-			char c = chars[randomChar];
-
-			if (posicion == largo) {
-				return password;
-			}
-
-			if (isLowerCase) {
-
-				return generarContrasenha(rand, password + chars[randomChar], posicion + 1, largo);
-
-			} else {
-				return generarContrasenha(rand, password + Character.toUpperCase(c), posicion + 1, largo);
-			}
-
+		if (position == longg) {
+			return plate;
 		}
 
-		private static int numeroRandom(int min, int max) {
-			Random rand = new Random();
-			int randomNum = rand.nextInt((max - min) + 1) + min;
-			return randomNum;
-		}
+		return generarMatriculaNum(rand, plate + numbers[randomNumber], position + 1, longg);
 
-		
+	}
+
+	private static int numeroRandom(int min, int max) {
+		Random rand = new Random();
+		int randomNum = rand.nextInt((max - min) + 1) + min;
+		return randomNum;
+	}
+
 }
