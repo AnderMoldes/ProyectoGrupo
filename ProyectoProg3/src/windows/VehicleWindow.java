@@ -2,17 +2,14 @@ package windows;
 
 import javax.swing.*;
 
-
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
 
 import java.awt.*;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
-
 
 import classes.Brand;
 import classes.Brand.BrandEnum;
@@ -37,7 +34,7 @@ import java.util.Random;
 
 import classes.*;
 
-public class VehicleWindow extends JFrame{
+public class VehicleWindow extends JFrame {
 	Vehicle vehicles;
 	JPanel panel1;
 	JPanel panel2;
@@ -48,7 +45,7 @@ public class VehicleWindow extends JFrame{
 	JMenuItem armoredVan;
 	JMenuItem motorbike;
 	JMenuItem truck;
-	
+
 	JLabel type;
 	JComboBox<VehicleTypes> comboTypes;
 	JLabel brand;
@@ -57,29 +54,31 @@ public class VehicleWindow extends JFrame{
 	DefaultListModel<Object> modelVehicles = new DefaultListModel();
 	JList vehicleJList = new JList(modelVehicles);
 	JScrollPane scrollVehicle = new JScrollPane(vehicleJList);
-	
+
 	PoliceStation policeStation = new PoliceStation();
 	private JPanel contentPane;
-	
+
 	ArrayList<Vehicle> al = new ArrayList<>();
-	
-	public VehicleWindow(){
+
+	public VehicleWindow() {
 		scrollVehicle.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollVehicle.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 807, 559);
+		setResizable(false);
 		setVisible(true);
+		setLocationRelativeTo(null);
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		
+
 		JLabel brandLabel = new JLabel("Brand:");
 		brandLabel.setBounds(645, 190, 127, 44);
 		contentPane.add(brandLabel);
-		
+
 		JComboBox<BrandEnum> comboBrand = new JComboBox();
 		comboBrand.addItem(BrandEnum.MITSUBISHI);
 		comboBrand.addItem(BrandEnum.NISSAN);
@@ -88,11 +87,11 @@ public class VehicleWindow extends JFrame{
 		comboBrand.addItem(BrandEnum.SEAT);
 		comboBrand.setBounds(629, 231, 132, 22);
 		contentPane.add(comboBrand);
-		
+
 		JLabel colourJLabel = new JLabel("Colour:");
 		colourJLabel.setBounds(645, 264, 138, 22);
 		contentPane.add(colourJLabel);
-		
+
 		JComboBox<ColourEnum> comboColour = new JComboBox();
 		comboColour.setBounds(629, 289, 132, 22);
 		comboColour.addItem(ColourEnum.BLACK);
@@ -103,171 +102,167 @@ public class VehicleWindow extends JFrame{
 		comboColour.addItem(ColourEnum.RED);
 		comboColour.addItem(ColourEnum.WHITE);
 		contentPane.add(comboColour);
-		
+
 		JLabel labelType = new JLabel("Vehicle Type:");
 		labelType.setBounds(645, 322, 138, 22);
 		contentPane.add(labelType);
-		
+
 		JComboBox<VehicleTypes> comboType = new JComboBox();
 		comboType.addItem(VehicleTypes.PATROLCAR);
 		comboType.addItem(VehicleTypes.ARMOREDCAR);
 		comboType.addItem(VehicleTypes.ARMOREDVAN);
 		comboType.addItem(VehicleTypes.MOTORBIKE);
 		comboType.addItem(VehicleTypes.TRUCK);
-		
+
 		comboType.setBounds(629, 355, 132, 22);
 		contentPane.add(comboType);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 793, 22);
 		contentPane.add(menuBar);
-		
+
 		JMenu menuInfo = new JMenu("Info for Vehycle types:");
 		menuBar.add(menuInfo);
-		
+
 		JMenuItem patrolCar = new JMenuItem("Patrol Car");
 		menuInfo.add(patrolCar);
-		
+
 		JMenuItem armoredCar = new JMenuItem("Armored Car");
 		menuInfo.add(armoredCar);
-		
+
 		JMenuItem armoredVan = new JMenuItem("Armored Van");
 		menuInfo.add(armoredVan);
-		
+
 		JMenuItem motorbike = new JMenuItem("Motorbike");
 		menuInfo.add(motorbike);
-		
+
 		JMenuItem truck = new JMenuItem("Truck");
 		menuInfo.add(truck);
-		
-		
-		
+
 		contentPane.add(scrollVehicle);
 		scrollVehicle.setBounds(72, 234, 503, 143);
-		
+
 		JButton bback = new JButton("Back");
 		bback.setBounds(10, 417, 89, 23);
 		contentPane.add(bback);
-		
+
 		JButton bdelete = new JButton("Delete");
 		bdelete.setBounds(10, 156, 112, 23);
 		contentPane.add(bdelete);
-		
+
 		JButton bshow = new JButton("Show");
 		bshow.setBounds(164, 156, 112, 23);
 		contentPane.add(bshow);
-		
-		
+
 		JButton bsave = new JButton("Save");
 		bsave.setBounds(486, 156, 112, 23);
 		contentPane.add(bsave);
-		
+
 		JButton bcreate = new JButton("Create");
 		bcreate.setBounds(649, 156, 112, 23);
 		contentPane.add(bcreate);
-		
 
 		JTextField tField = new JTextField();
 		tField.setBounds(629, 430, 132, 31);
 		contentPane.add(tField);
 		tField.setColumns(10);
 		tField.setEditable(false);
-		
+
 		JLabel lblLicensePlate = new JLabel("License Plate:");
 		lblLicensePlate.setBounds(629, 397, 138, 22);
 		contentPane.add(lblLicensePlate);
-		
+
 		JButton btnGeneratePlate = new JButton("Generate plate");
 		btnGeneratePlate.setBounds(299, 156, 159, 23);
 		contentPane.add(btnGeneratePlate);
-		
-		
-			
-		
-		
+
 		patrolCar.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new PatrolCarWindow();
-				
+
 			}
 		});
 		motorbike.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new MotorBikeWindow();
-				
+
 			}
 		});
 		truck.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new TruckWindow();
-				
+
 			}
 		});
 		armoredCar.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new ArmoredCarWindow();
-				
+
 			}
 		});
 		armoredVan.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new ArmoredVanWindow();
-				
+
 			}
 		});
-		
+
 		bcreate.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				VehicleTypes vehicle;
-				BrandEnum brand;
-				ColourEnum colour;
-				String plate;
-				
-				vehicle = (VehicleTypes) comboType.getSelectedItem();
-				brand = (BrandEnum) comboBrand.getSelectedItem();
-				colour = (ColourEnum) comboColour.getSelectedItem();
-				plate = tField.getText();
-				
-				Vehicle v = new Vehicle(brand,colour,vehicle,plate);
-				policeStation.getVehicles().add(v);
-				
-				modelVehicles.addElement(v);
-				al.add(v);
-				
-				
-				
+
+				if (tField.getText().equals("")) {
+					JOptionPane.showMessageDialog(bcreate, "Error. It is necessary to add a license plate",
+							"data creation", JOptionPane.ERROR_MESSAGE);
+				} else {
+
+					VehicleTypes vehicle;
+					BrandEnum brand;
+					ColourEnum colour;
+					String plate;
+
+					vehicle = (VehicleTypes) comboType.getSelectedItem();
+					brand = (BrandEnum) comboBrand.getSelectedItem();
+					colour = (ColourEnum) comboColour.getSelectedItem();
+					plate = tField.getText();
+
+					Vehicle v = new Vehicle(brand, colour, vehicle, plate);
+					policeStation.getVehicles().add(v);
+
+					modelVehicles.addElement(v);
+					al.add(v);
+				}
+
 			}
-			
+
 		});
 		btnGeneratePlate.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GeneradorMatriculasV generar= new GeneradorMatriculasV();
-				Random rand= new Random();
-				String matricula= generar.generarMatriculaLetra(rand, "", 0, 4) +" "+ generar.generarMatriculaNum(rand, "", 0, 3);
+				GeneradorMatriculasV generar = new GeneradorMatriculasV();
+				Random rand = new Random();
+				String matricula = generar.generarMatriculaLetra(rand, "", 0, 4) + " "
+						+ generar.generarMatriculaNum(rand, "", 0, 3);
 				tField.setText(matricula);
-			
-				
+
 			}
 		});
-		
-		
+
 		bback.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -276,43 +271,42 @@ public class VehicleWindow extends JFrame{
 			}
 		});
 		bsave.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				doCSV();
 			}
 
-			
 		});
 		bshow.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
-					try {
-						BufferedReader br = new BufferedReader(new FileReader("vehicles.txt"));
-						if(modelVehicles.isEmpty()) {
+
+				try {
+					BufferedReader br = new BufferedReader(new FileReader("vehicles.txt"));
+					if (modelVehicles.isEmpty()) {
 						String line = br.readLine();
-						while(line!=null) {
+						while (line != null) {
 							String data[] = line.split(" ");
 							BrandEnum bra = BrandEnum.valueOf(data[0]);
 							ColourEnum col = ColourEnum.valueOf(data[1]);
 							VehicleTypes veh = VehicleTypes.valueOf(data[2]);
 							String pla = String.valueOf(data[3]);
-						
-							Vehicle v = new Vehicle(bra,col,veh,pla);
+
+							Vehicle v = new Vehicle(bra, col, veh, pla);
 							modelVehicles.addElement(v);
 							policeStation.getVehicles().add(v);
 							line = br.readLine();
 						}
 						vehicleJList.setModel(modelVehicles);
 						br.close();
-					}else {
+					} else {
 						JOptionPane.showMessageDialog(null, "Error.");
 					}
-				
+
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -320,38 +314,37 @@ public class VehicleWindow extends JFrame{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
+
 			}
 		});
 		bdelete.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				int question = JOptionPane.showConfirmDialog(null, "Are you sure?");
 				if (question == 0) {
-					
-				Vehicle v = (Vehicle) vehicleJList.getSelectedValue();
-				al.remove(v);
-				modelVehicles.removeElement(v);
-				policeStation.getVehicles().remove(v);
-				doCSV();
+
+					Vehicle v = (Vehicle) vehicleJList.getSelectedValue();
+					al.remove(v);
+					modelVehicles.removeElement(v);
+					policeStation.getVehicles().remove(v);
+					doCSV();
 				}
 			}
 		});
-		
-		
-		
+
 	}
+
 	private void doCSV() {
 		// TODO Auto-generated method stub
 		try {
 			PrintWriter pw = new PrintWriter(new File("vehicles.txt"));
-			for(int i=0;i<modelVehicles.getSize();i++) {
+			for (int i = 0; i < modelVehicles.getSize(); i++) {
 				Vehicle v = (Vehicle) modelVehicles.get(i);
-				pw.println(v.getBrand()+" "+v.getColour()+" "+v.getVehicleTypes()+" "+v.getLicensePlate());
+				pw.println(v.getBrand() + " " + v.getColour() + " " + v.getVehicleTypes() + " " + v.getLicensePlate());
 				al.add(v);
-				policeStation.getVehicles().add(v);	
+				policeStation.getVehicles().add(v);
 			}
 			System.out.println(policeStation);
 			pw.flush();
@@ -361,5 +354,5 @@ public class VehicleWindow extends JFrame{
 			e1.printStackTrace();
 		}
 	}
-	
+
 }

@@ -76,5 +76,6 @@ public class MotorBikeWindow extends JFrame{
 		pack();
 		setResizable(false);
 		setVisible(true);
+		setLocationRelativeTo(null);
 }
 }

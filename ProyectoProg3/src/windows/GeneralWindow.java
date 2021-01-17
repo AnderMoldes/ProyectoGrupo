@@ -66,9 +66,6 @@ public class GeneralWindow {
 		JMenu mnNewMenu = new JMenu("File");
 		menuBar.add(mnNewMenu);
 
-//		JMenuItem mntmNewMenuItem = new JMenuItem("Create/Activate Database");
-//		mnNewMenu.add(mntmNewMenuItem);
-//		frame.getContentPane().setLayout(null);
 		
 		JMenuItem table = new JMenuItem("Create/Activate Tables");
 		mnNewMenu.add(table);
@@ -116,6 +113,25 @@ public class GeneralWindow {
 		JButton btnNewButton_1 = new JButton(new ImageIcon("criminal-preso.gif"));
 		btnNewButton_1.setBounds(181, 65, 97, 130);
 		frame.getContentPane().add(btnNewButton_1);
+		progressBar.setVisible(false);
+		
+
+		JButton buttonInfo =new JButton(new ImageIcon(((new ImageIcon("info.jpg").getImage()  .getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)))));
+		buttonInfo.setBounds(24, 11, 34, 30);
+		frame.getContentPane().add(buttonInfo);
+		buttonInfo.setEnabled(true);
+		
+		buttonInfo.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(buttonInfo, "The database was created / activated at the moment you entered the window.",
+						"Database Info", JOptionPane.INFORMATION_MESSAGE);
+				
+			}
+		});
+		
+		
 		progressBar.setVisible(false);
 
 		vehicle.addActionListener(new ActionListener() {
@@ -176,16 +192,6 @@ public class GeneralWindow {
 			}
 		});
 
-//		mntmNewMenuItem.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//
-//				BDWorkers.initBD("Workers.db");
-//				BDetained.initBD("Detained.db");
-//
-//			}
-//		});
 		
 		table.addActionListener(new ActionListener() {
 			
@@ -236,351 +242,7 @@ public class GeneralWindow {
 		frame.setVisible(true);
 		frame.setLocationRelativeTo( null );
 
-//		createWorkers.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				new WorkersWindow(null, policeStation, modelWorkers);
-//			}
-//		});
-//
-//		createBoss.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				new BossWindow(null, policeStation, modelWorkers);
-//			}
-//		});
-//
-//		/*
-//		 * consultWorkers.addActionListener(new ActionListener() {
-//		 * 
-//		 * @Override public void actionPerformed(ActionEvent e) { Workers workers =
-//		 * (Workers) modelWorkers.getValueAt(1, 1 );
-//		 * 
-//		 * if (workers instanceof Boss) { new BossWindow((Boss) workers, policeStation,
-//		 * modelWorkers); } else { new WorkersWindow(workers, policeStation,
-//		 * modelWorkers); } } });
-//		 * 
-//		 * table.addMouseListener(new MouseAdapter() { public void
-//		 * mouseClicked(MouseEvent evt) { JList list = (JList) evt.getSource(); if
-//		 * (evt.getClickCount() == 2) { Workers workers = (Workers)
-//		 * table.getSelectionModel();
-//		 * 
-//		 * if (workers instanceof Boss) { new BossWindow((Boss) workers, policeStation,
-//		 * modelWorkers); } else { new WorkersWindow(workers, policeStation,
-//		 * modelWorkers); } } } });
-//		 */
-//		
-////		tableWorkers.addMouseListener(new MouseAdapter() {
-////			public void mouseClicked(MouseEvent e) {
-////				int fila = tableWorkers.rowAtPoint(e.getPoint());
-////				int columna = tableWorkers.columnAtPoint(e.getPoint());
-////			if ((fila > -1) && (columna > -1) || e.getClickCount() == 2 ) {
-////				if (e.getClickCount() == 2) {
-////					Workers2 workers2=  (Workers2) tableWorkers.getSelectionModel(); 
-////					new WorkersWindow((Workers2) workers, policeStation, modelWorkers);
-////				}
-////			}
-////		});
-//
-//
-//		createArrested.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				new ArrestedWindow(null, policeStation, modelDetained);
-//			}
-//		});
-//
-//		createFined.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				new FainedWindow(null, policeStation, modelDetained);
-//			}
-//		});
-//
-//		/*
-//		 * consultDetained.addActionListener(new ActionListener() {
-//		 * 
-//		 * @Override public void actionPerformed(ActionEvent e) { Detained detained =
-//		 * (Detained) listDetained.getSelectedValue();
-//		 * 
-//		 * if (detained instanceof Arrested) { new ArrestedWindow((Arrested) detained,
-//		 * policeStation, modelDetained); } else if (detained instanceof Fined){ new
-//		 * FainedWindow((Fined)detained, policeStation, modelDetained); }
-//		 * 
-//		 * } });
-//		 * 
-//		 * listDetained.addMouseListener(new MouseAdapter() { public void
-//		 * mouseClicked(MouseEvent evt) { JList list = (JList) evt.getSource(); if
-//		 * (evt.getClickCount() == 2) { Detained detained = (Detained)
-//		 * listDetained.getSelectedValue();
-//		 * 
-//		 * if (detained instanceof Arrested) { new ArrestedWindow((Arrested) detained,
-//		 * policeStation, modelDetained); } else if (detained instanceof Fined){ new
-//		 * FainedWindow((Fined)detained, policeStation, modelDetained); } } } });
-//		 * 
-//		 * 
-//		 * 
-//		 * delete.addActionListener(new ActionListener() {
-//		 * 
-//		 * @Override public void actionPerformed(ActionEvent e) { int question =
-//		 * JOptionPane.showConfirmDialog(null,
-//		 * "Are you sure that you want to delete this?"); if (question == 0) { Workers
-//		 * worker = (Workers) listWorkers.getSelectedValue(); Workers boss = (Boss)
-//		 * listWorkers.getSelectedValue(); Detained arrested = (Arrested)
-//		 * listDetained.getSelectedValue(); Detained fined = (Fined)
-//		 * listDetained.getSelectedValue();
-//		 * 
-//		 * policeStation.getWorkers().remove(worker);
-//		 * policeStation.getWorkers().remove(boss);
-//		 * policeStation.getDetained().remove(arrested);
-//		 * policeStation.getDetained().remove(fined);
-//		 * 
-//		 * modelWorkers.removeElement(worker); modelWorkers.removeElement(boss);
-//		 * modelDetained.removeElement(arrested); modelDetained.removeElement(fined);
-//		 * 
-//		 * }
-//		 * 
-//		 * } });
-//		 */
-//		delete.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				int fila = tableWorkers.getSelectedRow();
-//				int fila2 = tableDetained.getSelectedColumn();
-//				if (fila >= 0 && tableWorkers.isColumnSelected(fila)) {
-//					modelWorkers.removeRow(fila);
-//				} else if (fila2 >= 0 && tableDetained.isColumnSelected(fila)) {
-//					modelDetained.removeRow(fila);
-//				} else {
-//					JOptionPane.showMessageDialog(null, "Select Row");
-//				}
-//			}
-//
-//		});
-//
-//		consultWorkers.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				
-//				for (Workers workers : policeStation.getWorkers()) {
-//					if (workers instanceof Workers2) {
-//						BDWorkers.update((Workers2) workers);
-//					}
-//				}
-//				
-//				for (Workers workers : policeStation.getWorkers()) {
-//					if (workers instanceof Boss) {
-//						BDWorkers.updateBoss((Boss) workers);
-//					}
-//				}
-//				
-//				
-//
-//			}
-//		});
-//
-//		consultDetained.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				int fila = Integer.parseInt(getName());
-//				int columna = Integer.parseInt(getTitle());
-//
-//			}
-//		});
-//
-//		
-//
-//		
-//		
-//		
-//		
 
-//
-
-//		
-//		ShowDataWorkers.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				try {
-//					ArrayList<Object[]> datos = new ArrayList<Object[]>();
-//					datos = BDWorkers.consultarDatos("WorkersTable");
-//
-//					for (int i = 0; i < datos.size(); i++) {
-//						modelWorkers.addRow(datos.get(i));
-//					}
-//					tableWorkers.setModel(modelWorkers);
-//
-//				} catch (SQLException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-//				
-//			}
-//		});
-//
-//		ShowData.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				
-//				
-//				try {
-//					ArrayList<Object[]> datosArrested = new ArrayList<Object[]>();
-//					datosArrested = BDetained.consultarDatosArrested("DetainedTable");
-//
-//					for (int i = 0; i < datosArrested.size(); i++) {
-//						modelDetained.addRow(datosArrested.get(i));
-//					}
-//					tableDetained.setModel(modelDetained);
-//
-//				} catch (SQLException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-//				
-//				try {
-//					ArrayList<Object[]> datosFained = new ArrayList<Object[]>();
-//					datosFained = BDetained.consultarDatosFained("FainedTable");
-//
-//					for (int i = 0; i < datosFained.size(); i++) {
-//						modelDetained.addRow(datosFained.get(i));
-//					}
-//					tableDetained.setModel(modelDetained);
-//
-//				} catch (SQLException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-//				
-//			}
-//		});
-//
-//		saveDataBoss.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				
-//			}
-//		});
-//		
-//		ShowDataBoss.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				try {
-//					ArrayList<Object[]> datosBoss = new ArrayList<Object[]>();
-//					datosBoss = BDWorkers.consultarDatosBoss("WorkersTableBoss");
-//
-//					for (int i = 0; i < datosBoss.size(); i++) {
-//						modelWorkers.addRow(datosBoss.get(i));
-//					}
-//					tableWorkers.setModel(modelWorkers);
-//
-//				} catch (SQLException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-//				
-//			}
-//		});
-//
-//		saveDataDetained.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				for (Detained detained : policeStation.getDetained()) {
-//					if (detained instanceof Arrested) {
-//						BDetained.insertIntoPrepStat((Arrested) detained);
-//					}
-//				}
-//
-//			}
-//		});
-//		
-//		ShowDataArrested.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				try {
-//					ArrayList<Object[]> datosArrested = new ArrayList<Object[]>();
-//					datosArrested = BDetained.consultarDatosArrested("DetainedTable");
-//
-//					for (int i = 0; i < datosArrested.size(); i++) {
-//						modelDetained.addRow(datosArrested.get(i));
-//					}
-//					tableDetained.setModel(modelDetained);
-//
-//				} catch (SQLException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-//				
-//			}
-//		});
-//
-//		saveDataFained.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				for (Detained detained : policeStation.getDetained()) {
-//					if (detained instanceof Fined) {
-//						BDetained.insertIntoPrepStatFained((Fined) detained);
-//					}
-//				}
-//
-//			}
-//		});
-//		
-//		
-//		ShowDataFained.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				
-//				try {
-//					ArrayList<Object[]> datosFained = new ArrayList<Object[]>();
-//					datosFained = BDetained.consultarDatosFained("FainedTable");
-//
-//					for (int i = 0; i < datosFained.size(); i++) {
-//						modelDetained.addRow(datosFained.get(i));
-//					}
-//					tableDetained.setModel(modelDetained);
-//
-//				} catch (SQLException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-//			}
-//		});
-//		
-//		
-//		
-//		
-//		//Parte recursivo
-//		ArrayList list = new ArrayList();
-//
-//		for (int i = 0; i < tableWorkers.getRowCount(); i++) {
-//			list.add(tableWorkers.getName());
-//		}
-//		
-//		
-//		sortTable.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				Collections.sort(list);
-//				
-//			}
-//		});
-//		TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(modelWorkers);
-//		tableWorkers.setRowSorter(sorter);
 
 	}
 }
