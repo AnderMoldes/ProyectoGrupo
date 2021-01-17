@@ -75,6 +75,7 @@ public class ArmoredCarWindow extends JFrame{
 		pack();
 		setResizable(false);
 		setVisible(true);
+		setLocationRelativeTo( null );
 }
 	
 }
