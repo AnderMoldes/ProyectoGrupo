@@ -125,7 +125,7 @@ public class WindowDetained {
 				creation.setAge((int) spinAge.getValue());
 
 				if (radioFemale.isSelected()) {
-					creation.setGender(radioMale.getActionCommand());
+					creation.setGender(radioFemale.getActionCommand());
 				} else if (radioMale.isSelected()) {
 					creation.setGender(radioMale.getActionCommand());
 				}
@@ -174,7 +174,7 @@ public class WindowDetained {
 				creation2.setAge((int) spinAge.getValue());
 
 				if (radioFemale.isSelected()) {
-					creation2.setGender(radioMale.getActionCommand());
+					creation2.setGender(radioFemale.getActionCommand());
 				} else if (radioMale.isSelected()) {
 					creation2.setGender(radioMale.getActionCommand());
 				}
