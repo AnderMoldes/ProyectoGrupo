@@ -47,7 +47,7 @@ public class WindowManageWorkers extends JFrame {
 	private JList listVehicle;
 
 	public WindowManageWorkers() {
-
+		//Declaramos atributos del frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 790, 662);
 		setVisible(true);
@@ -138,7 +138,7 @@ public class WindowManageWorkers extends JFrame {
 		ArrayList<Vehicle> declaredVehicles = policeStation.getHmWorVehi().get(workers);
 
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("vehicles.txt"));
+			BufferedReader br = new BufferedReader(new FileReader("vehicles.txt"));//Buffer
 			if (modelWorker1.isEmpty()) {
 				String line = br.readLine();
 				while (line != null) {
@@ -171,7 +171,7 @@ public class WindowManageWorkers extends JFrame {
 		}
 
 		policeStation.getVehicles();
-
+		//Eventos
 		bback.addActionListener(new ActionListener() {
 
 			@Override

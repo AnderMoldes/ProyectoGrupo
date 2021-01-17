@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 public class ArmoredVanWindow extends JFrame{
-
+	//Declaramos
 	JPanel panelPhoto;
 	JPanel panelText;
 	
@@ -36,11 +36,13 @@ public class ArmoredVanWindow extends JFrame{
 		JButton back = new JButton("Back");	
 		
 		text.setEditable(false);
+		/*Text Area en el que añadimos la información del vehiculo*/
 		text.setText(" An armored van vehicle, also known as an armoured rescue vehicle, a vehicle\n"
 				+ " used by police tactical units to respond to incidents. These are often non-military\n"
 				+ " armored vehicles which offer protection to the passengers and can additionally be\n"
 				+ " used to transport specialized equipment such as weapons and breaching tools.\n");
 		
+		//Eventos
 		back.addActionListener(new ActionListener() {
 			
 			@Override
@@ -50,6 +52,7 @@ public class ArmoredVanWindow extends JFrame{
 			}
 		});
 		
+		//Diseño
 		this.setLayout(new GridLayout(2,1));
 		panelPhoto.setLayout(new BorderLayout());
 		

@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 public class TruckWindow extends JFrame{
-
+	//Declaramos
 	JPanel panelPhoto;
 	JPanel panelText;
 	
@@ -36,6 +36,7 @@ public class TruckWindow extends JFrame{
 		JButton back = new JButton("Back");	
 		
 		text.setEditable(false);
+		/*Text Area en el que añadimos la información del vehiculo*/
 		text.setText(" A police truck is, broadly, a large motor vehicle that is\n"
 				+ " used for police and law enforcement duties. A police truck may be used for\n"
 				+ " many different purposes. Four-wheel drive versions may be used for patrolling\n"
@@ -44,6 +45,7 @@ public class TruckWindow extends JFrame{
 				+ " SWAT teams and often have facilities to securely detain and transport a small number\n"
 				+ " of suspects. Sometimes, police agencies use trucks equipped with cages for animal control.");
 		
+		//Eventos
 		back.addActionListener(new ActionListener() {
 			
 			@Override
@@ -53,6 +55,7 @@ public class TruckWindow extends JFrame{
 			}
 		});
 		
+		//Diseño
 		this.setLayout(new GridLayout(2,1));
 		panelPhoto.setLayout(new BorderLayout());
 		
