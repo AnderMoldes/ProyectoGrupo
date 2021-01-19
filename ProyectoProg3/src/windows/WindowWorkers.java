@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
@@ -560,13 +561,6 @@ public class WindowWorkers {
 		btnNewButton_6.setBounds(337, 209, 173, 23);
 		frame.getContentPane().add(btnNewButton_6);
 
-		btnNewButton_6.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
 
 		JButton btnNewButton_7 = new JButton("Default values Boss");
 		btnNewButton_7.setBounds(337, 243, 173, 23);
@@ -577,7 +571,27 @@ public class WindowWorkers {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				Map<String, String> list;
+                GestorPropertiesW gest= new GestorPropertiesW();
+                Properties pe= new Properties();
+                try {
+                    pe.load(new FileReader("Workers.properties"));
+                    list= gest.leerTodo(pe);
+                    
+                    
+                    spinner.setValue(0); 
+                    textField.setText(list.get("name")); 
+                    textField_1.setText(list.get("Surname"));
+                    rdbtnNewRadioButton.setSelected(true);
+                    comboBox.setSelectedIndex(0);
+                    textField_4.setText(list.get("Start"));
+                    textField_2.setText(list.get("Assesment"));
+                    textField_3.setText(list.get("boss"));
 
+
+                } catch (Exception e2) {
+
+                }
 			}
 		});
 
@@ -802,28 +816,38 @@ public class WindowWorkers {
 
 			}
 		});
-		
-		btnNewButton_6.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				Map<String, String> list;
-				GestorPropertiesW gest= new GestorPropertiesW();
-				Properties pe= new Properties();
-				try {
-					pe.load(new FileReader("Vehicle.properties"));
-					list= gest.leerTodo(pe);
-					
-					spinner.setValue(list.get("grade"));
-					textField.setText(list.get("name"));
-					textField_1.setText(list.get("surname"));
-					
-				} catch (Exception e2) {
-					
-				}
-			}
-		});
+
+
+
+        btnNewButton_6.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+                Map<String, String> list;
+                GestorPropertiesW gest= new GestorPropertiesW();
+                Properties pe= new Properties();
+                try {
+                    pe.load(new FileReader("Workers.properties"));
+                    list= gest.leerTodo(pe);
+                    
+                    
+                    spinner.setValue(0); 
+                    textField.setText(list.get("name")); 
+                    textField_1.setText(list.get("Surname"));
+                    rdbtnNewRadioButton.setSelected(true);
+                    comboBox.setSelectedIndex(0);
+                    textField_4.setText(list.get("Start"));
+                    textField_2.setText(list.get("Assesment"));
+
+
+                } catch (Exception e2) {
+
+                }
+            }
+        });
+        
+        
 
 		frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
 		frame.setTitle("POLICE MANAGEMENT");
